@@ -1,0 +1,1 @@
+#include "DxLibMake\DxLib.h"

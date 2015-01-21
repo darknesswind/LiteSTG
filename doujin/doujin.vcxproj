@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug_vs2012|Win32">
+      <Configuration>debug_vs2012</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3962CB99-33CF-435A-9AC5-74D882BDC355}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>doujin</RootNamespace>
+    <SccProjectName>SAK</SccProjectName>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug_vs2012|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug_vs2012|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(SolutionDir)Qt\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Qt\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)Qt\src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug_vs2012|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(SolutionDir)Qt\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Qt\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(SolutionDir)Qt\src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>E:\STGproject\boost;$(IncludePath)</IncludePath>
+    <SourcePath>E:\STGproject\boost;$(IncludePath);$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_HITBOX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine\;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4482;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)DxLib/bin;$(OutDir);$(QTDIR)/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DxLibW_d.lib;DxDrawFunc_d.lib;Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug_vs2012|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_HITBOX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine\;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4482;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)DxLib;$(OutDir);$(QTDIR)/lib;$(ICU_DIR)/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DxLibW_d.lib;DxDrawFuncW_d.lib;Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine\;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)DxLib;$(OutDir);../Qt/lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DxLibW.lib;DxDrawFunc.lib;Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <Profile>true</Profile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Animation\AnimationBase.cpp" />
+    <ClCompile Include="Animation\AnimationManager.cpp" />
+    <ClCompile Include="CollideEntity\ElipseEntity.cpp" />
+    <ClCompile Include="CollideEntity\Entity.cpp" />
+    <ClCompile Include="CollideEntity\RectEntity.cpp" />
+    <ClCompile Include="CollideEntity\RoundEntity.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Factory\EnemyFactory.cpp" />
+    <ClCompile Include="Factory\EntityFactory.cpp" />
+    <ClCompile Include="Factory\ShooterFactory.cpp" />
+    <ClCompile Include="gameobj\bullet\Bullet.cpp" />
+    <ClCompile Include="gameobj\bullet\CurveLaser.cpp" />
+    <ClCompile Include="gameobj\bullet\LBullets.cpp" />
+    <ClCompile Include="gameobj\bullet\RayLaser.cpp" />
+    <ClCompile Include="gameobj\bullet\SegmentLaser.cpp" />
+    <ClCompile Include="gameobj\enemy\LEnemy.cpp" />
+    <ClCompile Include="gameobj\enemy\LEnemys.cpp" />
+    <ClCompile Include="gameobj\LGameObject.cpp" />
+    <ClCompile Include="gameobj\player\LControlledPlayer.cpp" />
+    <ClCompile Include="gameobj\player\LPlayers.cpp" />
+    <ClCompile Include="gameobj\player\player.cpp" />
+    <ClCompile Include="gameobj\shooter\LRayShooter.cpp" />
+    <ClCompile Include="gameobj\shooter\LSegShooter.cpp" />
+    <ClCompile Include="gameobj\shooter\LShooter.cpp" />
+    <ClCompile Include="gameobj\shooter\LShooters.cpp" />
+    <ClCompile Include="gameobj\stage\LStage.cpp" />
+    <ClCompile Include="Manager\ComManage.cpp" />
+    <ClCompile Include="Manager\MemoryManager.cpp" />
+    <ClCompile Include="Manager\SpriteManager.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="DebugInfo.cpp" />
+    <ClCompile Include="Globle.cpp" />
+    <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="resource.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="ui\menu\GameMenu.cpp" />
+    <ClCompile Include="ui\stage\baseFrame.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Animation\AnimationBase.h" />
+    <ClInclude Include="Animation\AnimationManager.h" />
+    <ClInclude Include="CollideEntity\ElipseEntity.h" />
+    <ClInclude Include="CollideEntity\Entity.h" />
+    <ClInclude Include="CollideEntity\RectEntity.h" />
+    <ClInclude Include="CollideEntity\RoundEntity.h" />
+    <ClInclude Include="DxLib.h" />
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="Factory\EnemyFactory.h" />
+    <ClInclude Include="Factory\EntityFactory.h" />
+    <ClInclude Include="Factory\ShooterFactory.h" />
+    <ClInclude Include="gameobj\bullet\Bullet.h" />
+    <ClInclude Include="gameobj\bullet\CurveLaser.h" />
+    <ClInclude Include="gameobj\bullet\LBullets.h" />
+    <ClInclude Include="gameobj\bullet\RayLaser.h" />
+    <ClInclude Include="gameobj\bullet\SegmentLaser.h" />
+    <ClInclude Include="gameobj\enemy\LEnemy.h" />
+    <ClInclude Include="gameobj\enemy\LEnemys.h" />
+    <ClInclude Include="gameobj\LGameObject.h" />
+    <ClInclude Include="gameobj\player\LControlledPlayer.h" />
+    <ClInclude Include="gameobj\player\LPlayers.h" />
+    <ClInclude Include="gameobj\player\player.h" />
+    <ClInclude Include="gameobj\shooter\LRayShooter.h" />
+    <ClInclude Include="gameobj\shooter\LSegShooter.h" />
+    <ClInclude Include="gameobj\shooter\LShooter.h" />
+    <ClInclude Include="gameobj\shooter\LShooters.h" />
+    <ClInclude Include="gameobj\stage\LStage.h" />
+    <ClInclude Include="interfaceDef.h" />
+    <ClInclude Include="Manager\ComManage.h" />
+    <ClInclude Include="Manager\MemoryManager.h" />
+    <ClInclude Include="Manager\SpriteManager.h" />
+    <ClInclude Include="interdef.h" />
+    <ClInclude Include="DebugInfo.h" />
+    <ClInclude Include="Globle.h" />
+    <ClInclude Include="Graph.h" />
+    <ClInclude Include="MyTimer.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ui\menu\GameMenu.h" />
+    <ClInclude Include="ui\stage\baseFrame.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\事务处理.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DxLibEngine\DxLibEngine.vcxproj">
+      <Project>{30064ca8-f0f9-4477-b18d-475579bfc1c7}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="doujin.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

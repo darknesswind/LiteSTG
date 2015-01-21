@@ -1,0 +1,308 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{acb872f6-08de-42ac-aa55-a3af125b77d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollideEntity">
+      <UniqueIdentifier>{e1362c0d-d89c-4917-a2e7-c762c40411e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{eb47c8b2-56bf-4034-83c0-7cf06ef6d046}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Animation">
+      <UniqueIdentifier>{85a2e336-ca3a-45c2-8ce3-ac357e8cdbb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj">
+      <UniqueIdentifier>{75df2707-3554-4a06-b26e-f860f4fc07b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\player">
+      <UniqueIdentifier>{28a4c4a8-7499-43d7-a4a8-188665e4e028}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\enemy">
+      <UniqueIdentifier>{41b96351-c939-421f-b6a3-d8c3ed166b1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\组件">
+      <UniqueIdentifier>{5f3cb3fa-37ac-4eef-a3bf-a88a7a5a5143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{ba8e0c66-8736-421f-9aed-20c8a2059f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\menu">
+      <UniqueIdentifier>{398cd06b-2e6e-4639-a8fc-70da248417d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\stage">
+      <UniqueIdentifier>{8553b322-428e-4479-b97b-8400a7755852}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\bullet">
+      <UniqueIdentifier>{1fe1ed07-91ba-4b06-ba58-fc7242bd7ed9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\Shooter">
+      <UniqueIdentifier>{9d1bdda4-d85e-4c4b-8bb0-9829a3417fa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="状态机">
+      <UniqueIdentifier>{73ef8006-c372-417d-b0d0-9226fae3c484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObj\stage">
+      <UniqueIdentifier>{ccb99177-a679-4701-af89-ba61cd296bc5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Globle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Graph.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugInfo.cpp">
+      <Filter>GameObj\组件</Filter>
+    </ClCompile>
+    <ClCompile Include="resource.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\EnemyFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\EntityFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\ShooterFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="CollideEntity\ElipseEntity.cpp">
+      <Filter>CollideEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="CollideEntity\Entity.cpp">
+      <Filter>CollideEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="CollideEntity\RectEntity.cpp">
+      <Filter>CollideEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="CollideEntity\RoundEntity.cpp">
+      <Filter>CollideEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\ComManage.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\SpriteManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\AnimationBase.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation\AnimationManager.cpp">
+      <Filter>Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\MemoryManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\stage\baseFrame.cpp">
+      <Filter>ui\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\menu\GameMenu.cpp">
+      <Filter>ui\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\enemy\LEnemy.cpp">
+      <Filter>GameObj\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\enemy\LEnemys.cpp">
+      <Filter>GameObj\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\Bullet.cpp">
+      <Filter>GameObj\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\CurveLaser.cpp">
+      <Filter>GameObj\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\LBullets.cpp">
+      <Filter>GameObj\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\RayLaser.cpp">
+      <Filter>GameObj\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\SegmentLaser.cpp">
+      <Filter>GameObj\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\player\LControlledPlayer.cpp">
+      <Filter>GameObj\player</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\player\LPlayers.cpp">
+      <Filter>GameObj\player</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\player\player.cpp">
+      <Filter>GameObj\player</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\shooter\LRayShooter.cpp">
+      <Filter>GameObj\Shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\shooter\LSegShooter.cpp">
+      <Filter>GameObj\Shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\shooter\LShooter.cpp">
+      <Filter>GameObj\Shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\shooter\LShooters.cpp">
+      <Filter>GameObj\Shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\LGameObject.cpp">
+      <Filter>GameObj</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\stage\LStage.cpp">
+      <Filter>GameObj\stage</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Globle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugInfo.h">
+      <Filter>GameObj\组件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTimer.h">
+      <Filter>GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>状态机</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>状态机</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DxLib.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\EnemyFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\EntityFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\ShooterFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="CollideEntity\ElipseEntity.h">
+      <Filter>CollideEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="CollideEntity\Entity.h">
+      <Filter>CollideEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="CollideEntity\RectEntity.h">
+      <Filter>CollideEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="CollideEntity\RoundEntity.h">
+      <Filter>CollideEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\ComManage.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\SpriteManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="interdef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaceDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\AnimationBase.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation\AnimationManager.h">
+      <Filter>Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\MemoryManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\stage\baseFrame.h">
+      <Filter>ui\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\menu\GameMenu.h">
+      <Filter>ui\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\enemy\LEnemy.h">
+      <Filter>GameObj\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\enemy\LEnemys.h">
+      <Filter>GameObj\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\Bullet.h">
+      <Filter>GameObj\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\CurveLaser.h">
+      <Filter>GameObj\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\LBullets.h">
+      <Filter>GameObj\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\RayLaser.h">
+      <Filter>GameObj\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\SegmentLaser.h">
+      <Filter>GameObj\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\player\LControlledPlayer.h">
+      <Filter>GameObj\player</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\player\LPlayers.h">
+      <Filter>GameObj\player</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\player\player.h">
+      <Filter>GameObj\player</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\shooter\LRayShooter.h">
+      <Filter>GameObj\Shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\shooter\LSegShooter.h">
+      <Filter>GameObj\Shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\shooter\LShooter.h">
+      <Filter>GameObj\Shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\shooter\LShooters.h">
+      <Filter>GameObj\Shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\LGameObject.h">
+      <Filter>GameObj</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\stage\LStage.h">
+      <Filter>GameObj\stage</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\事务处理.txt" />
+  </ItemGroup>
+</Project>

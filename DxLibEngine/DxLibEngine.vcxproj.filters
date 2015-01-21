@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{9d6a3bfb-1e57-4f69-a2a5-a6a8e2f726e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools">
+      <UniqueIdentifier>{3ce007f2-6a3c-4e1c-87d4-3b48798b762b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="painting">
+      <UniqueIdentifier>{52ea1974-956a-44c2-8e98-a1e8420d8b20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="move">
+      <UniqueIdentifier>{b6936c78-1d93-4243-ada5-285a60946426}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="typedef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="base\LEngine.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\LPoint.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\Input.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="base\LScreen.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\EmbeddedList.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\FastFunc.hpp">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="base\LWindow.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\EnumHandle.hpp">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="painting\LImage.h">
+      <Filter>painting</Filter>
+    </ClInclude>
+    <ClInclude Include="painting\LPainter.h">
+      <Filter>painting</Filter>
+    </ClInclude>
+    <ClInclude Include="painting\LRgb.h">
+      <Filter>painting</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\Vector2.hpp">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="base\LMath.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\LUnifiedTimer.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\CsvReader.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\LMessageBox.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\LObjectPool.hpp">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\Vector3.hpp">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="base\DxHandleManager.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="painting\DebugPainter.h">
+      <Filter>painting</Filter>
+    </ClInclude>
+    <ClInclude Include="painting\LRender.h">
+      <Filter>painting</Filter>
+    </ClInclude>
+    <ClInclude Include="base\LHandle.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LPhysicWalker.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LWalker.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\Angle.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="enumations.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LPathWalker.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LFollowWalker.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LControlledWalker.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LPathNodes.h">
+      <Filter>move</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="base\LEngine.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\LPoint.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\Input.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="base\LScreen.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="base\LWindow.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="painting\LImage.cpp">
+      <Filter>painting</Filter>
+    </ClCompile>
+    <ClCompile Include="painting\LPainter.cpp">
+      <Filter>painting</Filter>
+    </ClCompile>
+    <ClCompile Include="base\LMath.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\LUnifiedTimer.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\CsvReader.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\LMessageBox.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="base\DxHandleManager.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="painting\DebugPainter.cpp">
+      <Filter>painting</Filter>
+    </ClCompile>
+    <ClCompile Include="painting\LRender.cpp">
+      <Filter>painting</Filter>
+    </ClCompile>
+    <ClCompile Include="base\LHandle.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LPhysicWalker.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LWalker.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LPathWalker.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LFollowWalker.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LControlledWalker.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LPathNodes.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
