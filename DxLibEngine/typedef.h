@@ -1,6 +1,8 @@
 ﻿#ifndef __TYPEDEFINE_H__
 #define __TYPEDEFINE_H__
 
+
+
 #pragma region Include
 #include <cassert>
 #pragma endregion
@@ -13,6 +15,8 @@ typedef unsigned char uchar;
 #pragma endregion
 
 #pragma region Switcher
+
+#define USE_PPL 1
 
 #if _DEBUG
 #	define USE_ASSERT 1
@@ -45,11 +49,30 @@ typedef unsigned char uchar;
 #	define __interface __declspec(novtable) struct
 #endif
 #define PURE = 0
+#define QWSTR(qstr) ((const TCHAR*)qstr.utf16())
+
+#if !USE_PPL
+#	define parallel_for_each(begin, end, func)\
+	{\
+		for (auto iter = (begin); iter != (end); ++iter)\
+										{\
+			func(*iter);
+		}\
+}
+template <class T> begin(T range) { return range.begin(); }
+template <class T> end(T range) { return range.end(); }
+#endif
 
 #pragma endregion
 
 #include "Vector2.hpp"
 #include "enumations.h"
+
+#if USE_PPL
+#	include <ppl.h>
+#	include <concurrent_vector.h>
+using namespace Concurrency;
+#endif
 
 #pragma region Interfaces
 class LGraphHandle;

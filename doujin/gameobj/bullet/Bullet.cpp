@@ -33,7 +33,7 @@ void Bullet::Update()
 		m_phyData.position.y() > 480.0 ||
 		--m_life == 0)	// 消亡检查	
 	{
-		Engine.GetBullets()->Remove(this);
+		m_bValid = false;
 		return;
 	}
 

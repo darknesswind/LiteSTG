@@ -4,8 +4,11 @@
 #include "Input.h"
 #include "painting/LRender.h"
 
+LEngine* LEngine::s_pEngine = nullptr;
+
 LEngine::LEngine(void)
 {
+	s_pEngine = this;
 }
 
 
@@ -43,4 +46,10 @@ bool LEngine::LoopCheck()
 {
 	Screen.clearDrawScreen();
 	return (0 == DxLib::ProcessMessage());
+}
+
+bool LEngine::BeforeEnd()
+{
+	m_pathSet.clear();
+	return true;
 }

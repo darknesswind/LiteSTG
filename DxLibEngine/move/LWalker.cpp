@@ -37,9 +37,9 @@ LPhysicWalker* LWalker::CreatePhysicWalker()
 	return new LPhysicWalker();
 }
 
-LPathWalker* LWalker::CreatePathWalker()
+LPathWalker* LWalker::CreatePathWalker(uint id /*= 0*/)
 {
-	return new LPathWalker();
+	return new LPathWalker(id);
 }
 
 LControlledWalker* LWalker::CreateControlledWalker()

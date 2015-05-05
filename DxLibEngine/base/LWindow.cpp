@@ -26,7 +26,7 @@ bool LWindow::getIsWindowMode()
 
 void LWindow::setWindowText(const QString& sWindowText)
 {
-	CheckRes(DxLib::SetMainWindowText(sWindowText.utf16w()));
+	CheckRes(DxLib::SetMainWindowText(QWSTR(sWindowText)));
 }
 
 void LWindow::setActiveStateChangeCallBack(OnActiveStateChange pCallBack, void* pUserData)

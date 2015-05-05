@@ -2,16 +2,14 @@
 #include "LPathNodes.h"
 
 LPathNodes::LPathNodes()
+	: m_id(0)
 {
 
 }
 
 LPathNodes::~LPathNodes()
 {
-	for each (LPathNode* node in m_nodes)
-	{
-		delete node;
-	}
+	clear();
 }
 
 LPathNode* LPathNodes::AddEmptyNode(uint frames)
@@ -35,6 +33,16 @@ LSinePathNode* LPathNodes::AddSineNode(const Vector2& detla, const Vector2& scal
 	return pNode;
 }
 
+void LPathNodes::clear()
+{
+	for (auto iter = m_nodes.begin(); iter != m_nodes.end(); ++iter)
+	{
+		delete *iter;
+		*iter = nullptr;
+	}
+	m_nodes.clear();
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 LPathNode::LPathNode(uint frames)
@@ -42,7 +50,7 @@ LPathNode::LPathNode(uint frames)
 {
 }
 
-Vector2 LPathNode::exec(const Vector2& beginPos, uint curFrame)
+Vector2 LPathNode::exec(const Vector2& beginPos, uint curFrame) const
 {
 	return beginPos;
 }
@@ -56,7 +64,7 @@ LLinePathNode::LLinePathNode(const Vector2& detla, uint frames)
 	m_speed = m_detla / frames;
 }
 
-Vector2 LLinePathNode::exec(const Vector2& beginPos, uint curFrame)
+Vector2 LLinePathNode::exec(const Vector2& beginPos, uint curFrame) const
 {
 	if (curFrame < m_frames)
 		return beginPos + curFrame * m_speed;
@@ -73,20 +81,26 @@ LSinePathNode::LSinePathNode(const Vector2& detla, const Vector2& scale, uint fr
 {
 	m_fSpeed = m_detla.length() / frames;
 	m_dir = detla.radian();
+	if (0 == m_scale.x())
+		m_scale.setX(1);
+
+	m_endPos.setX(m_detla.length());
+	m_endPos.setY(m_scale.y() * Sin(m_endPos.x() / m_scale.x()));
+	m_endPos.rotate(m_dir);
 }
 
-Vector2 LSinePathNode::exec(const Vector2& beginPos, uint curFrame)
+Vector2 LSinePathNode::exec(const Vector2& beginPos, uint curFrame) const
 {
 	if (curFrame < m_frames)
 	{
 		Vector2 res;
 		res.setX(curFrame * m_fSpeed);
-		res.setY(m_scale.y() * Sin(res.x() * m_scale.x()));
+		res.setY(m_scale.y() * Sin(res.x() / m_scale.x()));
 		res.rotate(m_dir);
-		return res;
+		return beginPos + res;
 	}
 	else
 	{
-		return beginPos + m_detla;
+		return beginPos + m_endPos;
 	}
 }

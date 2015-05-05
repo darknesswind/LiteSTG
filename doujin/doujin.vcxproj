@@ -87,7 +87,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)DxLib/bin;$(OutDir);$(QTDIR)/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)DxLib/bin;$(OutDir);../Qt/lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>DxLibW_d.lib;DxDrawFunc_d.lib;Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
@@ -139,7 +139,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(SolutionDir)DxLib;$(OutDir);../Qt/lib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)DxLib/bin;$(OutDir);../Qt/lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>DxLibW.lib;DxDrawFunc.lib;Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <Profile>true</Profile>

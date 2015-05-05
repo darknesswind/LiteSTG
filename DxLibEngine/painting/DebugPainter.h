@@ -43,9 +43,15 @@ class DebugPainter
 		LPoint point1, point2;
 		LRgb color;
 	};
+#if USE_PPL
+	typedef concurrent_vector<Quadrangle> QuadrangleList;
+	typedef concurrent_vector<Circle> CircleList;
+	typedef concurrent_vector<Line> LineList;
+#else
 	typedef std::vector<Quadrangle> QuadrangleList;
 	typedef std::vector<Circle> CircleList;
 	typedef std::vector<Line> LineList;
+#endif
 
 public:
 	DebugPainter();

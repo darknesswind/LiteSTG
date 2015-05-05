@@ -40,6 +40,8 @@ StgEngine::~StgEngine(void)
 
 bool StgEngine::BeforeDxInit()
 {
+	Base::BeforeDxInit();
+
 	AppWindow.setIsWindowMode(true);
 	Screen.setGraphMode(640, 480, 32);
 	Screen.setWaitVSync(false);
@@ -49,6 +51,9 @@ bool StgEngine::BeforeDxInit()
 
 bool StgEngine::AfterDxInit()
 {
+	Base::AfterDxInit();
+
+	m_pathSet.load(L".\\resource\\data\\PathSet.xml");
 	Resource::loadPrimaryGameResource();
 	Resource::loadPlayerResource(NS_Resource::Reimu);
 
@@ -124,6 +129,8 @@ void StgEngine::checkState()
 
 bool StgEngine::BeforeEnd()
 {
+	Base::BeforeEnd();
+
 	m_spEnemys->Clear();
 	m_spPlayers->Clear();
 	m_spBullets->Clear();

@@ -45,6 +45,10 @@ void RayLaser::Update()
 	case RayCollapse:
 		if (--m_nCollapseCount)
 			t_wid = m_width * (float)m_nCollapseCount / g_nPlayTime;
+		else
+			m_state = RayStop;
+		break;
+	default:
 		break;
 	}
 }

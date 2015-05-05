@@ -22,16 +22,16 @@ void DebugInfo::Draw()
 	{
 		Painter.drawString(
 			TH_X, TH_Y,
-			QString("Player (%1, %2)").arg(pPlayer->position().x()).arg(pPlayer->position().y()).utf16w(),
+			QWSTR(QString("Player (%1, %2)").arg(pPlayer->position().x()).arg(pPlayer->position().y())),
 			LRgb::White);
 	}
 	Painter.drawString(
 		TH_X, TH_Y + TH_DY,
-		QString("Bullet: %1").arg(Engine.GetBullets()->GetCount()).utf16w(),
+		QWSTR(QString("Bullet: %1").arg(Engine.GetBullets()->GetCount())),
 		LRgb::White);
 	Painter.drawString(
 		0, 0,
-		QString::number(Engine.unifiedTimer().fps(), 'f', 2).utf16w(),
+		QWSTR(QString::number(Engine.unifiedTimer().fps(), 'f', 2)),
 		LRgb::White);
 }
 

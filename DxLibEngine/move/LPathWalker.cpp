@@ -1,10 +1,17 @@
 ﻿#include "stdafx.h"
 #include "LPathWalker.h"
+#include "LEngine.h"
 
 LPathWalker::LPathWalker()
+	: LPathWalker(0)
+{
+}
+
+LPathWalker::LPathWalker(uint id)
 	: m_curFrame(0)
 {
-	m_curNode = m_nodes.end();
+	setPath(id);
+	m_curNode = m_pPath->cend();
 }
 
 LPathWalker::~LPathWalker()
@@ -14,12 +21,12 @@ LPathWalker::~LPathWalker()
 
 void LPathWalker::nextStep(PhysicData& data)
 {
-	if (m_nodes.empty())
+	if (m_pPath->empty())
 		return;
 
-	if (m_nodes.end() == m_curNode)
+	if (m_pPath->cend() == m_curNode)
 	{
-		m_curNode = m_nodes.begin();
+		m_curNode = m_pPath->cbegin();
 		m_curFrame = 0;
 		m_nodeBegin = data.position;
 	}
@@ -33,4 +40,9 @@ void LPathWalker::nextStep(PhysicData& data)
 		m_curFrame = 0;
 		m_nodeBegin = data.position;
 	}
+}
+
+void LPathWalker::setPath(uint id)
+{
+	m_pPath = EngineBase->pathSet().getPath(id);
 }

@@ -15,7 +15,7 @@ public:
 	static IWalker* CreateWalker(WalkerType type);
 	static LWalker* CreateStableWalker();
 	static LPhysicWalker* CreatePhysicWalker();
-	static LPathWalker* CreatePathWalker();
+	static LPathWalker* CreatePathWalker(uint id = 0);
 	static LControlledWalker* CreateControlledWalker();
 	static LFollowWalker* CreateFollowWalker();
 private:

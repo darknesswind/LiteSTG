@@ -8,13 +8,15 @@ class LPathWalker : public LWalker
 {
 public:
 	LPathWalker();
+	LPathWalker(uint id);
 	~LPathWalker();
 
 	void nextStep(PhysicData& data);
+	void setPath(uint id);
 
 private:
-	LPathNodes m_nodes;
-	LPathNodes::iterator m_curNode;
+	const LPathNodes* m_pPath;
+	LPathNodes::const_iterator m_curNode;
 	Vector2 m_nodeBegin;
 	uint m_curFrame;
 };

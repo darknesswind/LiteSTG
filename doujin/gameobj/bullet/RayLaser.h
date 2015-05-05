@@ -8,9 +8,10 @@ class RayLaser : public Bullet
 {
 	enum RayState
 	{
-		RayExpand = 1,
-		RayHold = 0,
 		RayCollapse = -1,
+		RayHold = 0,
+		RayExpand = 1,
+		RayStop = 2,
 	};
 
 public:

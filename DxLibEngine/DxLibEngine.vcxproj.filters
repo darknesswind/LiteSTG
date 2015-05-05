@@ -123,6 +123,9 @@
     <ClInclude Include="move\LPathNodes.h">
       <Filter>move</Filter>
     </ClInclude>
+    <ClInclude Include="move\LPathSet.h">
+      <Filter>move</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\LEngine.cpp">
@@ -189,6 +192,9 @@
       <Filter>move</Filter>
     </ClCompile>
     <ClCompile Include="move\LPathNodes.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LPathSet.cpp">
       <Filter>move</Filter>
     </ClCompile>
   </ItemGroup>

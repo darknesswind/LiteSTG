@@ -12,6 +12,7 @@ class LBullets : public SpriteManager<Bullet>
 {
 public:
 	LBullets() = default;
+	void UpdateChildren() override;
 
 public:
 	Bullet* Add(BulletType type, IGameObject* pParent);

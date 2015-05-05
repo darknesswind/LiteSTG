@@ -23,12 +23,9 @@ public:
 		Clear();
 	}
 
-	void Update()
+	virtual void Update()
 	{
-		for each (T *pItem in m_thisList)
-		{
-			pItem->Update();
-		}
+		UpdateChildren();
 		m_thisList.remove_if([](T *pItem)
 		{
 			return !(pItem->IsValid());
@@ -40,6 +37,15 @@ public:
 		}		
 		m_removeList.clear();
 	}
+
+	virtual void UpdateChildren()
+	{
+		for each (T *pItem in m_thisList)
+		{
+			pItem->Update();
+		}
+	}
+
 	void CommitRender()
 	{
 		for each(T* pItem in m_thisList)
@@ -76,7 +82,7 @@ public:
 
 protected:
 	std::list<T*> m_thisList;
-	std::list<T*> m_removeList;
+	std::vector<T*> m_removeList;
 };
 
 #endif

@@ -1,6 +1,7 @@
 ﻿#ifndef __LPATHNODES_H__
 #define __LPATHNODES_H__
 #include "LWalker.h"
+#include <QString>
 
 class LPathNode;
 class LLinePathNode;
@@ -12,18 +13,31 @@ public:
 	LPathNodes();
 	~LPathNodes();
 
+	typedef NodeList::iterator iterator;
+	typedef NodeList::const_iterator const_iterator;
+	iterator begin() { return m_nodes.begin(); }
+	iterator end() { return m_nodes.end(); }
+	const_iterator cbegin() const { return m_nodes.cbegin(); }
+	const_iterator cend() const { return m_nodes.cend(); }
+
+	uint size() const { return m_nodes.size(); }
+	bool empty() const { return m_nodes.empty(); }
+	const QString& getName() const { return m_name; }
+	uint getID() const { return m_id; }
+
+protected:
 	LPathNode* AddEmptyNode(uint frames);
 	LLinePathNode* AddLineNode(const Vector2& detla, uint frames);
 	LSinePathNode* AddSineNode(const Vector2& detla, const Vector2& scale, uint frames);
+	void setID(uint id) { m_id = id; }
+	void setName(const QString& name) { m_name = name; }
+	void clear();
 
-	typedef NodeList::iterator iterator;
-	iterator begin() { return m_nodes.begin(); }
-	iterator end() { return m_nodes.end(); }
-	uint size() const { return m_nodes.size(); }
-	bool empty() const { return m_nodes.empty(); }
-
+	friend class LPathSet;
 private:
+	uint m_id;
 	NodeList m_nodes;
+	QString m_name;
 };
 
 // 空节点（待机）
@@ -40,7 +54,7 @@ public:
 	LPathNode(uint frames);
 	~LPathNode() = default;
 
-	virtual Vector2 exec(const Vector2& beginPos, uint curFrame);
+	virtual Vector2 exec(const Vector2& beginPos, uint curFrame) const;
 	virtual Type type() const { return EmptyNode; }
 
 	uint getFrames() const { return m_frames; }
@@ -57,7 +71,7 @@ public:
 	LLinePathNode(const Vector2& detla, uint frames);
 	~LLinePathNode() = default;
 
-	virtual Vector2 exec(const Vector2& beginPos, uint curFrame);
+	virtual Vector2 exec(const Vector2& beginPos, uint curFrame) const;
 	virtual Type type() const { return LineNode; }
 
 private:
@@ -72,12 +86,13 @@ public:
 	LSinePathNode(const Vector2& detla, const Vector2& scale, uint frames);
 	~LSinePathNode() = default;
 
-	virtual Vector2 exec(const Vector2& beginPos, uint curFrame);
+	virtual Vector2 exec(const Vector2& beginPos, uint curFrame) const;
 	virtual Type type() const { return SineNode; }
 
 private:
 	Vector2	m_detla;
 	Vector2	m_scale;
+	Vector2	m_endPos;
 	float	m_fSpeed;
 	Radian	m_dir;
 };

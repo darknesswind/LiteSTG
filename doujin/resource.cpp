@@ -5,24 +5,24 @@
 
 namespace NS_FileName
 {
-	const auto IMG_BG_L = _T("img\\front\\bg_left.png");
-	const auto IMG_BG_R = _T("img\\front\\bg_right.png");
-	const auto IMG_BG_T = _T("img\\front\\bg_top.png");
-	const auto IMG_BG_B = _T("img\\front\\bg_bottom.png");
+	const auto IMG_BG_L = _T("resource\\image\\front\\bg_left.png");
+	const auto IMG_BG_R = _T("resource\\image\\front\\bg_right.png");
+	const auto IMG_BG_T = _T("resource\\image\\front\\bg_top.png");
+	const auto IMG_BG_B = _T("resource\\image\\front\\bg_bottom.png");
 
-	const auto IMG_TITLE = _T("img\\title\\title.png");
-	const auto IMG_SELECT = _T("img\\title\\select.png");
+	const auto IMG_TITLE = _T("resource\\image\\title\\title.png");
+	const auto IMG_SELECT = _T("resource\\image\\title\\select.png");
 
-	const auto IMG_BULLET1 = _T("img\\bullet\\etama.png");
-	const auto IMG_BULLET2 = _T("img\\bullet\\etama2.png");
-	const auto IMG_BULLET3 = _T("img\\bullet\\etama6.png");
-	const auto IMG_BULLET4 = _T("img\\bullet\\etama9.png");
+	const auto IMG_BULLET1 = _T("resource\\image\\bullet\\etama.png");
+	const auto IMG_BULLET2 = _T("resource\\image\\bullet\\etama2.png");
+	const auto IMG_BULLET3 = _T("resource\\image\\bullet\\etama6.png");
+	const auto IMG_BULLET4 = _T("resource\\image\\bullet\\etama9.png");
 
-	const auto IMG_PLAYER0 = _T("img\\player\\pl00.png");
+	const auto IMG_PLAYER0 = _T("resource\\image\\player\\pl00.png");
 
-	const auto IMG_ENEMY = _T("img\\enemy\\enemy.png");
+	const auto IMG_ENEMY = _T("resource\\image\\enemy\\enemy.png");
 
-	const auto SOUND_MISS = _T("sound\\miss.mp3");
+	const auto SOUND_MISS = _T("resource\\sound\\miss.mp3");
 }
 using namespace NS_FileName;
 using namespace NS_Resource;
