@@ -16,10 +16,10 @@ public:
 		: Entity(Vector2(cx, cy)), halfOfWidth(halfofwidth), halfOfHeight(halfofheight){}
 
 public:
-	virtual void draw(const Vector2 &pos, Radian rad) const;
+	virtual void draw(LPainter& painter, const Vector2 &pos, Radian rad) const override;
 
 public:
-	virtual bool isCollideWithPlayer(const Vector2 &self, Radian rad) const;
+	virtual bool isCollideWithPlayer(const Vector2 &self, Radian rad) const override;
 // 	virtual bool isCollideWith(Entity* pOther) { return pOther->isCollideWith(this); }
 // 	virtual bool isCollideWith(RectEntity* pOther);
 // 	virtual bool isCollideWith(CircleEntity* pOther);

@@ -11,17 +11,17 @@ LPathWalker::LPathWalker(uint id)
 	: m_curFrame(0)
 {
 	setPath(id);
-	m_curNode = m_pPath->cend();
+	if (m_pPath)
+		m_curNode = m_pPath->cend();
 }
 
 LPathWalker::~LPathWalker()
 {
-
 }
 
 void LPathWalker::nextStep(PhysicData& data)
 {
-	if (m_pPath->empty())
+	if (!m_pPath || m_pPath->empty())
 		return;
 
 	if (m_pPath->cend() == m_curNode)
@@ -44,5 +44,5 @@ void LPathWalker::nextStep(PhysicData& data)
 
 void LPathWalker::setPath(uint id)
 {
-	m_pPath = EngineBase->pathSet().getPath(id);
+	m_pPath = LEngine::engine()->pathSet().getPath(id);
 }

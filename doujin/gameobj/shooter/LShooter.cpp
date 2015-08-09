@@ -1,11 +1,10 @@
 #include "stdafx.h"
 #include "LShooter.h"
 #include "Globle.h"
-#include "Bullet/Bullet.h"
-#include <cmath>
-#include "player/player.h"
 #include "Engine.h"
 #include "move/LFollowWalker.h"
+#include "player/player.h"
+#include "bullet/LBullets.h"
 
 LShooter::LShooter(IGameObject* pParent /*= nullptr*/)
 	: LGameObject(pParent)
@@ -29,7 +28,9 @@ void LShooter::baseInit()
 	pWalker->SetTarget(m_pParent);
 	m_spWalker.reset(pWalker);
 
+#if USE_FASTFUNC
 	funcList[0] = timerFunc(this, &LShooter::Fun_test);
+#endif
 }
 
 void LShooter::Update()
@@ -39,7 +40,7 @@ void LShooter::Update()
 	{
 		m_counter = 0;
 		if (m_bFollowPlayer)
-			m_fireDegree = position().degreeBetween(Engine.GetActivePlayer()->position());
+			m_fireDegree = position().degreeBetween(StgEngine::engine()->GetActivePlayer()->position());
 
 		m_fireDegree += m_angleSpeed;
 		m_angleSpeed += m_angleAccel;
@@ -49,7 +50,7 @@ void LShooter::Update()
 		angle = m_fireDegree - ((m_fireRange - m_angleIncrease) / 2);
 		for (int i = 0; i < m_fireWays; ++i)
 		{
-			Bullet *pBullet = Engine.GetBullets()->AddGenericBullet(this);
+			Bullet *pBullet = StgEngine::bullets()->AddGenericBullet(this);
 			pBullet->setStyle(m_bulletStyle);
 			pBullet->setData(m_bulletData);
 			pBullet->setSpeed(m_bulletSpeed, angle);

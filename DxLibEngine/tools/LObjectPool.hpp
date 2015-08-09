@@ -93,7 +93,7 @@ protected:
 			if (nOffset >= 0 && nOffset < g_chunkSize)
 				return i;
 		}
-		return -1;
+		return (uint)-1;
 	}
 
 

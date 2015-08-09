@@ -27,6 +27,11 @@ namespace NS_FileName
 using namespace NS_FileName;
 using namespace NS_Resource;
 
+Resource::Resource()
+{
+
+}
+
 #pragma region 静态成员定义
 int Resource::frameBackground[4];
 int Resource::soundEffect[1];

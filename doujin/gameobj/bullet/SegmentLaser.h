@@ -17,7 +17,7 @@ public:
 	}
 	virtual ~SegmentLaser(){delete m_pMutableEntity;}
 	virtual void Update();
-	virtual void Draw();
+	virtual void Draw(LPainter& painter);
 	virtual BulletType GetType() const { return BulletType::SegmentLaser; }
 
 	SegmentLaser& setLength(float length);

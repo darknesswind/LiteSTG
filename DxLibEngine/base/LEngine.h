@@ -4,8 +4,8 @@
 
 #include "LUnifiedTimer.h"
 #include "move/LPathSet.h"
-#define EngineBase LEngine::s_pEngine
 
+class LRender;
 class LEngine
 {
 public:
@@ -17,19 +17,27 @@ public:
 	LPathSet& pathSet() { return m_pathSet; }
 
 public:
-	virtual bool BeforeDxInit() { return true; }
-	virtual bool AfterDxInit() { return true; }
+	virtual void BeforeDxInit() { }
+	virtual void AfterDxInit() { }
 	virtual bool LoopCheck();
-	virtual bool MainLoop() = 0;
-	virtual bool BeforeEnd();
+	virtual bool NeedUpdate();
+	virtual void Update() = 0;
+	virtual void Draw() = 0;
+	virtual void BeforeEnd();
 
 public:
+	static LEngine* engine() { return s_pEngine; }
+	static LRender* render() { return s_pEngine->m_spRender.get(); }
+
+protected:
 	static LEngine* s_pEngine;
 
 protected:
 	LUnifiedTimer m_centerTimer;
 	LPathSet m_pathSet;
+	bool m_bDebugPause;
 
+	std::auto_ptr<LRender> m_spRender;
 };
 
 #endif

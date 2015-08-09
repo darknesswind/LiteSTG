@@ -35,7 +35,7 @@ LSinePathNode* LPathNodes::AddSineNode(const Vector2& detla, const Vector2& scal
 
 void LPathNodes::clear()
 {
-	for (auto iter = m_nodes.begin(); iter != m_nodes.end(); ++iter)
+	for (NodeList::iterator iter = m_nodes.begin(); iter != m_nodes.end(); ++iter)
 	{
 		delete *iter;
 		*iter = nullptr;

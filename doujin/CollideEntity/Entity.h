@@ -5,6 +5,7 @@
 class RectEntity;
 class CircleEntity;
 class ElipseEntity;
+class LPainter;
 
 class Entity	// Åö×²ÊµÌå
 {
@@ -28,7 +29,7 @@ public:
 // 	virtual bool isCollideWith(ElipseEntity* pOther) const = 0;
 
 public:
-	virtual void draw(const Vector2 &pos, Radian rad) const = 0;
+	virtual void draw(LPainter& painter, const Vector2 &pos, Radian rad) const = 0;
 
 public:
 	Vector2 center;

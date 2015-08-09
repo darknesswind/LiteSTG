@@ -6,14 +6,6 @@
 #include "interdef.h"
 #include "Factory/EntityFactory.h"
 
-enum class BulletType
-{
-	Generic,
-	SegmentLaser,
-	RayLaser,
-	CurveLaser,
-};
-
 class Entity;
 
 // 子弹的类
@@ -30,10 +22,10 @@ public:
 	void	operator delete[](void*) = delete;
 
 public: // IGameObjBase
-	virtual void	Update();
-	virtual void	Draw();
-	virtual void	DrawHitBox();
-	virtual const LGraphHandle GetGraphHandle() const;
+	virtual void	Update() override;
+	virtual void	Draw(LPainter& painter) override;
+	virtual void	DrawHitBox(LPainter& painter) override;
+	virtual const LGraphHandle GetGraphHandle() const override;
 
 public: // Bullet
 	virtual BulletType GetType() const { return BulletType::Generic; }
@@ -89,7 +81,7 @@ protected:
 
 	MyTimer mytimer;
 	std::vector<timerFunc> m_funcList;
-	std::auto_ptr<IWalker> m_spWalker;
+	destory_ptr<IWalker> m_spWalker;
 	const Entity* m_pEntity;	
 };
 

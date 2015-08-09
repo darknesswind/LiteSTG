@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QDebug>
+#include "LPathNodes.h"
 
 #define CheckCurPath()\
 {\
@@ -14,9 +15,10 @@
 
 LPathSet::LPathSet()
 {
-	LPathNodes& path = m_paths[0];
-	path.setID(0);
-	path.setName("NULL");
+	LPathNodes* pPath = new LPathNodes();
+	m_paths[0] = pPath;
+	pPath->setID(0);
+	pPath->setName("NULL");
 }
 
 LPathSet::~LPathSet()
@@ -57,13 +59,18 @@ const LPathNodes* LPathSet::getPath(uint id)
 {
 	auto iter = m_paths.find(id);
 	if (iter != m_paths.end())
-		return &iter->second;
+		return iter->second;
 	else
 		return nullptr;
 }
 
 void LPathSet::clear()
 {
+	for (auto iter = m_paths.begin(); iter != m_paths.end(); ++iter)
+	{
+		delete iter->second;
+		iter->second = nullptr;
+	}
 	m_paths.clear();
 }
 
@@ -133,10 +140,11 @@ void LPathSet::parsePath(QXmlStreamReader& reader)
 	QXmlStreamAttributes& attr = reader.attributes();
 	uint id = attr.value("id").toUInt();
 
-	LPathNodes& path = m_paths[id];
-	path.setID(id);
-	path.setName(attr.value("name").toString());
-	m_pReadingPath = &path;
+	m_pReadingPath = new LPathNodes();
+	m_paths[id] = m_pReadingPath;
+
+	m_pReadingPath->setID(id);
+	m_pReadingPath->setName(attr.value("name").toString());
 }
 
 void LPathSet::parseEmptyNode(QXmlStreamReader& reader)

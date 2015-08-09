@@ -16,7 +16,7 @@ typedef unsigned char uchar;
 
 #pragma region Switcher
 
-#define USE_PPL 1
+#define USE_PPL 0
 
 #if _DEBUG
 #	define USE_ASSERT 1
@@ -51,16 +51,19 @@ typedef unsigned char uchar;
 #define PURE = 0
 #define QWSTR(qstr) ((const TCHAR*)qstr.utf16())
 
-#if !USE_PPL
+#if USE_PPL
+#	define parallel_begin(range)	begin(range)
+#	define parallel_end(range)		end(range)
+#else
 #	define parallel_for_each(begin, end, func)\
 	{\
 		for (auto iter = (begin); iter != (end); ++iter)\
-										{\
-			func(*iter);
+		{\
+			func(*iter);\
 		}\
-}
-template <class T> begin(T range) { return range.begin(); }
-template <class T> end(T range) { return range.end(); }
+	}
+#	define parallel_begin(range)	(range).begin()
+#	define parallel_end(range)		(range).end()
 #endif
 
 #pragma endregion
@@ -74,15 +77,47 @@ template <class T> end(T range) { return range.end(); }
 using namespace Concurrency;
 #endif
 
+template <class T>
+class destory_ptr
+{
+	typedef destory_ptr<T> _ThisType;
+public:
+	destory_ptr(T* _ptr = nullptr) : m_ptr(_ptr) {}
+	~destory_ptr() { if (m_ptr) m_ptr->destory(); }
+
+	destory_ptr(const _ThisType& other) = delete;
+	void operator=(const _ThisType& other) = delete;
+
+	T& operator*() { return *m_ptr; }
+	T* operator->() { return m_ptr; }
+	operator T*() { return m_ptr; }
+
+	void reset(T* _ptr = nullptr)
+	{
+		if (m_ptr) m_ptr->destory();
+		m_ptr = _ptr;
+	}
+
+private:
+	T* m_ptr;
+};
+
 #pragma region Interfaces
 class LGraphHandle;
+class LPainter;
 struct RenderArgument;
 struct PhysicData;
 
-__interface IDrawable
+// 禁止直接用接口调用 delete
+__interface IDestructible
 {
-	virtual void Draw() PURE;
-	virtual void DrawHitBox() PURE;
+	virtual void destory() PURE;
+};
+
+__interface IDrawable /*: public IDestructible*/
+{
+	virtual void Draw(LPainter& painter) PURE;
+	virtual void DrawHitBox(LPainter& painter) PURE;
 };
 
 __interface IDrawableObj : public IDrawable
@@ -91,7 +126,7 @@ __interface IDrawableObj : public IDrawable
 	virtual const RenderArgument& GetRenderArgument() const PURE;
 };
 
-__interface IWalker
+__interface IWalker : public IDestructible
 {
 	virtual void nextStep(PhysicData& data) PURE;
 };

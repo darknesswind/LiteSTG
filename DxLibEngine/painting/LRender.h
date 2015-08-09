@@ -6,7 +6,7 @@
 #include <unordered_map>
 
 // #define __RenderQueueTest__
-#define Render LRender::Instance()
+
 class LRender
 {
 public:
@@ -16,12 +16,11 @@ public:
 public:
 	void DoRender();
 	void PushItem(IDrawableObj* pItem);
+	LPainter& GetPainter() { return m_painter; }
 
-	static LRender& Instance()
-	{
-		static LRender instance;
-		return instance;
-	}
+private:
+	LRender(const LRender& other) = delete;
+	void operator=(const LRender& other) = delete;
 
 private:
 	typedef std::vector<IDrawableObj*> RenderItems;
@@ -36,6 +35,7 @@ private:
 	RenderQueue2 m_renderQueue;
 #endif
 
+	LPainter m_painter;
 };
 
 #endif // !__LRENDER_H__

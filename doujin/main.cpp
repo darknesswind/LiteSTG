@@ -8,5 +8,6 @@ int WINAPI WinMain(
 	_In_ int nShowCmd
 	)
 {
-	return Engine.exec();
+	StgEngine engine;
+	return engine.exec();
 }

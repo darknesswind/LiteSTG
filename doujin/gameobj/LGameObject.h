@@ -5,16 +5,16 @@ class LGameObject : public IGameObject
 {
 public:
 	LGameObject(IGameObject* pParent = nullptr);
-	virtual ~LGameObject() = 0 {}
+	virtual ~LGameObject() {}
 
 public: // IGameObject
-	virtual void	DrawHitBox();
-	virtual bool	IsValid() const			{ return m_bValid; }
-	virtual void	SetValid(bool bValid)	{ m_bValid = bValid; }
-	virtual const LGraphHandle GetGraphHandle() const;
-	virtual const RenderArgument& GetRenderArgument() const { return m_renderArg; }
-	virtual IGameObject* GetParent()		{ return m_pParent; }
-	virtual const Vector2& GetPosition()	{ return m_phyData.position; }
+	virtual void	DrawHitBox(LPainter& painter) override;
+	virtual bool	IsValid() const	override			{ return m_bValid; }
+	virtual void	SetValid(bool bValid) override		{ m_bValid = bValid; }
+	virtual const LGraphHandle GetGraphHandle() const override;
+	virtual const RenderArgument& GetRenderArgument() const override { return m_renderArg; }
+	virtual IGameObject* GetParent() override			{ return m_pParent; }
+	virtual const Vector2& GetPosition() override		{ return m_phyData.position; }
 
 public:
 	const RenderArgument& renderArg() const { return m_renderArg; }

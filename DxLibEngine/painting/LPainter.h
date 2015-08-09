@@ -7,8 +7,6 @@
 #include "DebugPainter.h"
 #include <stack>
 
-#define Painter LPainter::Instance
-
 #pragma region pre-define
 class PosType;
 class LImage;
@@ -19,7 +17,6 @@ using DxLib::VERTEX2D;
 class LPainter
 {
 public:
-	static LPainter Instance;
 	~LPainter();
 	
 public:	// 几何图形绘制函数
@@ -137,10 +134,11 @@ public:
 
 private:
 	LPainter();
+	friend class LRender;
 
 private:
-	DeleteFunc(LPainter(const LPainter&));			// delete
-	DeleteFunc(void operator=(const LPainter&));	// delete
+	LPainter(const LPainter&) = delete;
+	void operator=(const LPainter&) = delete;
 
 private:
 	std::stack<PaintArgument> m_argStack;

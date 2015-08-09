@@ -7,7 +7,7 @@
 
 bool CircleEntity::isCollideWithPlayer(const Vector2 &self, Radian rad) const
 {
-	Player* pPlayer = Engine.GetActivePlayer();
+	Player* pPlayer = StgEngine::engine()->GetActivePlayer();
 	Vector2 VectorB2A = pPlayer->position() - self;
 	CircleEntity* playEntity = (CircleEntity*)pPlayer->getEntity();
 
@@ -23,7 +23,7 @@ bool CircleEntity::isCollideWithPlayer(const Vector2 &self, Radian rad) const
 	return len < sum*sum;
 }
 
-void CircleEntity::draw(const Vector2 &pos, Radian rad) const
+void CircleEntity::draw(LPainter& painter, const Vector2 &pos, Radian rad) const
 {
 	Vector2 target = pos - center.rotated(rad);
 	DebugPat.AddCircle(target.x(), target.y(), r, LRgb::White);

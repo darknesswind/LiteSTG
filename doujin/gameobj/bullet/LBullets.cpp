@@ -50,7 +50,7 @@ CurveLaser* LBullets::AddCurveLaser(IGameObject* pParent)
 
 void LBullets::UpdateChildren()
 {
-	parallel_for_each(begin(m_thisList), end(m_thisList), [](Bullet* pItem)
+	parallel_for_each(parallel_begin(m_thisList), parallel_end(m_thisList), [](Bullet* pItem)
 	{
 		pItem->Update();
 	});

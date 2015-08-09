@@ -6,8 +6,13 @@ typedef unsigned int uint;
 typedef int GraphHandle;
 typedef int SoundHandle;
 
-// enum BulletType {B_TLaser, B_Scale, B_SPellet, B_SPellet2, B_Rice, B_Chain, B_Needle, B_Letter, B_Bullet, B_BlackRice, B_Star
-// 	,B_BigStar, B_MPellet, B_Butterfly, B_Sword, B_Ellipse, B_LPellet};
+enum class BulletType
+{
+	Generic,
+	SegmentLaser,
+	RayLaser,
+	CurveLaser,
+};
 
 enum BulletClass : unsigned int
 {

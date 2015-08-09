@@ -1,6 +1,7 @@
 ﻿#ifndef _SPRITEMANAGE_H_
 #define _SPRITEMANAGE_H_
 #pragma once
+#include "LEngine.h"
 #include "LRender.h"
 
 #define QuickImplGameObjAdd(Type)	\
@@ -50,7 +51,7 @@ public:
 	{
 		for each(T* pItem in m_thisList)
 		{
-			Render.PushItem(pItem);
+			LEngine::render()->PushItem(pItem);
 		}
 	}
 

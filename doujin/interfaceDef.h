@@ -2,10 +2,10 @@
 #define __INTERFACE_DEFINE__
 #include "interdef.h"
 
-__interface IComponent // 组件基类
+interface IComponent // 组件基类
 {
 	virtual void Update() PURE;
-	virtual void Draw() PURE;
+	virtual void Draw(LPainter& painter) PURE;
 };
 
 __interface IAnimateAtom

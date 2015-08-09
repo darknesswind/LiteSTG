@@ -4,8 +4,6 @@
 #include "LPoint.h"
 #include "Vector2.hpp"
 
-LPainter LPainter::Instance;
-
 LPainter::LPainter()
 {
 }

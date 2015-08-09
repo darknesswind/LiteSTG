@@ -34,6 +34,11 @@ protected:
 	void clear();
 
 	friend class LPathSet;
+
+private:
+	LPathNodes(const LPathNodes& other) = delete;
+	void operator=(const LPathNodes& other) = delete;
+
 private:
 	uint m_id;
 	NodeList m_nodes;
@@ -71,8 +76,8 @@ public:
 	LLinePathNode(const Vector2& detla, uint frames);
 	~LLinePathNode() = default;
 
-	virtual Vector2 exec(const Vector2& beginPos, uint curFrame) const;
-	virtual Type type() const { return LineNode; }
+	virtual Vector2 exec(const Vector2& beginPos, uint curFrame) const override;
+	virtual Type type() const override { return LineNode; }
 
 private:
 	Vector2 m_speed;	// 速度
@@ -86,8 +91,8 @@ public:
 	LSinePathNode(const Vector2& detla, const Vector2& scale, uint frames);
 	~LSinePathNode() = default;
 
-	virtual Vector2 exec(const Vector2& beginPos, uint curFrame) const;
-	virtual Type type() const { return SineNode; }
+	virtual Vector2 exec(const Vector2& beginPos, uint curFrame) const override;
+	virtual Type type() const override { return SineNode; }
 
 private:
 	Vector2	m_detla;

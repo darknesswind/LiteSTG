@@ -2,20 +2,21 @@
 #include "ComManage.h"
 #include "Globle.h"
 #include "interfaceDef.h"
+#include "LRender.h"
 
 void ComManager::Update()
 {
 	for each(auto *i in thisList)
 	{
 		i->Update();
-	}	
+	}
 }
 
 void ComManager::Draw() const
 {	
 	for each(auto *i in thisList)
 	{
-		i->Draw();
+		i->Draw(StgEngine::render()->GetPainter());
 	}
 }
 

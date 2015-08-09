@@ -18,8 +18,8 @@ void LRender::DoRender()
 	for (RenderQueue::iterator iterChannel = m_renderQueue.begin();
 		iterChannel != m_renderQueue.end(); ++iterChannel)
 	{
-		Painter.save();
-		Painter.setPaintArgument(iterChannel->first.paintArg);
+		m_painter.save();
+		m_painter.setPaintArgument(iterChannel->first.paintArg);
 
 		RenderImages& imgs = iterChannel->second;
 		for (RenderImages::iterator iterImg = imgs.begin();
@@ -29,10 +29,10 @@ void LRender::DoRender()
 			for (RenderItems::iterator iterItem = items.begin();
 				iterItem != items.end(); ++iterItem)
 			{
-				(*iterItem)->Draw();
+				(*iterItem)->Draw(m_painter);
 			}
 		}
-		Painter.restore();
+		m_painter.restore();
 	}
 #else
 	for (RenderQueue2::iterator iterChannel = m_renderQueue.begin();
@@ -47,12 +47,12 @@ void LRender::DoRender()
 			for (RenderItems::iterator iterItem = items.begin();
 				iterItem != items.end(); ++iterItem)
 			{
-				Painter.save();
-				Painter.setPaintArgument((*iterItem)->GetRenderArgument().paintArg);
+				m_painter.save();
+				m_painter.setPaintArgument((*iterItem)->GetRenderArgument().paintArg);
 
-				(*iterItem)->Draw();
+				(*iterItem)->Draw(TODO);
 
-				Painter.restore();
+				m_painter.restore();
 
 			}
 		}

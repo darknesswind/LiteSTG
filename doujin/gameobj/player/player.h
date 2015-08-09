@@ -17,8 +17,8 @@ public:
 	virtual ~Player(void);
 
 public:	// IGameobj
-	virtual void	Update();
-	virtual void	Draw();
+	virtual void Update() override;
+	virtual void Draw(LPainter& painter) override;
 
 public:	// Player
 	virtual PlayerType GetType() const { return PlayerType::Void; }
@@ -27,7 +27,7 @@ public:
 	const CircleEntity* getEntity() const { return m_entity; }
 
 protected:
-	std::auto_ptr<IWalker> m_spWalker;
+	destory_ptr<IWalker> m_spWalker;
 	const CircleEntity* m_entity;
 };
 #endif

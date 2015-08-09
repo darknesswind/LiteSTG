@@ -9,8 +9,8 @@ class LWalker : public IWalker
 {
 public:
 	LWalker() = default;
-	virtual ~LWalker() {}
-	virtual void nextStep(PhysicData& data);
+	virtual void destory() override { delete this; }
+	virtual void nextStep(PhysicData& data) override;
 
 	static IWalker* CreateWalker(WalkerType type);
 	static LWalker* CreateStableWalker();
@@ -18,7 +18,9 @@ public:
 	static LPathWalker* CreatePathWalker(uint id = 0);
 	static LControlledWalker* CreateControlledWalker();
 	static LFollowWalker* CreateFollowWalker();
-private:
+
+protected:
+	virtual ~LWalker() {}
 
 };
 

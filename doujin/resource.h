@@ -74,5 +74,6 @@ private:
 	static GraphHandle hBulletImg[18][16];
 	static GraphHandle hEffect[8];
 
+	int __dummy;
 };
 #endif

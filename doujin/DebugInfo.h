@@ -13,7 +13,7 @@ public:
 	virtual ~DebugInfo(void) {}
 
 	virtual void Update();
-	virtual void Draw();
+	virtual void Draw(LPainter& painter);
 
 private:
 };

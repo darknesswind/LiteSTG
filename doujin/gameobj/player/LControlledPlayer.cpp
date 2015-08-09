@@ -87,21 +87,21 @@ void LControlledPlayer::Update()
 	m_counter++;
 }
 
-void LControlledPlayer::Draw()
+void LControlledPlayer::Draw( LPainter& painter )
 {
-	Painter.drawRotaGraphF(m_phyData.position, 1, Radian0, LImage(GetGraphHandle()), true);
+	painter.drawRotaGraphF(m_phyData.position, 1, Radian0, LImage(GetGraphHandle()), true);
 	if (Input.isKeyDown(Keys::LShift))
 	{
-		Painter.setDrawMode(DxDrawMode::Bilinear);
-		Painter.drawRotaGraphF(m_phyData.position, 1, -m_phyData.radian, LImage(Resource::hitBox()), true);
-		Painter.drawRotaGraphF(m_phyData.position, 1, m_phyData.radian, LImage(Resource::hitBox()), true);
-		Painter.setDrawMode(DxDrawMode::Nearest);
+		painter.setDrawMode(DxDrawMode::Bilinear);
+		painter.drawRotaGraphF(m_phyData.position, 1, -m_phyData.radian, LImage(Resource::hitBox()), true);
+		painter.drawRotaGraphF(m_phyData.position, 1, m_phyData.radian, LImage(Resource::hitBox()), true);
+		painter.setDrawMode(DxDrawMode::Nearest);
 	}
 }
 
-void LControlledPlayer::DrawHitBox()
+void LControlledPlayer::DrawHitBox( LPainter& painter )
 {
-	m_entity->draw(m_phyData.position, Radian0);
+	m_entity->draw(painter, m_phyData.position, Radian0);
 }
 
 const LGraphHandle LControlledPlayer::GetGraphHandle() const

@@ -1,7 +1,9 @@
+#include <memory>
 #include <map>
 #include <unordered_map>
 #include <vector>
 #include <list>
 #include <deque>
+#include <cmath>
 #include "typedef.h"
-#include "Manager/MemoryManager.h"
+#include "Engine.h"

@@ -10,19 +10,17 @@ public:
 	virtual ~LControlledPlayer(void);
 	
 public:	// IGameobj
-	virtual void	Update();
-	virtual void	Draw();
-	virtual void	DrawHitBox();
-	virtual const LGraphHandle GetGraphHandle() const;
+	virtual void	Update() override;
+	virtual void	Draw(LPainter& painter) override;
+	virtual void	DrawHitBox(LPainter& painter) override;
+	virtual const LGraphHandle GetGraphHandle() const override;
 
 public:	// Player
-	virtual PlayerType GetType() const { return PlayerType::Controlled; }
+	virtual PlayerType GetType() const override { return PlayerType::Controlled; }
 
 public:
 
 private:
-	std::auto_ptr<IWalker> m_spWalker;
-
 	int m_CharacterID;
 	int m_imgCount;
 	int m_counter;

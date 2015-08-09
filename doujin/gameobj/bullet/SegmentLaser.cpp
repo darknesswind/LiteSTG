@@ -26,10 +26,10 @@ void SegmentLaser::Update()
 	}
 }
 
-void SegmentLaser::Draw()
+void SegmentLaser::Draw( LPainter& painter )
 {
-	Painter.drawExtRotaGraph(m_phyData.position, 0.5f, m_curScale, m_phyData.radian + Radian90, LImage(Resource::bullet(m_style)), true);
-	m_pEntity->draw(m_phyData.position, m_phyData.radian + Radian90);
+	painter.drawExtRotaGraph(m_phyData.position, 0.5f, m_curScale, m_phyData.radian + Radian90, LImage(Resource::bullet(m_style)), true);
+	m_pEntity->draw(painter, m_phyData.position, m_phyData.radian + Radian90);
 }
 
 SegmentLaser& SegmentLaser::setLength(float length)

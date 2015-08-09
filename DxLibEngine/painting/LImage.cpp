@@ -3,7 +3,6 @@
 #include "DxHandle.h"
 
 LImage::LImage(void)
-	: m_handle(0)
 {
 }
 
@@ -13,7 +12,7 @@ LImage::LImage( int width, int height, bool bNotUse3D /*= false*/ )
 	LAssert(m_handle);
 }
 
-LImage::LImage(const TCHAR* FileName, bool bNotUse3D /*= false*/)
+LImage::LImage(LPCWSTR FileName, bool bNotUse3D /*= false*/)
 {
 	m_handle = DxLib::LoadGraph(FileName, bNotUse3D);
 	LAssert(m_handle);

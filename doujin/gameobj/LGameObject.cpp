@@ -9,7 +9,7 @@ LGameObject::LGameObject(IGameObject* pParent /*= nullptr*/)
 
 }
 
-void LGameObject::DrawHitBox()
+void LGameObject::DrawHitBox( LPainter& painter )
 {
 
 }

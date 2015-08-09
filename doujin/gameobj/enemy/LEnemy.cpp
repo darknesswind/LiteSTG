@@ -41,10 +41,10 @@ void LEnemy::Update()
 	m_spShooters->Update();
 }
 
-void LEnemy::Draw()
+void LEnemy::Draw( LPainter& painter )
 {
-	Painter.drawRotaGraphF(m_phyData.position, 1, Radian0, Resource::enemy(m_enemyStyle, m_imgCount), true, m_bFace);
-	Painter.drawString(m_phyData.position, QWSTR(QString("%1, %2").arg(m_phyData.position.x()).arg(m_phyData.position.y())), LRgb::White);
+	painter.drawRotaGraphF(m_phyData.position, 1, Radian0, Resource::enemy(m_enemyStyle, m_imgCount), true, m_bFace);
+	painter.drawString(m_phyData.position, QWSTR(QString("%1, %2").arg(m_phyData.position.x()).arg(m_phyData.position.y())), LRgb::White);
 }
 
 const LGraphHandle LEnemy::GetGraphHandle() const

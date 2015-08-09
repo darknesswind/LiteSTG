@@ -1,9 +1,9 @@
 #ifndef _SHOOTER_H_
 #define _SHOOTER_H_
 #pragma once
+#include "interdef.h"
 #include "LGameObject.h"
 #include "MyTimer.h"
-#include "interdef.h"
 
 enum class ShooterType
 {
@@ -22,7 +22,7 @@ public:
 
 public:
 	virtual void Update();
-	virtual void Draw(){}
+	virtual void Draw(LPainter& painter){}
 
 public:
 	LShooter& setFireWays(int _ways)	// 设置射击路数
@@ -96,7 +96,7 @@ protected:
 	Degree m_fireDegree;		// 发射中心角度
 
 	// shooter data
-	std::auto_ptr<IWalker> m_spWalker;
+	destory_ptr<IWalker> m_spWalker;
 	int m_life;				// 生存时间
 	Degree m_fireRange;		// 发射角范围 Degree
 	Degree m_angleSpeed;	// 角速度

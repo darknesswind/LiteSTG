@@ -1,7 +1,6 @@
 #pragma once
 #include "Entity.h"
-class CircleEntity :
-	public Entity
+class CircleEntity : public Entity
 {
 public:
 	CircleEntity(float r)
@@ -15,9 +14,11 @@ public:
 
 	~CircleEntity(void){}
 
-	bool isCollideWithPlayer(const Vector2 &self, Radian) const;
-	void draw(const Vector2 &pos, Radian rad) const;
+public: // Entity
+	virtual bool isCollideWithPlayer(const Vector2 &self, Radian) const override;
+	virtual void draw(LPainter& painter, const Vector2 &pos, Radian rad) const override;
 
+public:
 	const float radius() const { return r; }
 
 private:

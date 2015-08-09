@@ -1,7 +1,7 @@
 ﻿#ifndef __LPATHSET_H__
 #define __LPATHSET_H__
 
-#include "LPathNodes.h"
+class LPathNodes;
 class QXmlStreamReader;
 class QXmlStreamAttributes;
 class LPathSet
@@ -36,7 +36,7 @@ private:
 	static std::map<QString, PathNodeID> s_parser;
 
 private:
-	std::unordered_map<uint, LPathNodes> m_paths;
+	std::unordered_map<uint, LPathNodes*> m_paths;
 
 	LPathNodes* m_pReadingPath = nullptr;
 };

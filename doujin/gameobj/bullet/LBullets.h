@@ -8,6 +8,7 @@
 class SegmentLaser;
 class RayLaser;
 class CurveLaser;
+class Bullet;
 class LBullets : public SpriteManager<Bullet>
 {
 public:

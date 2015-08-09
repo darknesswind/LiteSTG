@@ -18,7 +18,7 @@ public:
 	RayLaser(IGameObject* pParent);
 	~RayLaser();
 
-	virtual void Draw();
+	virtual void Draw(LPainter& painter);
 	virtual void Update();
 	virtual BulletType GetType() const { return BulletType::RayLaser; }
 

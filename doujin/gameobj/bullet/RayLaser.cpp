@@ -53,14 +53,14 @@ void RayLaser::Update()
 	}
 }
 
-void RayLaser::Draw()
+void RayLaser::Draw( LPainter& painter )
 {
 	LImage imgBullet(GetGraphHandle());
 	int bulletWidth = imgBullet.width();
 	bulletWidth /= 16;
-	Painter.drawExtRotaGraph(m_phyData.position, t_wid, m_length, m_phyData.radian + Radian90, imgBullet, turnFlag);
-	Painter.drawRotaGraphF(m_phyData.position, bulletWidth * t_wid, Radian0, LImage(Resource::laserEffect((m_style.color + 15) & 0x7/*%8*/)), true);
+	painter.drawExtRotaGraph(m_phyData.position, t_wid, m_length, m_phyData.radian + Radian90, imgBullet, turnFlag);
+	painter.drawRotaGraphF(m_phyData.position, bulletWidth * t_wid, Radian0, LImage(Resource::laserEffect((m_style.color + 15) & 0x7/*%8*/)), true);
 
-	m_pEntity->draw(m_phyData.position, m_phyData.radian + Radian90);
+	m_pEntity->draw(painter, m_phyData.position, m_phyData.radian + Radian90);
 }
 

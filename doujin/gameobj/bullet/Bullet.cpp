@@ -10,6 +10,7 @@
 #include "LPainter.h"
 #include "LImage.h"
 #include "move/LPhysicWalker.h"
+#include "Manager/MemoryManager.h"
 
 Bullet::Bullet(IGameObject* pParent)
 	: LGameObject(pParent)
@@ -18,9 +19,10 @@ Bullet::Bullet(IGameObject* pParent)
 {
 	m_spWalker.reset(LWalker::CreatePhysicWalker());
 	m_pEntity = EntityFactory::getBulletEntity(m_style.type);
+#if USE_FASTFUNC
 	m_funcList.push_back(timerFunc(this, &Bullet::Fun_test));
 	m_funcList.push_back(timerFunc(this, &Bullet::Fun_turnToPlayer));
-
+#endif
 	m_renderArg.uDepth = DepthBullet;
 	m_renderArg.paintArg.drawMode = DxDrawMode::Bilinear;
 }
@@ -49,14 +51,14 @@ void Bullet::Update()
 #endif // _DEBUG
 }
 
-void Bullet::Draw()
+void Bullet::Draw( LPainter& painter )
 {
-	Painter.drawRotaGraphF(m_phyData.position, 1, m_phyData.radian + Radian90, LImage(GetGraphHandle()), true);
+	painter.drawRotaGraphF(m_phyData.position, 1, m_phyData.radian + Radian90, LImage(GetGraphHandle()), true);
 }
 
-void Bullet::DrawHitBox()
+void Bullet::DrawHitBox( LPainter& painter )
 {
-	m_pEntity->draw(m_phyData.position, m_phyData.radian + Radian90);
+	m_pEntity->draw(painter, m_phyData.position, m_phyData.radian + Radian90);
 }
 
 void Bullet::setData(const PhysicData& data)
@@ -67,12 +69,12 @@ void Bullet::setData(const PhysicData& data)
 
 void Bullet::Fun_test(int &_counter)
 {
-	setAcceleration(0.02f, degreeBetween(*Engine.GetActivePlayer()));
+	setAcceleration(0.02f, degreeBetween(*StgEngine::engine()->GetActivePlayer()));
 	_counter = 1;
 }
 void Bullet::Fun_turnToPlayer(int &_counter)
 {
-	setSpeed(m_phyData.speed.length(), degreeBetween(*Engine.GetActivePlayer()));
+	setSpeed(m_phyData.speed.length(), degreeBetween(*StgEngine::engine()->GetActivePlayer()));
 }
 
 void* Bullet::operator new(size_t size)

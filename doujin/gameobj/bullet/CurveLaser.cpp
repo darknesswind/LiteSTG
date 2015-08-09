@@ -46,7 +46,7 @@ void CurveLaser::Update()
 		m_grids.pop_back();
 }
 
-void CurveLaser::Draw()
+void CurveLaser::Draw( LPainter& painter )
 {
 	if (m_grids.size() <= 1)
 		return;
@@ -75,10 +75,10 @@ void CurveLaser::Draw()
 		i += 2;
 	}
 
-	// 	Painter.setDrawBlendMode(DxBlendMode::Add, 100);
-//  	Painter.setDrawMode(DxDrawMode::Bilinear);
-	Painter.drawPrimitive2D(vertexs, 2 * g_MaxGridSize, PrimitiveType::TriangleStrip, Resource::bullet(BulletStyle(曲线激光)), true);
-//  	Painter.setDrawMode(DxDrawMode::Nearest);
-	// 	Painter.setDrawBlendMode(DxBlendMode::NoBlend, 0);
+// 	painter.setDrawBlendMode(DxBlendMode::Add, 100);
+//  painter.setDrawMode(DxDrawMode::Bilinear);
+	painter.drawPrimitive2D(vertexs, 2 * g_MaxGridSize, PrimitiveType::TriangleStrip, Resource::bullet(BulletStyle(曲线激光)), true);
+//  painter.setDrawMode(DxDrawMode::Nearest);
+// 	painter.setDrawBlendMode(DxBlendMode::NoBlend, 0);
 }
 

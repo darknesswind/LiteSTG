@@ -1,6 +1,5 @@
 #include "stdafx.h"
-#include "Engine.h"
-#include "DxLib.h"
+
 // NewEngineinc
 #include "LWindow.h"
 #include "LScreen.h"
@@ -12,12 +11,11 @@
 #include "resource.h"
 #include "ui/menu/GameMenu.h"
 #include "ui/stage/baseFrame.h"
+
 #include "bullet/LBullets.h"
 #include "player/LPlayers.h"
+#include "enemy/LEnemys.h"
 
-#include "player/player.h"
-
-#include "bullet/Bullet.h"
 // DEBUG
 #include "enemy/LEnemy.h"
 #include "Factory/ShooterFactory.h"
@@ -25,12 +23,9 @@
 DebugInfo debugInfo;
 // _DEBUG
 
-BaseFrame baseFrame;
-StgEngine StgEngine::Instance;
 
 StgEngine::StgEngine(void)
-	: pGameMenu(nullptr)
-	, m_bDebugPause(false)
+	: LEngine()
 {
 }
 
@@ -38,7 +33,7 @@ StgEngine::~StgEngine(void)
 {
 }
 
-bool StgEngine::BeforeDxInit()
+void StgEngine::BeforeDxInit()
 {
 	Base::BeforeDxInit();
 
@@ -46,10 +41,9 @@ bool StgEngine::BeforeDxInit()
 	Screen.setGraphMode(640, 480, 32);
 	Screen.setWaitVSync(false);
 	AppWindow.setRunWhenDeactivate(true);
-	return true;
 }
 
-bool StgEngine::AfterDxInit()
+void StgEngine::AfterDxInit()
 {
 	Base::AfterDxInit();
 
@@ -63,51 +57,51 @@ bool StgEngine::AfterDxInit()
 
 	m_spComManage.reset(new ComManager);
 
-	pGameMenu = new GameMenu;
+	m_spGameMenu.reset(new GameMenu);
 
 	m_bDebugPause = false;
 
-	m_spComManage->push_back(pGameMenu);
-
-	return true;
+	m_spComManage->push_back(m_spGameMenu.get());
 }
 
 bool StgEngine::LoopCheck()
 {
-	return Base::LoopCheck() &&
-		Input.update() &&
-		!endflag;
+	if (!Base::LoopCheck())
+		return false;
+
+	if (!Input.update())
+		return false;
+
+	return !endflag;
 }
 
-bool StgEngine::MainLoop()
+void StgEngine::Update()
 {
 	//timeCount = GetNowCount();
-#ifdef _DEBUG
-	if (Input.isKeyPress(Keys::F9))
-		m_bDebugPause = !m_bDebugPause;
-	if (!m_bDebugPause || (Input.isKeyPress(Keys::F10) || Input.isKeyDown(Keys::F11)))
-#endif
-	{
-		m_spEnemys->Update();
-		m_spPlayers->Update();
-		m_spBullets->Update();
-		m_spComManage->Update();
-		debugInfo.Update();
-	}
 
+	m_spEnemys->Update();
+	m_spPlayers->Update();
+	m_spBullets->Update();
+	m_spComManage->Update();
+	debugInfo.Update();
+
+	if (isStateChange)
+		checkState();
+}
+
+void StgEngine::Draw()
+{
 	m_spEnemys->CommitRender();
 	m_spBullets->CommitRender();
 	m_spPlayers->CommitRender();
 	m_spComManage->Draw();
 
-	debugInfo.Draw();
-
-	if (isStateChange) checkState();
-	return true;
+	debugInfo.Draw(StgEngine::render()->GetPainter());
 }
 
 void StgEngine::checkState()
 {
+	static 	BaseFrame baseFrame;
 	switch (gameState)
 	{
 	case GAMESTATE_START:
@@ -127,14 +121,13 @@ void StgEngine::checkState()
 	isStateChange = false;
 }
 
-bool StgEngine::BeforeEnd()
+void StgEngine::BeforeEnd()
 {
-	Base::BeforeEnd();
-
 	m_spEnemys->Clear();
 	m_spPlayers->Clear();
 	m_spBullets->Clear();
-	return true;
+
+	Base::BeforeEnd();
 }
 
 Player* StgEngine::GetActivePlayer()

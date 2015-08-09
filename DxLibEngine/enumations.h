@@ -1,5 +1,6 @@
 ﻿#ifndef __ENUMATIONS_H__
 #define __ENUMATIONS_H__
+
 #include "DxLib.h"
 
 enum class WalkerType
@@ -51,12 +52,12 @@ enum class DxDrawMode
 // 图元类型
 enum class PrimitiveType
 {
-	PointList		= DxLib::D_D3DPT_POINTLIST,			// 点集
-	LineList		= DxLib::D_D3DPT_LINELIST,			// 线段集
-	LineStrip		= DxLib::D_D3DPT_LINESTRIP,			// 连续线段
-	TriangleList	= DxLib::D_D3DPT_TRIANGLELIST,		// 三角形集
-	TriangleStrip	= DxLib::D_D3DPT_TRIANGLESTRIP,		// 连续三角形
-	TriangleFan		= DxLib::D_D3DPT_TRIANGLEFAN,		// 
+	PointList		= DX_PRIMTYPE_POINTLIST,			// 点集
+	LineList		= DX_PRIMTYPE_LINELIST,			// 线段集
+	LineStrip		= DX_PRIMTYPE_LINESTRIP,			// 连续线段
+	TriangleList	= DX_PRIMTYPE_TRIANGLELIST,		// 三角形集
+	TriangleStrip	= DX_PRIMTYPE_TRIANGLESTRIP,		// 连续三角形
+	TriangleFan		= DX_PRIMTYPE_TRIANGLEFAN,		// 
 };
 
 enum RenderDepthBase

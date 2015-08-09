@@ -8,7 +8,7 @@
 
 bool ElipseEntity::isCollideWithPlayer(const Vector2 &self, Radian rad) const
 {
-	Player* pPlayer = Engine.GetActivePlayer();
+	Player* pPlayer = StgEngine::engine()->GetActivePlayer();
 	CircleEntity* playEntity = (CircleEntity*)pPlayer->getEntity();
 
 	const float &r = playEntity->radius();
@@ -30,7 +30,7 @@ bool ElipseEntity::isCollideWithPlayer(const Vector2 &self, Radian rad) const
 	return true;
 }
 
-void ElipseEntity::draw(const Vector2 &pos, Radian rad) const
+void ElipseEntity::draw(LPainter& painter, const Vector2 &pos, Radian rad) const
 {
-	Painter.drawOval(pos.x() + center.x(), pos.y() + center.y(), rx, ry, LRgb32::White, 0);
+	painter.drawOval(pos.x() + center.x(), pos.y() + center.y(), rx, ry, LRgb32::White, 0);
 }

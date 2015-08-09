@@ -3,12 +3,12 @@
 #pragma once
 
 #include "LEngine.h"
-#include "bullet/LBullets.h"
-#include "player/LPlayers.h"
-#include "enemy/LEnemys.h"
-#define Engine StgEngine::Instance
 
 #pragma region pre-define
+class LBullets;
+class LPlayers;
+class LEnemys;
+class Player;
 class GameMenu;
 class ComManager;
 typedef ComManager LCharacters;
@@ -18,14 +18,20 @@ class StgEngine : public LEngine
 {
 public:
 	typedef LEngine Base;
+	StgEngine(void);
 	~StgEngine(void);
 
 public:
-	virtual bool BeforeDxInit();
-	virtual bool AfterDxInit();
-	virtual bool LoopCheck();
-	virtual bool MainLoop();
-	virtual bool BeforeEnd();
+	virtual void BeforeDxInit() override;
+	virtual void AfterDxInit() override;
+	virtual bool LoopCheck() override;
+	virtual void Update() override;
+	virtual void Draw() override;
+	virtual void BeforeEnd() override;
+
+public:
+	static StgEngine* engine() { return static_cast<StgEngine*>(s_pEngine); }
+	static LBullets* bullets() { return engine()->GetBullets(); }
 
 public:
 	LBullets* GetBullets() { return m_spBullets.get(); }
@@ -33,8 +39,8 @@ public:
 public:
 	Player* GetActivePlayer();
 
-public:
-	static StgEngine Instance;
+private:
+	void checkState();
 
 protected:
 	std::auto_ptr<LBullets> m_spBullets;
@@ -43,11 +49,8 @@ protected:
 	std::auto_ptr<ComManager> m_spComManage;
 
 private:
-	StgEngine(void);
-	void checkState();
+	std::auto_ptr<GameMenu> m_spGameMenu;
 
-	GameMenu *pGameMenu;
-	bool m_bDebugPause;
 };
 
 #endif

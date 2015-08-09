@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "LRayShooter.h"
 #include "Globle.h"
-#include "DxLib.h"
 #include "painting/LPainter.h"
+#include "player/player.h"
+#include "bullet/LBullets.h"
 #include "Bullet/RayLaser.h"
 #include "Engine.h"
 
@@ -41,8 +42,21 @@ void LRayShooter::Update()
 	}
 }
 
-void LRayShooter::Draw()
+void LRayShooter::Draw( LPainter& painter )
 {
+	switch (m_currState)
+	{
+	case LRayShooter::None:
+		break;
+	case LRayShooter::Warning:
+		// 	DrawExtRotaGraph(Pos(), 0.1f, 70, (lineDir).direction() + L_PID2, Resource::bullet(bulletType, bulletColor));
+		painter.drawLine(position(), position() + m_warningLine, LRgb::White);
+		break;
+	case LRayShooter::Shooting:
+		break;
+	default:
+		break;
+	}
 }
 
 void LRayShooter::ChangeState(State targetState)
@@ -68,7 +82,7 @@ void LRayShooter::EntryShootingState()
 	Degree angle = m_fireDegree - ((m_fireRange - m_angleIncrease) / 2);
 	for (int i = 0; i < m_fireWays; ++i)
 	{
-		RayLaser* pLaser = Engine.GetBullets()->AddRayLaser(this);
+		RayLaser* pLaser = StgEngine::bullets()->AddRayLaser(this);
 		pLaser->SetLife(m_durationTime);
 		pLaser->setPosition(position());
 		pLaser->setStyle(bulletStyle());
@@ -105,11 +119,9 @@ void LRayShooter::ExecWarning()
 {
 	if (m_bFollowPlayer)
 	{
-		Radian rad = position().radianBetween(Engine.GetActivePlayer()->position());
+		Radian rad = position().radianBetween(StgEngine::engine()->GetActivePlayer()->position());
 		m_warningLine.InitFromPolar(600, rad);
 	}
-	// 	DrawExtRotaGraph(Pos(), 0.1f, 70, (lineDir).direction() + L_PID2, Resource::bullet(bulletType, bulletColor));
-	Painter.drawLine(position(), position() + m_warningLine, LRgb::White);
 
 	if (--m_counter == 0)
 	{

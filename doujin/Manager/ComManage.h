@@ -32,8 +32,8 @@ protected:
 	std::list<IComponent*> thisList;
 
 private:
-	ComManager(const ComManager&);
-	ComManager& operator=(const ComManager&);
+	ComManager(const ComManager&) = delete;
+	ComManager& operator=(const ComManager&) = delete;
 };
 
 #endif

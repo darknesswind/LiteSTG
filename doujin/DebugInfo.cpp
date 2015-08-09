@@ -4,7 +4,7 @@
 #include "shooter/LShooter.h"
 #include "player/player.h"
 #include "Engine.h"
-#include "bullet/Bullet.h"
+#include "bullet/LBullets.h"
 #include "LPainter.h"
 #include "QString"
 #include "Input.h"
@@ -15,23 +15,23 @@
 #define TH_Y 15
 #define TH_DY 15
 
-void DebugInfo::Draw()
+void DebugInfo::Draw( LPainter& painter )
 {
-	Player* pPlayer = Engine.GetActivePlayer();
+	Player* pPlayer = StgEngine::engine()->GetActivePlayer();
 	if (pPlayer)
 	{
-		Painter.drawString(
+		painter.drawString(
 			TH_X, TH_Y,
 			QWSTR(QString("Player (%1, %2)").arg(pPlayer->position().x()).arg(pPlayer->position().y())),
 			LRgb::White);
 	}
-	Painter.drawString(
+	painter.drawString(
 		TH_X, TH_Y + TH_DY,
-		QWSTR(QString("Bullet: %1").arg(Engine.GetBullets()->GetCount())),
+		QWSTR(QString("Bullet: %1").arg(StgEngine::bullets()->GetCount())),
 		LRgb::White);
-	Painter.drawString(
+	painter.drawString(
 		0, 0,
-		QWSTR(QString::number(Engine.unifiedTimer().fps(), 'f', 2)),
+		QWSTR(QString::number(StgEngine::engine()->unifiedTimer().fps(), 'f', 2)),
 		LRgb::White);
 }
 

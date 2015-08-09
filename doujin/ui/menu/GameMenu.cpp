@@ -19,15 +19,15 @@ GameMenu::~GameMenu(void)
 {
 }
 
-void GameMenu::Draw()
+void GameMenu::Draw( LPainter& painter )
 {
 	using namespace NS_Resource;
 
-	Painter.drawGraph(0, 0, LImage(Resource::title(Title_BG)), false);
-	Painter.drawBox(410, 50 + 32 * menuSelect, 602, 82 + 32 * menuSelect, 0xffff, true);
+	painter.drawGraph(0, 0, LImage(Resource::title(Title_BG)), false);
+	painter.drawBox(410, 50 + 32 * menuSelect, 602, 82 + 32 * menuSelect, 0xffff, true);
 	for (int i = 0; i < MENU_SELECT_NUM; ++i)
 	{
-		Painter.drawGraph(410, 50 + 32 * i, LImage(Resource::TitleSelection(i)), true);
+		painter.drawGraph(410, 50 + 32 * i, LImage(Resource::TitleSelection(i)), true);
 	}	
 }
 

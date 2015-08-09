@@ -8,7 +8,7 @@
 
 bool RectEntity::isCollideWithPlayer(const Vector2 &self, Radian rad) const
 {
-	Player* pPlayer = Engine.GetActivePlayer();
+	Player* pPlayer = StgEngine::engine()->GetActivePlayer();
 	CircleEntity* playEntity = (CircleEntity*)pPlayer->getEntity();
 
 	float r = playEntity->radius();
@@ -31,13 +31,13 @@ bool RectEntity::isCollideWithPlayer(const Vector2 &self, Radian rad) const
 	return true;
 }
 
-void RectEntity::draw(const Vector2 &pos, Radian rad) const
+void RectEntity::draw(LPainter& painter, const Vector2 &pos, Radian rad) const
 {
 	Vector2 vLTop = pos + leftTop().rotate(rad);
 	Vector2 vRTop = pos + rightTop().rotate(rad);
 	Vector2 vRBottom = pos + rightBottom().rotate(rad);
 	Vector2 vLBottom = pos + leftBottom().rotate(rad);
-	Painter.drawQuadrangle(vLTop, vRTop, vRBottom, vLBottom, LRgb::Red, false);
+	painter.drawQuadrangle(vLTop, vRTop, vRBottom, vLBottom, LRgb::Red, false);
 }
 
 // bool RectEntity::isCollideWith(RectEntity* pOther)

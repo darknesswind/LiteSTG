@@ -9,7 +9,7 @@ class GameMenu : public IComponent
 public:
 	GameMenu(void);
 	~GameMenu(void);
-	virtual void Draw();
+	virtual void Draw(LPainter& painter);
 	virtual void Update();
 
 private:

@@ -12,8 +12,9 @@ public:
 	ElipseEntity(float rx, float ry, float cx = 0, float cy = 0)
 		: Entity(Vector2(cx, cy)), rx(rx), ry(ry){}
 
-	bool isCollideWithPlayer(const Vector2 &self, Radian rad) const;
-	void draw(const Vector2 &pos, Radian rad) const;
+public:
+	virtual bool isCollideWithPlayer(const Vector2 &self, Radian rad) const override;
+	virtual void draw(LPainter& painter, const Vector2 &pos, Radian rad) const override;
 
 protected:
 	float rx;

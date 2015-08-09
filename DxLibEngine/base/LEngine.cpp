@@ -7,10 +7,13 @@
 LEngine* LEngine::s_pEngine = nullptr;
 
 LEngine::LEngine(void)
+	: m_bDebugPause(false)
 {
+	LAssert(!s_pEngine);
 	s_pEngine = this;
-}
 
+	m_spRender.reset(new LRender());
+}
 
 LEngine::~LEngine(void)
 {
@@ -31,15 +34,22 @@ int LEngine::exec()
 	m_centerTimer.start();
 	while (LoopCheck())
 	{
+#ifdef _DEBUG
+		if (Input.isKeyPress(Keys::F9))
+			m_bDebugPause = !m_bDebugPause;
+#endif
 		m_centerTimer.update();
-		if (!MainLoop())
-			break;
+		if (NeedUpdate())
+			Update();
 
-		Render.DoRender();
+		Draw();
+
+		render()->DoRender();
 		Screen.screenFlip();
 	}
 
-	return BeforeEnd();
+	BeforeEnd();
+	return 0;
 }
 
 bool LEngine::LoopCheck()
@@ -48,8 +58,19 @@ bool LEngine::LoopCheck()
 	return (0 == DxLib::ProcessMessage());
 }
 
-bool LEngine::BeforeEnd()
+bool LEngine::NeedUpdate()
+{
+#ifdef _DEBUG
+	if (!m_bDebugPause)
+		return true;
+
+	if (Input.isKeyPress(Keys::F10) || Input.isKeyDown(Keys::F11))
+		return true;
+#endif
+	return false;
+}
+
+void LEngine::BeforeEnd()
 {
 	m_pathSet.clear();
-	return true;
 }
