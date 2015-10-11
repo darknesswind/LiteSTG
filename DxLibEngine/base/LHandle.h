@@ -47,18 +47,20 @@ class LHandle
 		TypeOffset		= 26,				// 有效值偏移量
 		MaxType			= 32,				// 最大type数
 		
-		ErrorMask		= 0x80000000,		// エラーチェックマスク( ０ではなかったらエラー )
+		ErrorMask		= 0x80000000,		// Error Check Mask( ０ではなかったらエラー )
 	};
 
 public:
+	LHandle() : m_handle(0) {}
 	LHandle(int hHandle)
 		: m_handle(hHandle)
 	{
 	}
-	operator int() const { return m_handle; }
+	operator int() const { LAssert(!empty()); return m_handle; }
 	bool operator< (const LHandle& rhs) const { return m_handle < rhs.m_handle; }
 
 public:
+	bool empty() const { return !m_handle; }
 	bool hasError() const { return m_handle & ErrorMask; }
 	uint index() const { return m_handle & IndexMask; }
 	DxHandleType type() const 
@@ -66,7 +68,7 @@ public:
 		return (DxHandleType)((m_handle & TypeMask) >> TypeOffset);
 	}
 
-	bool checkValid(DxHandleType targetType) const;
+	bool checkValidType(DxHandleType targetType) const;
 	const DxLib::HANDLEINFO* innerData() const;
 
 protected:

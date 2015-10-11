@@ -96,7 +96,7 @@ protected:
 	Degree m_fireDegree;		// 发射中心角度
 
 	// shooter data
-	destory_ptr<IWalker> m_spWalker;
+	std::auto_ptr<IWalker> m_spWalker;
 	int m_life;				// 生存时间
 	Degree m_fireRange;		// 发射角范围 Degree
 	Degree m_angleSpeed;	// 角速度

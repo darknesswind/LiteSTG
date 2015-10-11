@@ -21,8 +21,7 @@ LEnemy::LEnemy(IGameObject* pParent, int _enemyStyle)
 	m_imgCount = 0;
 	m_bFace = true;
 
-	LPathWalker* pWalker = LWalker::CreatePathWalker(1);
-	m_spWalker.reset(pWalker);
+	m_spWalker.reset(LWalker::CreatePathWalker(1));
 }
 
 LEnemy::~LEnemy(void)

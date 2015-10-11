@@ -5,7 +5,7 @@
 class LFollowWalker : public LWalker
 {
 public:
-	LFollowWalker();
+	LFollowWalker(IGameObject* pTarget);
 	~LFollowWalker();
 	void SetTarget(IGameObject* pGameObj);
 

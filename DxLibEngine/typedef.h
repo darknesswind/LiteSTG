@@ -50,6 +50,7 @@ typedef unsigned char uchar;
 #endif
 #define PURE = 0
 #define QWSTR(qstr) ((const TCHAR*)qstr.utf16())
+#define WQSTR(wstr) (QString::fromUtf16((const ushort*)(wstr)))
 
 #if USE_PPL
 #	define parallel_begin(range)	begin(range)
@@ -108,13 +109,12 @@ class LPainter;
 struct RenderArgument;
 struct PhysicData;
 
-// 禁止直接用接口调用 delete
 __interface IDestructible
 {
 	virtual void destory() PURE;
 };
 
-__interface IDrawable /*: public IDestructible*/
+__interface IDrawable
 {
 	virtual void Draw(LPainter& painter) PURE;
 	virtual void DrawHitBox(LPainter& painter) PURE;
@@ -126,18 +126,18 @@ __interface IDrawableObj : public IDrawable
 	virtual const RenderArgument& GetRenderArgument() const PURE;
 };
 
-__interface IWalker : public IDestructible
+__interface IWalker
 {
 	virtual void nextStep(PhysicData& data) PURE;
 };
 
 __interface IGameObject : public IDrawableObj
 {
-	virtual void Update() PURE;
-	virtual bool IsValid() const PURE;
-	virtual void SetValid(bool bValid) PURE;
-	virtual IGameObject* GetParent() PURE;
-	virtual const Vector2& GetPosition() PURE;
+	virtual void			Update()				PURE;
+	virtual bool			IsValid() const			PURE;
+	virtual void			SetValid(bool bValid)	PURE;
+	virtual IGameObject*	GetParent()				PURE;
+	virtual const Vector2&	GetPosition()			PURE;
 };
 #pragma endregion
 

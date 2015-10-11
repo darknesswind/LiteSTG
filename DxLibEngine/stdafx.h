@@ -6,3 +6,4 @@
 #include <QString>
 
 #include "typedef.h"
+#include "tools/LLogger.h"

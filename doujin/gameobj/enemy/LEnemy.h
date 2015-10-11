@@ -20,7 +20,7 @@ public:
 
 private:
 	std::auto_ptr<LShooters> m_spShooters;
-	destory_ptr<IWalker> m_spWalker;
+	std::auto_ptr<IWalker> m_spWalker;
 
 	bool m_bFace;
 	int m_counter;

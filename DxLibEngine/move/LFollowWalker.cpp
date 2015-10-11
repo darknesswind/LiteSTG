@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
 #include "LFollowWalker.h"
 
-LFollowWalker::LFollowWalker()
-	: m_pTarget(nullptr)
+LFollowWalker::LFollowWalker(IGameObject* pTarget)
+	: m_pTarget(pTarget)
 {
 
 }

@@ -95,7 +95,8 @@ void Bullet::operator delete(void* pObject, size_t size)
 
 void Bullet::setWalkerType(WalkerType type)
 {
-	m_spWalker.reset(LWalker::CreateWalker(type));
+	LAssert(!"Not Impl");
+// 	m_spWalker.reset(LWalker::CreateWalker(type));
 }
 
 void Bullet::setBulletClass(const BulletClass type)

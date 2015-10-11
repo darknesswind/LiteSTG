@@ -1,26 +1,22 @@
 ﻿#ifndef __LWALKER_H__
 #define __LWALKER_H__
 
-class LPhysicWalker;
-class LPathWalker;
-class LControlledWalker;
-class LFollowWalker;
 class LWalker : public IWalker
 {
 public:
 	LWalker() = default;
-	virtual void destory() override { delete this; }
+	virtual ~LWalker() {}
+
 	virtual void nextStep(PhysicData& data) override;
 
-	static IWalker* CreateWalker(WalkerType type);
 	static LWalker* CreateStableWalker();
-	static LPhysicWalker* CreatePhysicWalker();
-	static LPathWalker* CreatePathWalker(uint id = 0);
-	static LControlledWalker* CreateControlledWalker();
-	static LFollowWalker* CreateFollowWalker();
+	static LWalker* CreatePhysicWalker();
+	static LWalker* CreatePathWalker(uint id = 0);
+	static LWalker* CreateControlledWalker();
+	static LWalker* CreateFollowWalker(IGameObject* pTarget);
 
 protected:
-	virtual ~LWalker() {}
+	static LWalker* CreateWalker(WalkerType type);	// 不建议用
 
 };
 

@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "LPathSet.h"
+#include "LAssets.h"
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QDebug>
@@ -42,16 +43,7 @@ bool LPathSet::load(LPCWSTR lpFile)
 	if (!lpFile)
 		return false;
 	setupParseMap();
-
-	QString sFile = QString::fromUtf16((const ushort*)lpFile);
-	QFile file(sFile);
-	if (!file.open(QFile::ReadOnly))
-	{
-		qDebug() << file.errorString();
-		return false;
-	}
-
-	QXmlStreamReader reader(&file);
+	QXmlStreamReader reader(LAssets::LoadRawData(lpFile));
 	return parse(reader);
 }
 

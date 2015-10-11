@@ -3,6 +3,7 @@
 #include "LScreen.h"
 #include "Input.h"
 #include "painting/LRender.h"
+#include "LAssets.h"
 
 LEngine* LEngine::s_pEngine = nullptr;
 
@@ -12,12 +13,19 @@ LEngine::LEngine(void)
 	LAssert(!s_pEngine);
 	s_pEngine = this;
 
-	m_spRender.reset(new LRender());
+	m_spRender = std::make_unique<LRender>();
+	m_spAssets = std::make_unique<LAssets>();
 }
 
 LEngine::~LEngine(void)
 {
 	DxLib::DxLib_End();
+}
+
+void LEngine::AfterDxInit()
+{
+	m_spAssets->LoadTextureList(L"resource\\data\\texture.csv");
+	m_spAssets->LoadSoundEffectList(L"resource\\data\\se.csv");
 }
 
 int LEngine::exec()
@@ -61,13 +69,15 @@ bool LEngine::LoopCheck()
 bool LEngine::NeedUpdate()
 {
 #ifdef _DEBUG
-	if (!m_bDebugPause)
-		return true;
-
-	if (Input.isKeyPress(Keys::F10) || Input.isKeyDown(Keys::F11))
-		return true;
+	if (m_bDebugPause)
+	{
+		if (Input.isKeyPress(Keys::F10) || Input.isKeyDown(Keys::F11))
+			return true;
+		else
+			return false;
+	}
 #endif
-	return false;
+	return true;
 }
 
 void LEngine::BeforeEnd()

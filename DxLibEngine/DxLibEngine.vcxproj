@@ -101,6 +101,7 @@
     <ClInclude Include="base\LEngine.h" />
     <ClInclude Include="base\LHandle.h" />
     <ClInclude Include="base\LMath.h" />
+    <ClInclude Include="base\LAssets.h" />
     <ClInclude Include="base\LScreen.h" />
     <ClInclude Include="base\LWindow.h" />
     <ClInclude Include="enumations.h" />
@@ -117,11 +118,15 @@
     <ClInclude Include="painting\LRender.h" />
     <ClInclude Include="painting\LRgb.h" />
     <ClInclude Include="tools\Angle.h" />
-    <ClInclude Include="tools\CsvReader.h" />
+    <ClInclude Include="tools\CsvReader.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="tools\EmbeddedList.h" />
     <ClInclude Include="tools\EnumHandle.hpp" />
     <ClInclude Include="tools\FastFunc.hpp" />
     <ClInclude Include="tools\Input.h" />
+    <ClInclude Include="tools\LLogger.h" />
     <ClInclude Include="tools\LMessageBox.h" />
     <ClInclude Include="tools\LObjectPool.hpp" />
     <ClInclude Include="tools\LUnifiedTimer.h" />
@@ -135,6 +140,7 @@
     <ClCompile Include="base\LEngine.cpp" />
     <ClCompile Include="base\LHandle.cpp" />
     <ClCompile Include="base\LMath.cpp" />
+    <ClCompile Include="base\LAssets.cpp" />
     <ClCompile Include="base\LScreen.cpp" />
     <ClCompile Include="base\LWindow.cpp" />
     <ClCompile Include="move\LControlledWalker.cpp" />
@@ -152,8 +158,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="tools\CsvReader.cpp" />
+    <ClCompile Include="tools\CsvReader.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="tools\Input.cpp" />
+    <ClCompile Include="tools\LLogger.cpp" />
     <ClCompile Include="tools\LMessageBox.cpp" />
     <ClCompile Include="tools\LUnifiedTimer.cpp" />
     <ClCompile Include="tools\LPoint.cpp" />

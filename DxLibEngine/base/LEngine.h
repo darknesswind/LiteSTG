@@ -6,6 +6,7 @@
 #include "move/LPathSet.h"
 
 class LRender;
+class LAssets;
 class LEngine
 {
 public:
@@ -18,7 +19,7 @@ public:
 
 public:
 	virtual void BeforeDxInit() { }
-	virtual void AfterDxInit() { }
+	virtual void AfterDxInit();
 	virtual bool LoopCheck();
 	virtual bool NeedUpdate();
 	virtual void Update() = 0;
@@ -28,6 +29,7 @@ public:
 public:
 	static LEngine* engine() { return s_pEngine; }
 	static LRender* render() { return s_pEngine->m_spRender.get(); }
+	static LAssets* assets() { return s_pEngine->m_spAssets.get(); }
 
 protected:
 	static LEngine* s_pEngine;
@@ -37,7 +39,8 @@ protected:
 	LPathSet m_pathSet;
 	bool m_bDebugPause;
 
-	std::auto_ptr<LRender> m_spRender;
+	std::unique_ptr<LRender> m_spRender;
+	std::unique_ptr<LAssets> m_spAssets;
 };
 
 #endif

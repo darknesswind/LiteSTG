@@ -4,7 +4,7 @@
 
 LGraphHandle LGraphHandle::NoneGraph;
 
-bool LHandle::checkValid(DxHandleType targetType) const
+bool LHandle::checkValidType(DxHandleType targetType) const
 {
 	bool bAsync = true;
 	DxLib::HANDLEMANAGE& manage = DxLib::HandleManageArray[(uint)targetType];
@@ -27,6 +27,6 @@ bool LHandle::checkValid(DxHandleType targetType) const
 
 const DxLib::HANDLEINFO* LHandle::innerData() const
 {
-	LAssert(checkValid(type()));
+	LAssert(checkValidType(type()));
 	return DxLib::HandleManageArray[(uint)type()].Handle[index()];
 }

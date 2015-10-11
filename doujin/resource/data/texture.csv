@@ -1,0 +1,13 @@
+﻿路径,名称（默认为不带扩展名的文件名，禁重复）
+resource\image\front\bg_left.png,
+resource\image\front\bg_right.png,
+resource\image\front\bg_top.png,
+resource\image\front\bg_bottom.png,
+resource\image\title\title.png,
+resource\image\title\select.png,
+resource\image\bullet\etama.png,
+resource\image\bullet\etama2.png,
+resource\image\bullet\etama6.png,
+resource\image\bullet\etama9.png,
+resource\image\player\pl00.png,
+resource\image\enemy\enemy.png,

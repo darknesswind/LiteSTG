@@ -11,7 +11,7 @@
 
 LControlledPlayer::LControlledPlayer(int x, int y)
 {
-	m_spWalker.reset(LWalker::CreateWalker(WalkerType::Controlled));
+	m_spWalker.reset(LWalker::CreateControlledWalker());
 	m_phyData.position.Init(x, y);
 
 	m_actionState = 5;

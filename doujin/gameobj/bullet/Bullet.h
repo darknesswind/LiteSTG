@@ -81,7 +81,7 @@ protected:
 
 	MyTimer mytimer;
 	std::vector<timerFunc> m_funcList;
-	destory_ptr<IWalker> m_spWalker;
+	std::auto_ptr<IWalker> m_spWalker;
 	const Entity* m_pEntity;	
 };
 
