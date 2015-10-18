@@ -17,10 +17,10 @@ public:
 	~LLogger();
 
 public:
-	static void Print(const QString& msg, LogLevel level);
-	static void PrintInfo(const QString& msg);
-	static void PrintWarning(const QString& msg);
-	static void PrintError(const QString& msg);
+	static void Print(LogLevel level, const QString& msg);
+	static void PrintInfo(const QString& msg) { Print(Info, msg); };
+	static void PrintWarning(const QString& msg) { Print(Warning, msg); };
+	static void PrintError(const QString& msg) { Print(Error, msg); };
 
 private:
 

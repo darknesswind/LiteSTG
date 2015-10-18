@@ -18,7 +18,9 @@ public:
 	void insertRow(LCsvRowData row);
 
 	size_t getRowCount() const { return m_data.size(); }
-	QString getData(int row, int col) const;
+	LCsvRowData& getRow(int i) { return m_data[i]; }
+	QString getString(int row, int col) const;
+	int getInt(int row, int col, int def = 0) const;
 
 private:
 	LCsvTable(const LCsvTable&) = delete;
@@ -29,15 +31,34 @@ private:
 };
 typedef std::shared_ptr<LCsvTable> LCsvTablePtr;
 
-
 class LAssets
 {
+#pragma region Structs
 	struct LAssetData
 	{
 		QString path;
 		LHandle handle;
 	};
+	struct LSubGraphInfo
+	{
+		QString ref;
+		int xSrc;
+		int ySrc;
+		int allNum;
+		int xNum;
+		int yNum;
+		int width;
+		int height;
+	};
+	struct LSubGraphData
+	{
+		std::vector<LSubGraphInfo> infos;
+		std::vector<LGraphHandle> handles;
+	};
+#pragma endregion
 	typedef QHash<QString, LAssetData> LNamedAssetMap;
+	typedef QHash<QString, LSubGraphData> LSubGraphAssetMap;
+// 	typedef std::unordered_map<std::wstring, LAssetData> LNamedAssetMap;
 
 public:
 	LAssets();
@@ -46,9 +67,17 @@ public:
 public:
 	void LoadTextureList(LPCWSTR lpPath);
 	void LoadSoundEffectList(LPCWSTR lpPath);
+	void LoadSubGraphicsList(LPCWSTR lpPath);
+
+public:
+	LGraphHandle GetTexture(QString name);
+	LGraphHandle GetTexture(LPCWSTR name) { return GetTexture(W2QSTR(name)); }
+	LSoundHandle GetSoundEffect(LPCWSTR name);
+	const LGraphHandles& GetSubGraphGroup(LPCWSTR name);
 
 protected:
 	void LoadAssetsList(LPCWSTR lpPath, LNamedAssetMap& map);
+	void LoadDivGraphics(LSubGraphData& data);
 
 public:
 	static QByteArray LoadRawData(LPCWSTR lpPath);
@@ -61,6 +90,10 @@ private:
 private:
 	LNamedAssetMap m_textureMap;
 	LNamedAssetMap m_seMap;
+	LSubGraphAssetMap m_subGraphics;
+
+private:
+	static LGraphHandles s_emptyGraphHandles;
 };
 
 #endif // !__LASSETS_H__

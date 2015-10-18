@@ -9,7 +9,7 @@ void LWalker::nextStep(PhysicData& data)
 {
 }
 
-LWalker* LWalker::CreateWalker(WalkerType type)
+WalkerPtr LWalker::CreateWalker(WalkerType type)
 {
 	switch (type)
 	{
@@ -27,27 +27,27 @@ LWalker* LWalker::CreateWalker(WalkerType type)
 	}
 }
 
-LWalker* LWalker::CreateStableWalker()
+WalkerPtr LWalker::CreateStableWalker()
 {
 	return new LWalker();
 }
 
-LWalker* LWalker::CreatePhysicWalker()
+WalkerPtr LWalker::CreatePhysicWalker()
 {
 	return new LPhysicWalker();
 }
 
-LWalker* LWalker::CreatePathWalker(uint id /*= 0*/)
+WalkerPtr LWalker::CreatePathWalker(uint id /*= 0*/)
 {
 	return new LPathWalker(id);
 }
 
-LWalker* LWalker::CreateControlledWalker()
+WalkerPtr LWalker::CreateControlledWalker()
 {
 	return new LControlledWalker();
 }
 
-LWalker* LWalker::CreateFollowWalker(IGameObject* pTarget)
+WalkerPtr LWalker::CreateFollowWalker(IGameObject* pTarget)
 {
 	return new LFollowWalker(pTarget);
 }

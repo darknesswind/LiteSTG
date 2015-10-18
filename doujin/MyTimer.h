@@ -40,7 +40,7 @@ public:
 			{
 				d.func(d.counter);
 			}
-		}		
+		}
 	}
 	// 装载计时器函数
 	void setup(timerFunc f, uint time)

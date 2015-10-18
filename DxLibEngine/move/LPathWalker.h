@@ -9,7 +9,7 @@ class LPathWalker : public LWalker
 public:
 	LPathWalker();
 	LPathWalker(uint id);
-	~LPathWalker() override;
+	virtual ~LPathWalker() override;
 
 	void nextStep(PhysicData& data) override;
 	void setPath(uint id);

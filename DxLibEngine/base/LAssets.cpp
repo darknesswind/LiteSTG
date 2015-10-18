@@ -3,6 +3,8 @@
 #include "LHandle.h"
 #include <QTextStream>
 
+LGraphHandles LAssets::s_emptyGraphHandles;
+
 enum DXAPriority
 {
 	dxap_PackFirst = 0,
@@ -22,16 +24,17 @@ LAssets::~LAssets()
 
 void LAssets::LoadAssetsList(LPCWSTR lpPath, LNamedAssetMap& map)
 {
+	enum param { argPath, argName };
 	static QRegExp reg("\\\\?([^\\/:*?\"|\\.]+)");
 	LCsvTablePtr pTable = LAssets::LoadCSV(lpPath);
 	// 第一行标题
 	for (size_t i = 1; i < pTable->getRowCount(); ++i)
 	{
-		QString path = pTable->getData(i, 0);
+		QString path = pTable->getString(i, argPath);
 		if (path.isEmpty())
 			continue;
 
-		QString name = pTable->getData(i, 1);
+		QString name = pTable->getString(i, argName);
 		if (name.isEmpty())
 		{
 			int nBegin = path.lastIndexOf(QRegExp("[\\\\/]"));
@@ -46,22 +49,23 @@ void LAssets::LoadAssetsList(LPCWSTR lpPath, LNamedAssetMap& map)
 
 			if (nBegin >= path.size() || nBegin > nEnd)
 			{
-				LLogger::PrintError(QString("%1(%2): Can not auto alloc name for \"%3\"")
-					.arg(WQSTR(lpPath)).arg(i).arg(path));
+				static QString msg(R"(%1(%2): Can not auto alloc name for "%3".)");
+				LLogger::PrintError(msg.arg(W2QSTR(lpPath)).arg(i).arg(path));
 				continue;
 			}
 
 			name = path.mid(nBegin, nEnd - nBegin);
-			auto iter = map.find(name);
-			if (iter != map.end())
-			{
-				LLogger::PrintWarning(QString("%1(%2): Name \"%3\" conflicted")
-					.arg(WQSTR(lpPath)).arg(i).arg(name));
-			}
-			else
-			{
-				map[name].path = path;
-			}
+		}
+
+		auto iter = map.find(name);
+		if (iter != map.end())
+		{
+			static QString msg(R"(%1(%2): Name "%3" conflicted.)");
+			LLogger::PrintWarning(msg.arg(W2QSTR(lpPath)).arg(i).arg(name));
+		}
+		else
+		{
+			map[name].path = path;
 		}
 	}
 }
@@ -74,6 +78,113 @@ void LAssets::LoadTextureList(LPCWSTR lpPath)
 void LAssets::LoadSoundEffectList(LPCWSTR lpPath)
 {
 	LoadAssetsList(lpPath, m_seMap);
+}
+
+void LAssets::LoadSubGraphicsList(LPCWSTR lpPath)
+{
+	enum param { cName, cRef, cSrcX, cSrcY, cAllNum, cRowNum, cColNum, cWidth, cHeight, ParamCount };
+	LCsvTablePtr pTable = LAssets::LoadCSV(lpPath);
+	// 第一行标题
+	for (size_t i = 1; i < pTable->getRowCount(); ++i)
+	{
+		auto& rowDat = pTable->getRow(i);
+		if (rowDat.size() != ParamCount)
+		{
+			static QString msg(R"(%1(%2): Param number Error.)");
+			LLogger::PrintError(msg.arg(W2QSTR(lpPath)).arg(i));
+			continue;
+		}
+		LAssert(!rowDat[cName].isEmpty());
+		LSubGraphData& datas = m_subGraphics[rowDat[cName]];
+
+		datas.infos.emplace_back(LSubGraphInfo());
+		LSubGraphInfo& d = datas.infos.back();
+
+		bool bOk = false;
+#define AssignIntData(name, idx) { d.name = rowDat[idx].toInt(&bOk); LAssert(bOk); }
+		d.ref = rowDat[cRef];
+		AssignIntData(xSrc, cSrcX);
+		AssignIntData(ySrc, cSrcY);
+		AssignIntData(allNum, cAllNum);
+		AssignIntData(xNum, cRowNum);
+		AssignIntData(yNum, cColNum);
+		AssignIntData(width, cWidth);
+		AssignIntData(height, cHeight);
+#undef AssignIntData
+	}
+}
+
+LGraphHandle LAssets::GetTexture(QString sName)
+{
+	auto iter = m_textureMap.find(sName);
+	if (iter == m_textureMap.end())
+	{
+		static QString msg(R"(Texture "%1" not found.)");
+		LLogger::PrintError(msg.arg(sName));
+		return LGraphHandle();
+	}
+	else
+	{
+		LAssetData& data = iter.value();
+		if (data.handle.empty())
+			data.handle = DxLib::LoadGraph(Q2WSTR(data.path));
+		return data.handle;
+	}
+}
+
+LSoundHandle LAssets::GetSoundEffect(LPCWSTR name)
+{
+	QString sName = W2QSTR(name);
+	auto iter = m_seMap.find(sName);
+	if (iter == m_seMap.end())
+	{
+		static QString msg(R"(SE "%1" not found.)");
+		LLogger::PrintError(msg.arg(sName));
+		return LGraphHandle();
+	}
+	else
+	{
+		LAssetData& data = iter.value();
+		if (data.handle.empty())
+			data.handle = DxLib::LoadGraph(Q2WSTR(data.path));
+		return data.handle;
+	}
+}
+
+const LGraphHandles& LAssets::GetSubGraphGroup(LPCWSTR name)
+{
+	QString sName = W2QSTR(name);
+	auto iter = m_subGraphics.find(sName);
+	if (iter == m_subGraphics.end())
+	{
+		static QString msg(R"(SubGraphicGroup "%1" not found.)");
+		LLogger::PrintError(msg.arg(sName));
+		return s_emptyGraphHandles;
+	}
+	else
+	{
+		LSubGraphData& data = iter.value();
+		if (data.handles.empty())
+			LoadDivGraphics(data);
+		return data.handles;
+	}
+}
+
+void LAssets::LoadDivGraphics(LSubGraphData& data)
+{
+	for each (const LSubGraphInfo& info in data.infos)
+	{
+		LGraphHandle hSrcGraph = GetTexture(info.ref);
+		for (int i = 0; i < info.allNum; ++i)
+		{
+			int srcX = info.xSrc + info.width * (i % info.xNum);
+			int srcY = info.ySrc + info.height * (i / info.xNum);
+			LGraphHandle hDivGraph = DxLib::DerivationGraph(
+				srcX, srcY, info.width, info.height, hSrcGraph);
+
+			data.handles.push_back(hDivGraph);
+		}
+	}
 }
 
 QByteArray LAssets::LoadRawData(LPCWSTR lpPath)
@@ -114,7 +225,7 @@ void LCsvTable::insertRow(LCsvRowData row)
 	m_data.push_back(row);
 }
 
-QString LCsvTable::getData(int row, int col) const
+QString LCsvTable::getString(int row, int col) const
 {
 	if ((size_t)row >= m_data.size())
 		return QString();
@@ -124,4 +235,15 @@ QString LCsvTable::getData(int row, int col) const
 		return QString();
 	else
 		return rowDat[col];
+}
+
+int LCsvTable::getInt(int row, int col, int def /*= 0*/) const
+{
+	QString str = getString(row, col);
+	if (str.isEmpty())
+		return def;
+	
+	bool bOk = false;
+	int res = str.toInt(&bOk);
+	return (bOk ? res : def);
 }

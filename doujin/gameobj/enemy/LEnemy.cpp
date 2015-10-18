@@ -10,18 +10,21 @@
 #include <QString>
 #include "shooter/LShooters.h"
 #include "move/LPathWalker.h"
+#include "LAssets.h"
 
 LEnemy::LEnemy(IGameObject* pParent, int _enemyStyle)
 	: LGameObject(pParent)
+	, m_pGraphGroup(nullptr)
 {
-	m_spShooters.reset(new LShooters);
+	m_spShooters = std::make_unique<LShooters>();
 	m_phyData.position.Init(256, 256);
 	m_enemyStyle = _enemyStyle;
 	m_counter = 0;
 	m_imgCount = 0;
 	m_bFace = true;
 
-	m_spWalker.reset(LWalker::CreatePathWalker(1));
+	m_pGraphGroup = &LEngine::assets()->GetSubGraphGroup(_T("À¶Ñý¾«"));
+	m_spWalker = LWalker::CreatePathWalker(1);
 }
 
 LEnemy::~LEnemy(void)
@@ -42,11 +45,13 @@ void LEnemy::Update()
 
 void LEnemy::Draw( LPainter& painter )
 {
-	painter.drawRotaGraphF(m_phyData.position, 1, Radian0, Resource::enemy(m_enemyStyle, m_imgCount), true, m_bFace);
-	painter.drawString(m_phyData.position, QWSTR(QString("%1, %2").arg(m_phyData.position.x()).arg(m_phyData.position.y())), LRgb::White);
+	painter.drawRotaGraphF(m_phyData.position, 1, Radian0, m_pGraphGroup->at(m_imgCount), true, m_bFace);
+#ifdef _DEBUG
+	painter.drawString(m_phyData.position, Q2WSTR(QString("%1, %2").arg(m_phyData.position.x()).arg(m_phyData.position.y())), LRgb::White);
+#endif
 }
 
 const LGraphHandle LEnemy::GetGraphHandle() const
 {
-	return Resource::enemy(m_enemyStyle, m_imgCount);
+	return m_pGraphGroup->at(m_imgCount);
 }

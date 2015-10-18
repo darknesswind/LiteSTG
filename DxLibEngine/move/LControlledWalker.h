@@ -6,7 +6,7 @@ class LControlledWalker : public LWalker
 {
 public:
 	LControlledWalker();
-	~LControlledWalker() = default;
+	virtual ~LControlledWalker() = default;
 
 	void nextStep(PhysicData& data);
 	void setSpeed(float fNormal, float fFocus);

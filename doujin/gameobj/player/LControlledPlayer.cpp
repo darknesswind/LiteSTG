@@ -11,9 +11,8 @@
 
 LControlledPlayer::LControlledPlayer(int x, int y)
 {
-	m_spWalker.reset(LWalker::CreateControlledWalker());
+	m_spWalker = LWalker::CreateControlledWalker();
 	m_phyData.position.Init(x, y);
-
 	m_actionState = 5;
 	m_nStarImg = 0;
 	m_nEndImg = 7;

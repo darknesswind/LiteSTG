@@ -3,6 +3,7 @@
 
 #pragma once
 #include "interfaceDef.h"
+#include "LImage.h"
 // Ö÷²Ëµ¥
 class GameMenu : public IComponent
 {
@@ -14,8 +15,10 @@ public:
 
 private:
 // 	void *MenuClass;
-	bool canMove;
-	int menuSelect;
-	int timeCount;
+	bool m_canMove;
+	int m_menuSelect;
+	int m_timeCount;
+	LImage m_title;
+	const LGraphHandles* m_pSelections;
 };
 #endif

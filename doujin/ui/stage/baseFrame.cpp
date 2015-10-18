@@ -2,16 +2,16 @@
 #include "baseFrame.h"
 #include "resource.h"
 #include "LPainter.h"
-
+#include "Engine.h"
+#include "LAssets.h"
 
 BaseFrame::BaseFrame()
 {
-	using namespace NS_Resource;
-
-	m_leftFrame = Resource::frameBG(BG_Left);
-	m_topFrame = Resource::frameBG(BG_Top);
-	m_rightFrame = Resource::frameBG(BG_Right);
-	m_bottomFrame = Resource::frameBG(BG_Bottom);
+	LAssets* pAssets = StgEngine::assets();
+	m_leftFrame		= pAssets->GetTexture(_T("bg_left"));
+	m_topFrame		= pAssets->GetTexture(_T("bg_top"));
+	m_rightFrame	= pAssets->GetTexture(_T("bg_right"));
+	m_bottomFrame	= pAssets->GetTexture(_T("bg_bottom"));
 }
 
 void BaseFrame::Update()

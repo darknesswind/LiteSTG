@@ -8,18 +8,18 @@
 bool CircleEntity::isCollideWithPlayer(const Vector2 &self, Radian rad) const
 {
 	Player* pPlayer = StgEngine::engine()->GetActivePlayer();
-	Vector2 VectorB2A = pPlayer->position() - self;
+	Vector2 vSelf2Player = pPlayer->position() - self;
 	CircleEntity* playEntity = (CircleEntity*)pPlayer->getEntity();
 
-	if (VectorB2A.manhattanLength() > 2 * (playEntity->radius() + r) + center.manhattanLength())
+	if (vSelf2Player.manhattanLength() > 2 * (playEntity->radius() + r) + center.manhattanLength())
 		return false;
 
 	Vector2 target = self - center.rotated(rad + Radian90);
 	DebugPat.AddLine(pPlayer->position(), target, LRgb::White);
 
-	VectorB2A += center.rotated(rad + Radian90);
+	vSelf2Player += center.rotated(rad + Radian90);
 	auto sum = playEntity->radius() + r;
-	auto len = VectorB2A.lengthSquared();
+	auto len = vSelf2Player.lengthSquared();
 	return len < sum*sum;
 }
 

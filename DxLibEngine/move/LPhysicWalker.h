@@ -6,7 +6,7 @@ class LPhysicWalker : public LWalker
 {
 public:
 	LPhysicWalker() = default;
-	~LPhysicWalker() = default;
+	virtual ~LPhysicWalker() = default;
 
 	void nextStep(PhysicData& data);
 private:

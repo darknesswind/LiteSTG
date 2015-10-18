@@ -49,8 +49,8 @@ typedef unsigned char uchar;
 #	define __interface __declspec(novtable) struct
 #endif
 #define PURE = 0
-#define QWSTR(qstr) ((const TCHAR*)qstr.utf16())
-#define WQSTR(wstr) (QString::fromUtf16((const ushort*)(wstr)))
+#define Q2WSTR(qstr) ((const TCHAR*)qstr.utf16())
+#define W2QSTR(wstr) (QString::fromUtf16((const ushort*)(wstr)))
 
 #if USE_PPL
 #	define parallel_begin(range)	begin(range)
@@ -89,10 +89,28 @@ public:
 	destory_ptr(const _ThisType& other) = delete;
 	void operator=(const _ThisType& other) = delete;
 
+	destory_ptr(_ThisType&& other)
+	{
+		if (m_ptr) m_ptr->destory();
+		m_ptr = other.m_ptr;
+		other.m_ptr = nullptr;
+	}
+	void operator=(_ThisType&& other)
+	{
+		if (m_ptr) m_ptr->destory();
+		m_ptr = other.m_ptr;
+		other.m_ptr = nullptr;
+	}
+
 	T& operator*() { return *m_ptr; }
 	T* operator->() { return m_ptr; }
-	operator T*() { return m_ptr; }
+// 	operator T*() { return m_ptr; }
+	const T& operator*() const { return *m_ptr; }
+	const T* operator->() const { return m_ptr; }
 
+
+	T* get() { return m_ptr; }
+	const T* get() const { return m_ptr; }
 	void reset(T* _ptr = nullptr)
 	{
 		if (m_ptr) m_ptr->destory();
@@ -126,7 +144,7 @@ __interface IDrawableObj : public IDrawable
 	virtual const RenderArgument& GetRenderArgument() const PURE;
 };
 
-__interface IWalker
+__interface IWalker : IDestructible
 {
 	virtual void nextStep(PhysicData& data) PURE;
 };

@@ -5,12 +5,15 @@
 #include "Input.h"
 #include "LPainter.h"
 #include "LImage.h"
+#include "LAssets.h"
 
 GameMenu::GameMenu(void)
+	: m_pSelections(nullptr)
 {
-	menuSelect = 0;
-	timeCount = 0;
-	
+	m_menuSelect = 0;
+	m_timeCount = 0;
+	m_title = LEngine::assets()->GetTexture(_T("title"));
+	m_pSelections = &LEngine::assets()->GetSubGraphGroup(_T("标题选项"));
 // 	MenuClass = NULL;
 }
 
@@ -23,11 +26,11 @@ void GameMenu::Draw( LPainter& painter )
 {
 	using namespace NS_Resource;
 
-	painter.drawGraph(0, 0, LImage(Resource::title(Title_BG)), false);
-	painter.drawBox(410, 50 + 32 * menuSelect, 602, 82 + 32 * menuSelect, 0xffff, true);
+	painter.drawGraph(0, 0, m_title, false);
+	painter.drawBox(410, 50 + 32 * m_menuSelect, 602, 82 + 32 * m_menuSelect, 0xffff, true);
 	for (int i = 0; i < MENU_SELECT_NUM; ++i)
 	{
-		painter.drawGraph(410, 50 + 32 * i, LImage(Resource::TitleSelection(i)), true);
+		painter.drawGraph(410, 50 + 32 * i, m_pSelections->at(i), true);
 	}	
 }
 
@@ -35,7 +38,7 @@ void GameMenu::Update()
 {	
 	if (Input.isKeyDown(Keys::Z))
 	{
-		switch (menuSelect)
+		switch (m_menuSelect)
 		{
 		case MENU_GAME_START:
 			gameState = 1;
@@ -49,23 +52,23 @@ void GameMenu::Update()
 	}
 	if (Input.isKeyDown(Keys::X))
 	{
-		menuSelect = MENU_SELECT_NUM - 1;
-		canMove = false;
+		m_menuSelect = MENU_SELECT_NUM - 1;
+		m_canMove = false;
 	}
-	if (!canMove) // 速度控制
+	if (!m_canMove) // 速度控制
 	{		
-		if (timeCount++ > 8)
+		if (m_timeCount++ > 8)
 		{
-			timeCount = 0;
-			canMove = true;
+			m_timeCount = 0;
+			m_canMove = true;
 		}
 		return;
 	}
 	if (Input.isKeyDown(Keys::Down) || Input.isKeyDown(Keys::Up))
 	{
-		menuSelect = (menuSelect + Input.isKeyDown(Keys::Down)) % MENU_SELECT_NUM;
-		menuSelect = (menuSelect + Input.isKeyDown(Keys::Up) * (MENU_SELECT_NUM - 1)) % MENU_SELECT_NUM;
-		canMove = false;
+		m_menuSelect = (m_menuSelect + Input.isKeyDown(Keys::Down)) % MENU_SELECT_NUM;
+		m_menuSelect = (m_menuSelect + Input.isKeyDown(Keys::Up) * (MENU_SELECT_NUM - 1)) % MENU_SELECT_NUM;
+		m_canMove = false;
 	}		
 	return;
 }

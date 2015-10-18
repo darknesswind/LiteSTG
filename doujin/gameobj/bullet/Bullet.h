@@ -17,8 +17,9 @@ public:
 
 public:
 	void*	operator new(size_t size);
-	void*	operator new[](size_t size) = delete;
 	void	operator delete(void* pObject, size_t size);
+
+	void*	operator new[](size_t size) = delete;
 	void	operator delete[](void*) = delete;
 
 public: // IGameObjBase
@@ -81,7 +82,7 @@ protected:
 
 	MyTimer mytimer;
 	std::vector<timerFunc> m_funcList;
-	std::auto_ptr<IWalker> m_spWalker;
+	destory_ptr<IWalker> m_spWalker;
 	const Entity* m_pEntity;	
 };
 

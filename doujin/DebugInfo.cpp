@@ -22,16 +22,16 @@ void DebugInfo::Draw( LPainter& painter )
 	{
 		painter.drawString(
 			TH_X, TH_Y,
-			QWSTR(QString("Player (%1, %2)").arg(pPlayer->position().x()).arg(pPlayer->position().y())),
+			Q2WSTR(QString("Player (%1, %2)").arg(pPlayer->position().x()).arg(pPlayer->position().y())),
 			LRgb::White);
 	}
 	painter.drawString(
 		TH_X, TH_Y + TH_DY,
-		QWSTR(QString("Bullet: %1").arg(StgEngine::bullets()->GetCount())),
+		Q2WSTR(QString("Bullet: %1").arg(StgEngine::bullets()->GetCount())),
 		LRgb::White);
 	painter.drawString(
 		0, 0,
-		QWSTR(QString::number(StgEngine::engine()->unifiedTimer().fps(), 'f', 2)),
+		Q2WSTR(QString::number(StgEngine::engine()->unifiedTimer().fps(), 'f', 2)),
 		LRgb::White);
 }
 

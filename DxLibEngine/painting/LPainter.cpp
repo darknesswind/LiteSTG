@@ -77,17 +77,17 @@ void LPainter::drawVString(int x, int y, LPCWSTR pStr, LRgb Color, LRgb EdgeColo
 
 #pragma region Õº–ŒªÊ÷∆
 
-void LPainter::drawGraph(int x, int y, const LImage& img, bool TransFlag)
+void LPainter::drawGraph(int x, int y, LImage img, bool TransFlag)
 {
 	CheckRes(DxLib::DrawGraph(x, y, img.m_handle, TransFlag));
 }
 
-void LPainter::drawRotaGraphF(float xf, float yf, double ExRate, Radian Angle, const LImage& img, bool TransFlag, bool TurnFlag /*= false*/)
+void LPainter::drawRotaGraphF(float xf, float yf, double ExRate, Radian Angle, LImage img, bool TransFlag, bool TurnFlag /*= false*/)
 {
 	CheckRes(DxLib::DrawRotaGraphF(xf, yf, ExRate, Angle.radian(), img.m_handle, TransFlag, TurnFlag));
 }
 
-void LPainter::drawExtRotaGraph(float fx, float fy, float ExRateX, float ExRateY, Radian RAD, const LImage& img, bool turnFlag /*= false*/)
+void LPainter::drawExtRotaGraph(float fx, float fy, float ExRateX, float ExRateY, Radian RAD, LImage img, bool turnFlag /*= false*/)
 {
 	QSize size = img.size();
 	float x = size.width() / 2.0f, y = size.height() / 2.0f;

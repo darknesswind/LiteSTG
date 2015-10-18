@@ -2,6 +2,7 @@
 #define _ENEMY_H_
 #pragma once
 #include "LGameObject.h"
+#include "LHandle.h"
 
 class LShooters;
 class LEnemy : public LGameObject
@@ -19,8 +20,9 @@ public:
 	LShooters* GetShooters() { return m_spShooters.get(); }
 
 private:
-	std::auto_ptr<LShooters> m_spShooters;
-	std::auto_ptr<IWalker> m_spWalker;
+	std::unique_ptr<LShooters> m_spShooters;
+	destory_ptr<IWalker> m_spWalker;
+	const LGraphHandles* m_pGraphGroup;
 
 	bool m_bFace;
 	int m_counter;

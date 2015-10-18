@@ -18,5 +18,5 @@ void LMessageBox::message(LPCWSTR lpMsg, LPCWSTR lpTitle)
 
 void LMessageBox::message(const QString& sMsg, const QString& sTitle)
 {
-	message(QWSTR(sMsg), QWSTR(sTitle));
+	message(Q2WSTR(sMsg), Q2WSTR(sTitle));
 }

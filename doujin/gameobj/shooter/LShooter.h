@@ -4,7 +4,7 @@
 #include "interdef.h"
 #include "LGameObject.h"
 #include "MyTimer.h"
-
+class LWalker;
 enum class ShooterType
 {
 	Normal,
@@ -96,7 +96,7 @@ protected:
 	Degree m_fireDegree;		// 发射中心角度
 
 	// shooter data
-	std::auto_ptr<IWalker> m_spWalker;
+	destory_ptr<IWalker> m_spWalker;
 	int m_life;				// 生存时间
 	Degree m_fireRange;		// 发射角范围 Degree
 	Degree m_angleSpeed;	// 角速度

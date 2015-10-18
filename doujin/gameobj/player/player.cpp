@@ -8,7 +8,7 @@ Player::Player(int x, int y)
 	: LGameObject()
 {
 	m_phyData.position.Init(x, y);
-	m_spWalker.reset(LWalker::CreateStableWalker());
+	m_spWalker = LWalker::CreateStableWalker();
 	m_entity = EntityFactory::getPlayerEntity(0);
 	m_renderArg.uDepth = DepthBackground;
 }

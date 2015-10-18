@@ -24,7 +24,7 @@ void LShooter::baseInit()
 	m_angleIncrease = m_fireRange / m_fireWays;
 	setFireSpeed(Vector2(0, 1));
 
-	m_spWalker.reset(LWalker::CreateFollowWalker(m_pParent));
+	m_spWalker = LWalker::CreateFollowWalker(m_pParent);
 
 #if USE_FASTFUNC
 	funcList[0] = timerFunc(this, &LShooter::Fun_test);

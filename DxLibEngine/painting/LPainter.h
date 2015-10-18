@@ -99,23 +99,23 @@ public:	// 字符串绘制
 	}
 
 public:	// 图形绘制
-	void drawGraph(int x, int y, const LImage& img, bool TransFlag);					// 绘制实际大小图像
+	void drawGraph(int x, int y, LImage img, bool TransFlag);					// 绘制实际大小图像
 	template <typename PosType>
 	void drawGraph(const PosType& pt, const LImage& img, bool TransFlag)
 	{
 		drawGraph(pt.x(), pt.y(), img.m_handle, TransFlag);
 	}
 
-	void drawRotaGraphF(float xf, float yf, double ExRate, Radian Angle, const LImage& img, bool TransFlag, bool TurnFlag = false);	// 绘制旋转后的图像
+	void drawRotaGraphF(float xf, float yf, double ExRate, Radian Angle, LImage img, bool TransFlag, bool TurnFlag = false);	// 绘制旋转后的图像
 	template <typename PosType>
-	void drawRotaGraphF(const PosType& pos, double ExRate, Radian Angle, const LImage& img, bool TransFlag, bool TurnFlag = false)
+	void drawRotaGraphF(const PosType& pos, double ExRate, Radian Angle, LImage img, bool TransFlag, bool TurnFlag = false)
 	{
 		drawRotaGraphF(pos.x(), pos.y(), ExRate, Angle, img.m_handle, TransFlag, TurnFlag);
 	}
 
-	void drawExtRotaGraph(float fx, float fy, float ExRateX, float ExRateY, Radian RAD, const LImage& img, bool turnFlag = false);
+	void drawExtRotaGraph(float fx, float fy, float ExRateX, float ExRateY, Radian RAD, LImage img, bool turnFlag = false);
 	template <typename PosType>
-	void drawExtRotaGraph(const PosType &pos, float ExRateX, float ExRateY, Radian RAD, const LImage& img, bool turnFlag = false)
+	void drawExtRotaGraph(const PosType &pos, float ExRateX, float ExRateY, Radian RAD, LImage img, bool turnFlag = false)
 	{
 		drawExtRotaGraph(pos.x(), pos.y(), ExRateX, ExRateY, RAD, img, turnFlag);
 	}

@@ -56,7 +56,8 @@ public:
 		: m_handle(hHandle)
 	{
 	}
-	operator int() const { LAssert(!empty()); return m_handle; }
+	int handle() const { LAssert(!empty()); return m_handle; }
+	operator int() const { return handle(); }
 	bool operator< (const LHandle& rhs) const { return m_handle < rhs.m_handle; }
 
 public:
@@ -77,6 +78,7 @@ protected:
 protected:
 	int m_handle;
 };
+typedef LHandle LSoundHandle;
 
 class LGraphHandle : public LHandle
 {
@@ -84,6 +86,11 @@ public:
 	LGraphHandle()
 		: LHandle(hNoneGraph)
 	{
+	}
+	LGraphHandle(LHandle hHandle)
+		: LHandle(hHandle)
+	{
+		LAssert(type() == DxHandleType::Graph);
 	}
 	LGraphHandle(int hHandle)
 		: LHandle(hHandle)
@@ -101,5 +108,6 @@ public:
 private:
 
 };
+typedef std::vector<LGraphHandle> LGraphHandles;
 
 #endif	// __LHANDLE_H__

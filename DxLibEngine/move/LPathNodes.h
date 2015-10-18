@@ -57,7 +57,7 @@ public:
 	};
 public:
 	LPathNode(uint frames);
-	~LPathNode() = default;
+	virtual ~LPathNode() {};
 
 	virtual Vector2 exec(const Vector2& beginPos, uint curFrame) const;
 	virtual Type type() const { return EmptyNode; }
@@ -74,7 +74,7 @@ class LLinePathNode : public LPathNode
 {
 public:
 	LLinePathNode(const Vector2& detla, uint frames);
-	~LLinePathNode() = default;
+	virtual ~LLinePathNode() {};
 
 	virtual Vector2 exec(const Vector2& beginPos, uint curFrame) const override;
 	virtual Type type() const override { return LineNode; }
@@ -89,7 +89,7 @@ class LSinePathNode : public LPathNode
 {
 public:
 	LSinePathNode(const Vector2& detla, const Vector2& scale, uint frames);
-	~LSinePathNode() = default;
+	virtual ~LSinePathNode() {};
 
 	virtual Vector2 exec(const Vector2& beginPos, uint curFrame) const override;
 	virtual Type type() const override { return SineNode; }

@@ -17,7 +17,7 @@ Bullet::Bullet(IGameObject* pParent)
 	, m_life(99 * 60)
 	, m_pEntity(nullptr)
 {
-	m_spWalker.reset(LWalker::CreatePhysicWalker());
+	m_spWalker = LWalker::CreatePhysicWalker();
 	m_pEntity = EntityFactory::getBulletEntity(m_style.type);
 #if USE_FASTFUNC
 	m_funcList.push_back(timerFunc(this, &Bullet::Fun_test));

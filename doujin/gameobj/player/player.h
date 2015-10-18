@@ -10,7 +10,6 @@ enum class PlayerType
 };
 
 class CircleEntity;
-class LWalker;
 class Player : public LGameObject
 {
 public:
@@ -28,7 +27,7 @@ public:
 	const CircleEntity* getEntity() const { return m_entity; }
 
 protected:
-	std::auto_ptr<LWalker> m_spWalker;
+	destory_ptr<IWalker> m_spWalker;
 	const CircleEntity* m_entity;
 };
 #endif

@@ -6,7 +6,7 @@ class LFollowWalker : public LWalker
 {
 public:
 	LFollowWalker(IGameObject* pTarget);
-	~LFollowWalker();
+	virtual ~LFollowWalker() override;
 	void SetTarget(IGameObject* pGameObj);
 
 public:

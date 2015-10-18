@@ -26,6 +26,7 @@ void LEngine::AfterDxInit()
 {
 	m_spAssets->LoadTextureList(L"resource\\data\\texture.csv");
 	m_spAssets->LoadSoundEffectList(L"resource\\data\\se.csv");
+	m_spAssets->LoadSubGraphicsList(L"resource\\data\\subgraph.csv");
 }
 
 int LEngine::exec()
