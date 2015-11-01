@@ -12,14 +12,8 @@
     <Filter Include="Factory">
       <UniqueIdentifier>{acb872f6-08de-42ac-aa55-a3af125b77d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollideEntity">
-      <UniqueIdentifier>{e1362c0d-d89c-4917-a2e7-c762c40411e0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Manager">
       <UniqueIdentifier>{eb47c8b2-56bf-4034-83c0-7cf06ef6d046}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Animation">
-      <UniqueIdentifier>{85a2e336-ca3a-45c2-8ce3-ac357e8cdbb9}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameObj">
       <UniqueIdentifier>{75df2707-3554-4a06-b26e-f860f4fc07b8}</UniqueIdentifier>
@@ -54,6 +48,9 @@
     <Filter Include="GameObj\stage">
       <UniqueIdentifier>{ccb99177-a679-4701-af89-ba61cd296bc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Script">
+      <UniqueIdentifier>{2cd01312-e728-414b-9dd4-69dbd7170638}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,9 +71,6 @@
     <ClCompile Include="Engine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>GameObj</Filter>
-    </ClCompile>
     <ClCompile Include="Factory\EnemyFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
@@ -86,18 +80,6 @@
     <ClCompile Include="Factory\ShooterFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="CollideEntity\ElipseEntity.cpp">
-      <Filter>CollideEntity</Filter>
-    </ClCompile>
-    <ClCompile Include="CollideEntity\Entity.cpp">
-      <Filter>CollideEntity</Filter>
-    </ClCompile>
-    <ClCompile Include="CollideEntity\RectEntity.cpp">
-      <Filter>CollideEntity</Filter>
-    </ClCompile>
-    <ClCompile Include="CollideEntity\RoundEntity.cpp">
-      <Filter>CollideEntity</Filter>
-    </ClCompile>
     <ClCompile Include="Manager\ComManage.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
@@ -106,12 +88,6 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation\AnimationBase.cpp">
-      <Filter>Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation\AnimationManager.cpp">
-      <Filter>Animation</Filter>
     </ClCompile>
     <ClCompile Include="Manager\MemoryManager.cpp">
       <Filter>源文件</Filter>
@@ -170,6 +146,12 @@
     <ClCompile Include="gameobj\stage\LStage.cpp">
       <Filter>GameObj\stage</Filter>
     </ClCompile>
+    <ClCompile Include="gameobj\bullet\LBulletStyles.cpp">
+      <Filter>GameObj\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="script\LTcc.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globle.h">
@@ -185,9 +167,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MyTimer.h">
-      <Filter>GameObj</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
       <Filter>GameObj</Filter>
     </ClInclude>
     <ClInclude Include="State.h">
@@ -211,18 +190,6 @@
     <ClInclude Include="Factory\ShooterFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="CollideEntity\ElipseEntity.h">
-      <Filter>CollideEntity</Filter>
-    </ClInclude>
-    <ClInclude Include="CollideEntity\Entity.h">
-      <Filter>CollideEntity</Filter>
-    </ClInclude>
-    <ClInclude Include="CollideEntity\RectEntity.h">
-      <Filter>CollideEntity</Filter>
-    </ClInclude>
-    <ClInclude Include="CollideEntity\RoundEntity.h">
-      <Filter>CollideEntity</Filter>
-    </ClInclude>
     <ClInclude Include="Manager\ComManage.h">
       <Filter>Manager</Filter>
     </ClInclude>
@@ -237,12 +204,6 @@
     </ClInclude>
     <ClInclude Include="interfaceDef.h">
       <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation\AnimationBase.h">
-      <Filter>Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation\AnimationManager.h">
-      <Filter>Animation</Filter>
     </ClInclude>
     <ClInclude Include="Manager\MemoryManager.h">
       <Filter>头文件</Filter>
@@ -300,6 +261,12 @@
     </ClInclude>
     <ClInclude Include="gameobj\stage\LStage.h">
       <Filter>GameObj\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\LBulletStyles.h">
+      <Filter>GameObj\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="script\LTcc.h">
+      <Filter>Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

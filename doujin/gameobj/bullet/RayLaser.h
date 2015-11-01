@@ -3,7 +3,7 @@
 #pragma once
 #include "DxLib.h"
 #include "Bullet.h"
-#include "CollideEntity/RectEntity.h"
+
 class RayLaser : public Bullet
 {
 	enum RayState
@@ -34,9 +34,6 @@ private:
 	int m_nExpandCount, m_nCollapseCount;
 	RayState m_state;
 	int turnFlag;
-
-	RectEntity *m_pMutableEntity;
-	const RectEntity *m_pOriginEntity;
 };
 
 #endif

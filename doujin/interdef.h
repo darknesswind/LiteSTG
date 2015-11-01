@@ -58,4 +58,31 @@ struct BulletData
 	{}
 };
 
+struct _InnerEntityData	// Åö×²ÊµÌå
+{
+	enum Type
+	{
+		tUnknown,
+		tCircle,
+		tRectangle,
+	};
+
+	Type type;
+	Vector2 center;
+	float halfWidth;
+	float halfHeight;
+};
+
+struct EntityData : public _InnerEntityData
+{
+	EntityData()
+		: _InnerEntityData{ tUnknown, {0, 0}, 0, 0 }
+	{
+	}
+	EntityData(_InnerEntityData&& other)
+		: _InnerEntityData(std::move(other))
+	{
+	}
+};
+
 #endif

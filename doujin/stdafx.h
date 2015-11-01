@@ -6,5 +6,7 @@
 #include <deque>
 #include <cmath>
 #include "typedef.h"
+#include "interdef.h"
+#include "interfaceDef.h"
 #include "Engine.h"
 #include "tools/LLogger.h"

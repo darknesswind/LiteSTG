@@ -9,8 +9,7 @@ enum class PlayerType
 	Controlled,
 };
 
-class CircleEntity;
-class Player : public LGameObject
+class Player : public LCollideObject
 {
 public:
 	explicit Player(int x = 220, int y = 400);
@@ -23,11 +22,7 @@ public:	// IGameobj
 public:	// Player
 	virtual PlayerType GetType() const { return PlayerType::Void; }
 
-public:
-	const CircleEntity* getEntity() const { return m_entity; }
-
 protected:
 	destory_ptr<IWalker> m_spWalker;
-	const CircleEntity* m_entity;
 };
 #endif

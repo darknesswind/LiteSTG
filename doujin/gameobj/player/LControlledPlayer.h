@@ -12,7 +12,6 @@ public:
 public:	// IGameobj
 	virtual void	Update() override;
 	virtual void	Draw(LPainter& painter) override;
-	virtual void	DrawHitBox(LPainter& painter) override;
 	virtual const LGraphHandle GetGraphHandle() const override;
 
 public:	// Player

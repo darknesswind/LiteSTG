@@ -23,21 +23,26 @@ enum DirectionFlag
 };
 
 LControlledWalker::LControlledWalker()
-	: m_normalSpeed(3.5)
-	, m_focusSpeed(2)
+	: m_speeds{ 3.5 ,2 }
 {
+	m_speeds[sDiagNormal] = L_SQRT1_2 * m_speeds[sNormal];
+	m_speeds[sDiagFocus] = L_SQRT1_2 * m_speeds[sFocus];
 }
 
 void LControlledWalker::setSpeed(float fNormal, float fFocus)
 {
-	m_normalSpeed = fNormal;
-	m_focusSpeed = fFocus;
+	m_speeds[sNormal] = fNormal;
+	m_speeds[sFocus] = fFocus;
+	m_speeds[sDiagNormal] = L_SQRT1_2 * fNormal;
+	m_speeds[sDiagFocus] = L_SQRT1_2 * fFocus;
 }
 
 void LControlledWalker::nextStep(PhysicData& data)
 {
 	int movetype = Stop;
-	float detla = Input.isKeyDown(Keys::LShift) ? m_focusSpeed : m_normalSpeed;
+	int detlaIdx = Input.isKeyDown(Keys::LShift) ? sFocus : sNormal;
+	float speed = m_speeds[detlaIdx];
+	float diagSpeed = m_speeds[detlaIdx | sDiagFlag];
 
 	if (Input.isKeyDown(Keys::Up))		movetype |= MoveUp;
 	if (Input.isKeyDown(Keys::Down))	movetype |= MoveDown;
@@ -48,35 +53,35 @@ void LControlledWalker::nextStep(PhysicData& data)
 	{
 	case MoveUp:
 	case MoveUpLRC:
-		data.position.ry() -= detla;
+		data.position.ry() -= speed;
 		break;
 	case MoveDown:
 	case MoveDownLRC:
-		data.position.ry() += detla;
+		data.position.ry() += speed;
 		break;
 	case MoveLeft:
 	case MoveLeftUDC:
-		data.position.rx() -= detla;
+		data.position.rx() -= speed;
 		break;
 	case MoveRight:
 	case MoveRightUDC:
-		data.position.rx() += detla;
+		data.position.rx() += speed;
 		break;
 	case MoveLeftUp:
-		data.position.rx() -= L_SQRT1_2 * detla;
-		data.position.ry() -= L_SQRT1_2 * detla;
+		data.position.rx() -= diagSpeed;
+		data.position.ry() -= diagSpeed;
 		break;
 	case MoveRightUp:
-		data.position.rx() += L_SQRT1_2 * detla;
-		data.position.ry() -= L_SQRT1_2 * detla;
+		data.position.rx() += diagSpeed;
+		data.position.ry() -= diagSpeed;
 		break;
 	case MoveLeftDown:
-		data.position.rx() -= L_SQRT1_2 * detla;
-		data.position.ry() += L_SQRT1_2 * detla;
+		data.position.rx() -= diagSpeed;
+		data.position.ry() += diagSpeed;
 		break;
 	case MoveRightDown:
-		data.position.rx() += L_SQRT1_2 * detla;
-		data.position.ry() += L_SQRT1_2 * detla;
+		data.position.rx() += diagSpeed;
+		data.position.ry() += diagSpeed;
 		break;
 	default:
 		break;

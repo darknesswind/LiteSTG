@@ -2,7 +2,6 @@
 #include "Globle.h"
 #include "SegmentLaser.h"
 #include "resource.h"
-#include "CollideEntity/RectEntity.h"
 #include "LPainter.h"
 #include "LImage.h"
 
@@ -21,15 +20,15 @@ void SegmentLaser::Update()
 		{
 			m_curScale = m_maxScale;
 		}
-		m_pMutableEntity->halfOfHeight = m_pOriginEntity->halfOfHeight * m_curScale;
-		m_pMutableEntity->center.setY(m_pMutableEntity->halfOfHeight - m_pOriginEntity->halfOfHeight);
+		m_entity.halfHeight = m_originHalfHeight * m_curScale;
+		m_entity.center.setY(m_entity.halfHeight - m_originHalfHeight);
 	}
 }
 
 void SegmentLaser::Draw( LPainter& painter )
 {
 	painter.drawExtRotaGraph(m_phyData.position, 0.5f, m_curScale, m_phyData.radian + Radian90, LImage(Resource::bullet(m_style)), true);
-	m_pEntity->draw(painter, m_phyData.position, m_phyData.radian + Radian90);
+	DrawHitBox(painter);
 }
 
 SegmentLaser& SegmentLaser::setLength(float length)

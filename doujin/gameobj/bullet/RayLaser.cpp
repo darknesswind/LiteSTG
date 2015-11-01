@@ -14,9 +14,7 @@ RayLaser::RayLaser(IGameObject* pParent)
 	m_state = RayExpand;
 	m_nExpandCount = m_nCollapseCount = g_nPlayTime;
 
-	m_pOriginEntity = EntityFactory::getLaserEntity(0);
-	m_pMutableEntity = new RectEntity(*m_pOriginEntity);
-	m_pEntity = m_pMutableEntity;
+	m_entity = EntityFactory::getLaserEntity(0);
 
 	m_renderArg.paintArg.blendMode = DxBlendMode::Add;
 	m_renderArg.paintArg.blendParam = 250;
@@ -61,6 +59,6 @@ void RayLaser::Draw( LPainter& painter )
 	painter.drawExtRotaGraph(m_phyData.position, t_wid, m_length, m_phyData.radian + Radian90, imgBullet, turnFlag);
 	painter.drawRotaGraphF(m_phyData.position, bulletWidth * t_wid, Radian0, LImage(Resource::laserEffect((m_style.color + 15) & 0x7/*%8*/)), true);
 
-	m_pEntity->draw(painter, m_phyData.position, m_phyData.radian + Radian90);
+	DrawHitBox(painter);
 }
 

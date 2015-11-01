@@ -109,18 +109,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Animation\AnimationBase.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="Animation\AnimationManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="CollideEntity\ElipseEntity.cpp" />
-    <ClCompile Include="CollideEntity\Entity.cpp" />
-    <ClCompile Include="CollideEntity\RectEntity.cpp" />
-    <ClCompile Include="CollideEntity\RoundEntity.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Factory\EnemyFactory.cpp" />
     <ClCompile Include="Factory\EntityFactory.cpp" />
@@ -128,6 +116,7 @@
     <ClCompile Include="gameobj\bullet\Bullet.cpp" />
     <ClCompile Include="gameobj\bullet\CurveLaser.cpp" />
     <ClCompile Include="gameobj\bullet\LBullets.cpp" />
+    <ClCompile Include="gameobj\bullet\LBulletStyles.cpp" />
     <ClCompile Include="gameobj\bullet\RayLaser.cpp" />
     <ClCompile Include="gameobj\bullet\SegmentLaser.cpp" />
     <ClCompile Include="gameobj\enemy\LEnemy.cpp" />
@@ -144,7 +133,7 @@
     <ClCompile Include="Manager\ComManage.cpp" />
     <ClCompile Include="Manager\MemoryManager.cpp" />
     <ClCompile Include="Manager\SpriteManager.cpp" />
-    <ClCompile Include="Sprite.cpp">
+    <ClCompile Include="script\LTcc.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -158,18 +147,6 @@
     <ClCompile Include="ui\stage\baseFrame.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation\AnimationBase.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="Animation\AnimationManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="CollideEntity\ElipseEntity.h" />
-    <ClInclude Include="CollideEntity\Entity.h" />
-    <ClInclude Include="CollideEntity\RectEntity.h" />
-    <ClInclude Include="CollideEntity\RoundEntity.h" />
     <ClInclude Include="DxLib.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Factory\EnemyFactory.h" />
@@ -178,6 +155,7 @@
     <ClInclude Include="gameobj\bullet\Bullet.h" />
     <ClInclude Include="gameobj\bullet\CurveLaser.h" />
     <ClInclude Include="gameobj\bullet\LBullets.h" />
+    <ClInclude Include="gameobj\bullet\LBulletStyles.h" />
     <ClInclude Include="gameobj\bullet\RayLaser.h" />
     <ClInclude Include="gameobj\bullet\SegmentLaser.h" />
     <ClInclude Include="gameobj\enemy\LEnemy.h" />
@@ -201,7 +179,7 @@
     <ClInclude Include="Graph.h" />
     <ClInclude Include="MyTimer.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Sprite.h">
+    <ClInclude Include="script\LTcc.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
@@ -217,6 +195,9 @@
   <ItemGroup>
     <ProjectReference Include="..\DxLibEngine\DxLibEngine.vcxproj">
       <Project>{30064ca8-f0f9-4477-b18d-475579bfc1c7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TinyCC\TinyCC.vcxproj">
+      <Project>{e9a7cdd2-463e-4f72-b1fc-afda7fcaf31c}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

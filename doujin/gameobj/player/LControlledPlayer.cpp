@@ -4,7 +4,6 @@
 #include "Input.h"
 #include "resource.h"
 #include "Factory/EntityFactory.h"
-#include "CollideEntity/RoundEntity.h"
 #include "LPainter.h"
 #include "LImage.h"
 #include "move/LWalker.h"
@@ -23,6 +22,7 @@ LControlledPlayer::LControlledPlayer(int x, int y)
 
 	m_entity = EntityFactory::getPlayerEntity(m_CharacterID);
 	m_renderArg.uDepth = DepthCharacter;
+	m_hitboxClr = LRgb::Lime;
 }
 
 
@@ -96,11 +96,7 @@ void LControlledPlayer::Draw( LPainter& painter )
 		painter.drawRotaGraphF(m_phyData.position, 1, m_phyData.radian, LImage(Resource::hitBox()), true);
 		painter.setDrawMode(DxDrawMode::Nearest);
 	}
-}
-
-void LControlledPlayer::DrawHitBox( LPainter& painter )
-{
-	m_entity->draw(painter, m_phyData.position, Radian0);
+	DrawHitBox(painter);
 }
 
 const LGraphHandle LControlledPlayer::GetGraphHandle() const

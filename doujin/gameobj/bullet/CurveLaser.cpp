@@ -2,7 +2,6 @@
 #include "Globle.h"
 #include "CurveLaser.h"
 #include "resource.h"
-#include "CollideEntity/RectEntity.h"
 #include "LPainter.h"
 #include "LImage.h"
 #include "Input.h"

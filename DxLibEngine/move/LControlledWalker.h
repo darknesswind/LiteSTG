@@ -12,8 +12,18 @@ public:
 	void setSpeed(float fNormal, float fFocus);
 
 private:
-	float m_normalSpeed;
-	float m_focusSpeed;
+	enum SpeedIDX
+	{
+		sNormal	= 0x0,
+		sFocus	= 0x1,
+		sDiagNormal	= 0x2,
+		sDiagFocus	= 0x3,
+
+		sDiagFlag	= 0x2,
+	};
+
+private:
+	float m_speeds[4];
 };
 
 #endif // __LPLAYERWALKER_H__

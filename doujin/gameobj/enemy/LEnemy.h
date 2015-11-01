@@ -5,7 +5,7 @@
 #include "LHandle.h"
 
 class LShooters;
-class LEnemy : public LGameObject
+class LEnemy : public LCollideObject
 {
 public:
 	explicit LEnemy(IGameObject* pParent, int _enemyStyle = 0);

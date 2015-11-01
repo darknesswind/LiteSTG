@@ -4,21 +4,20 @@
 #include "resource.h"
 #include "DxLib.h"
 #include <cmath>
-#include "CollideEntity/Entity.h"
 #include "player/player.h"
 #include "Engine.h"
 #include "LPainter.h"
 #include "LImage.h"
 #include "move/LPhysicWalker.h"
 #include "Manager/MemoryManager.h"
+#include "Input.h"
 
 Bullet::Bullet(IGameObject* pParent)
-	: LGameObject(pParent)
+	: LCollideObject(pParent)
 	, m_life(99 * 60)
-	, m_pEntity(nullptr)
 {
 	m_spWalker = LWalker::CreatePhysicWalker();
-	m_pEntity = EntityFactory::getBulletEntity(m_style.type);
+	m_entity = EntityFactory::getBulletEntity(m_style.type);
 #if USE_FASTFUNC
 	m_funcList.push_back(timerFunc(this, &Bullet::Fun_test));
 	m_funcList.push_back(timerFunc(this, &Bullet::Fun_turnToPlayer));
@@ -43,7 +42,7 @@ void Bullet::Update()
 
 	mytimer.update();
 #ifdef _DEBUG
-	if (m_pEntity->isCollideWithPlayer(m_phyData.position, m_phyData.radian))
+	if (CollideWith(*StgEngine::engine()->GetActivePlayer()))
 	{
 		// 		PlaySoundMem(Resource::SE(NS_Resource::SE_Miss), DX_PLAYTYPE_BACK);
 		// 		Sleep(100);
@@ -54,11 +53,7 @@ void Bullet::Update()
 void Bullet::Draw( LPainter& painter )
 {
 	painter.drawRotaGraphF(m_phyData.position, 1, m_phyData.radian + Radian90, LImage(GetGraphHandle()), true);
-}
-
-void Bullet::DrawHitBox( LPainter& painter )
-{
-	m_pEntity->draw(painter, m_phyData.position, m_phyData.radian + Radian90);
+	DrawHitBox(painter);
 }
 
 void Bullet::setData(const PhysicData& data)

@@ -15,7 +15,7 @@ public:
 	Vector2() : cx(0), cy(0) { }
 
 	template<typename T1, typename T2>
-	explicit Vector2(T1 xpos, T2 ypos)
+	Vector2(T1 xpos, T2 ypos)
 		: cx((float)xpos), cy((float)ypos)
 	{
 	}

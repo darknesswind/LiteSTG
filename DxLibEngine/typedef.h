@@ -41,14 +41,19 @@ typedef unsigned char uchar;
 
 #if _MSC_VER >= 1800
 #	define DeleteFunc(FuncDef)	FuncDef = delete;
+#	define AssertSizeEqual(Type1, Type2) static_assert(sizeof(Type1) == sizeof(Type2), "sizeof(" #Type1 ") != sizeof(" #Type2 ")");
 #else
 #	define DeleteFunc(FuncDef)	FuncDef;
+#	define AssertSizeEqual(Type1, Type2)
 #endif
 
 #ifndef _MSC_VER
 #	define __interface __declspec(novtable) struct
 #endif
-#define PURE = 0
+#ifndef PURE
+#	define PURE =0
+#endif
+
 #define Q2WSTR(qstr) ((const TCHAR*)qstr.utf16())
 #define W2QSTR(wstr) (QString::fromUtf16((const ushort*)(wstr)))
 

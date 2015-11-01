@@ -6,10 +6,8 @@
 #include "interdef.h"
 #include "Factory/EntityFactory.h"
 
-class Entity;
-
 // 子弹的类
-class Bullet : public LGameObject
+class Bullet : public LCollideObject
 {
 public:
 	explicit Bullet(IGameObject* pParent);
@@ -25,7 +23,6 @@ public:
 public: // IGameObjBase
 	virtual void	Update() override;
 	virtual void	Draw(LPainter& painter) override;
-	virtual void	DrawHitBox(LPainter& painter) override;
 	virtual const LGraphHandle GetGraphHandle() const override;
 
 public: // Bullet
@@ -47,7 +44,7 @@ public:
 	void	setStyle(const BulletStyle &style);
 
 	void	Rotate(Radian rad);
-	void	SetEntity(const Entity* entity)				{ m_pEntity = entity; }
+	void	SetEntity(const EntityData& entity)				{ m_entity = entity; }
 	void	SetLife(int life)							{ m_life = life; }
 	void	setWalkerType(WalkerType type);
 
@@ -73,7 +70,7 @@ public:
 	void	Fun_turnToPlayer(int &);
 
 protected:
-	void updateEntity() { m_pEntity = EntityFactory::getBulletEntity(m_style.type);	}
+	void updateEntity() { m_entity = EntityFactory::getBulletEntity(m_style.type);	}
 	void updateRadian()	{ m_phyData.radian = m_phyData.speed.radian(); }
 
 protected:
@@ -83,7 +80,6 @@ protected:
 	MyTimer mytimer;
 	std::vector<timerFunc> m_funcList;
 	destory_ptr<IWalker> m_spWalker;
-	const Entity* m_pEntity;	
 };
 
 #endif

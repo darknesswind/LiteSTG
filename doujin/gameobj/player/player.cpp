@@ -5,7 +5,7 @@
 #include "LHandle.h"
 
 Player::Player(int x, int y)
-	: LGameObject()
+	: LCollideObject()
 {
 	m_phyData.position.Init(x, y);
 	m_spWalker = LWalker::CreateStableWalker();

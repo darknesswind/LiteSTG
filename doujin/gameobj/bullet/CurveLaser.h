@@ -2,7 +2,6 @@
 #define __CURVELASER_H__
 #pragma once
 #include "bullet.h"
-#include "CollideEntity/RectEntity.h"
 #include <QQueue>
 
 struct LaserGrid

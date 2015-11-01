@@ -1,39 +1,19 @@
 #include "stdafx.h"
 #include "EntityFactory.h"
-#include "CollideEntity/RectEntity.h"
-#include "CollideEntity/RoundEntity.h"
-#include "CollideEntity/ElipseEntity.h"
 
-// const Entity* EntityFactory::getBulletEntity( int type )
-// {
-// 	return bulletEntity[0];
-// }
-// 
-// const RoundEntity* EntityFactory::getPlayerEntity( int type )
-// {
-// 	return playerEntity[0];
-// }
-
-const Entity *EntityFactory::bulletEntity[20] = 
+const EntityData EntityFactory::bulletEntity[20] = 
 {
-// 	new CircleEntity(Vector2(-3, 0), 2)
-	new CircleEntity(0, 0, 10),
-	new RectEntity(0, 3, 2, 2),
+	_InnerEntityData{ EntityData::tCircle, { 0, -5 }, 10 },
+	_InnerEntityData{ EntityData::tRectangle,{ 0, 3 }, 2, 2 },
 };
 
-const CircleEntity *EntityFactory::playerEntity[4] =
+const EntityData EntityFactory::playerEntity[4] =
 {
-	new CircleEntity(3)
+	_InnerEntityData{ EntityData::tCircle, { 0, 0 }, 3, 3 },
 };
 
-const RectEntity *EntityFactory::laserEntity[20] =
+const EntityData EntityFactory::laserEntity[20] =
 {
-	new RectEntity(0.5, 4),
-	new RectEntity(0.5, 3.5),		// 想起
+	_InnerEntityData{ EntityData::tRectangle, { 0, 0 }, 0.5, 4 },
+	_InnerEntityData{ EntityData::tRectangle, { 0, 0 }, 0.5, 3.5 }, // 想起
 };
-
-
-// const Entity* EntityFactory::getLaserEntity( int type )
-// {
-// 	return laserEntity[0]
-// }

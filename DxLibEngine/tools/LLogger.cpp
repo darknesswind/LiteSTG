@@ -16,7 +16,7 @@ void LLogger::Print(LogLevel level, const QString& msg)
 {
 	if (Error == level)
 	{
-		LASSERT(!L"Error happened!");
+		LAssert(!L"Error happened!");
 	}
 	qDebug() << msg;
 }

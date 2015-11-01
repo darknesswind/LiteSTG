@@ -13,7 +13,7 @@
 #include "LAssets.h"
 
 LEnemy::LEnemy(IGameObject* pParent, int _enemyStyle)
-	: LGameObject(pParent)
+	: LCollideObject(pParent)
 	, m_pGraphGroup(nullptr)
 {
 	m_spShooters = std::make_unique<LShooters>();
