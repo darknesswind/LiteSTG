@@ -21,7 +21,6 @@ const LGraphHandle LGameObject::GetGraphHandle() const
 }
 
 //////////////////////////////////////////////////////////////////////////
-#define position m_phyData.position
 #define center m_entity.center
 #define radius m_entity.halfWidth
 
@@ -40,16 +39,16 @@ void LCollideObject::DrawHitBox(LPainter& painter)
 	{
 	case EntityData::tCircle:
 	{
-		Vector2 target = position + center.rotated(rad);
+		Vector2 target = position() + center.rotated(rad);
 		DebugPat.AddCircle(target.x(), target.y(), radius, m_hitboxClr);
 		break;
 	}
 	case EntityData::tRectangle:
 	{
-		Vector2 vLTop = position + Vector2(left, top).rotate(rad);
-		Vector2 vRTop = position + Vector2(right, top).rotate(rad);
-		Vector2 vRBottom = position + Vector2(right, bottom).rotate(rad);
-		Vector2 vLBottom = position + Vector2(left, bottom).rotate(rad);
+		Vector2 vLTop = position() + Vector2(left, top).rotate(rad);
+		Vector2 vRTop = position() + Vector2(right, top).rotate(rad);
+		Vector2 vRBottom = position() + Vector2(right, bottom).rotate(rad);
+		Vector2 vLBottom = position() + Vector2(left, bottom).rotate(rad);
 		painter.drawQuadrangle(vLTop, vRTop, vRBottom, vLBottom, m_hitboxClr, false);
 		break;
 	}
@@ -90,7 +89,7 @@ bool LCollideObject::CollideWithCircle(const LCollideObject& other) const
 	{
 	case EntityData::tCircle:
 	{
-		Vector2 vSelf2Other = other.position - position;
+		Vector2 vSelf2Other = other.position() - position();
 		float radiusSum = other.radius + radius;
 
 		if (vSelf2Other.manhattanLength() >= radiusSum + center.manhattanLength() + other.center.manhattanLength())
@@ -105,7 +104,7 @@ bool LCollideObject::CollideWithCircle(const LCollideObject& other) const
 	}
 	case EntityData::tRectangle:
 	{
-		Vector2 vSelf2Other = other.position - position;
+		Vector2 vSelf2Other = other.position() - position();
 		float radiusSum = m_entity.halfWidth + m_entity.halfHeight + other.radius;
 
 		if (vSelf2Other.manhattanLength() >= radiusSum + center.manhattanLength() + other.center.manhattanLength())
@@ -149,7 +148,6 @@ bool LCollideObject::CollideWithRectangle(const LCollideObject& other) const
 	}
 }
 
-#undef position
 #undef center
 #undef radius
 

@@ -57,6 +57,7 @@ private:
 	RgbUnion32 m_color;
 
 public:
+	// From https://zh.wikipedia.org/wiki/%E9%A2%9C%E8%89%B2%E5%88%97%E8%A1%A8
 	enum StaticColorTable : uint
 	{
 		Transparent				= 0x00000000, // Í¸Ã÷

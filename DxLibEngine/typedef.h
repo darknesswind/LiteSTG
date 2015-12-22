@@ -1,8 +1,6 @@
 ﻿#ifndef __TYPEDEFINE_H__
 #define __TYPEDEFINE_H__
 
-
-
 #pragma region Include
 #include <cassert>
 #pragma endregion
@@ -49,6 +47,9 @@ typedef unsigned char uchar;
 
 #ifndef _MSC_VER
 #	define __interface __declspec(novtable) struct
+#endif
+#ifdef PURE
+#	undef PURE
 #endif
 #ifndef PURE
 #	define PURE =0
