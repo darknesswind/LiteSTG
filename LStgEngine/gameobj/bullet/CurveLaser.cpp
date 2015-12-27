@@ -58,9 +58,11 @@ void CurveLaser::Draw( LPainter& painter )
 		++iter)
 	{
 		vertexs[i] = g_vertexTemplate;
-		vertexs[i].pos = iter->leftPos;
+		vertexs[i].pos.x = iter->leftPos.x();
+		vertexs[i].pos.y = iter->leftPos.y();
 		vertexs[i + 1] = g_vertexTemplate;
-		vertexs[i + 1].pos = iter->rightPos;
+		vertexs[i + 1].pos.x = iter->rightPos.x();
+		vertexs[i + 1].pos.y = iter->rightPos.y();
 
 		int nMain = i / 2;
 		float pres = (float)nMain / (g_MaxGridSize - 1);

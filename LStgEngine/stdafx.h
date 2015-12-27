@@ -17,6 +17,7 @@
 #include <list>
 #include <deque>
 #include <cmath>
+#include <array>
 
 // DxLibEngine
 #include "typedef.h"
@@ -25,5 +26,4 @@
 
 // LStgEngine
 #include "interdef.h"
-#include "interfaceDef.h"
 #include "LStgEngine.h"

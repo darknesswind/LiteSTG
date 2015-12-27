@@ -77,7 +77,8 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine\;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,7 +105,8 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine\;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -152,7 +154,6 @@
     <ClInclude Include="gameobj\stage\LStage.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="interdef.h" />
-    <ClInclude Include="interfaceDef.h" />
     <ClInclude Include="Manager\ComManage.h" />
     <ClInclude Include="Manager\MemoryManager.h" />
     <ClInclude Include="Manager\SpriteManager.h" />

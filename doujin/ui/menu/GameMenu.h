@@ -2,7 +2,6 @@
 #define _GAMEMENU_H_
 
 #pragma once
-#include "interfaceDef.h"
 #include "LImage.h"
 // Ö÷²Ëµ¥
 class GameMenu : public IComponent

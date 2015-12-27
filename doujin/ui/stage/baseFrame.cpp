@@ -1,6 +1,5 @@
 ﻿#include "stdafx.h"
 #include "baseFrame.h"
-#include "resource.h"
 #include "LPainter.h"
 #include "LAssets.h"
 

@@ -10,11 +10,6 @@ LGameObject::LGameObject(IGameObject* pParent /*= nullptr*/)
 
 }
 
-void LGameObject::DrawHitBox( LPainter& painter )
-{
-
-}
-
 const LGraphHandle LGameObject::GetGraphHandle() const
 {
 	return LGraphHandle::NoneGraph;

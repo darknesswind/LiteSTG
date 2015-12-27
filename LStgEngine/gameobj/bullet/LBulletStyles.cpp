@@ -15,10 +15,10 @@ LBulletStyles::~LBulletStyles()
 
 }
 
-void LBulletStyles::LoadBulletStyles()
+void LBulletStyles::LoadBulletStyles(LPCWSTR path)
 {
 	QJsonParseError err;
-	QJsonDocument doc = doc.fromJson(LAssets::LoadRawData(_T("resource\\bulletstyles.json")), &err);
+	QJsonDocument doc = doc.fromJson(LAssets::LoadRawData(path), &err);
 
 	QJsonArray array = doc.array();
 	for (auto iter = array.begin(); iter != array.end(); ++iter)
@@ -41,6 +41,17 @@ void LBulletStyles::LoadBulletStyles()
 		style.entity.halfWidth = rect[2].toDouble();
 		style.entity.halfHeight = rect[3].toDouble();
 
-		m_nameMap[name.toStdWString()] = &style;
+		m_nameMap[name.toStdWString()] = m_styles.size() - 1;
+		if (!m_defStyles[(uint)style.type])
+			m_defStyles[(uint)style.type] = m_styles.size() - 1;
 	}
+}
+
+LBulletStyle* LBulletStyles::getStyle(LPCWSTR name)
+{
+	auto iter = m_nameMap.find(name);
+	if (iter != m_nameMap.end())
+		return getStyle(iter->second);
+	else
+		return getDefaultStyle(BulletType::Generic);
 }

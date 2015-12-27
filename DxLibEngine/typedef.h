@@ -1,28 +1,26 @@
-﻿#ifndef __TYPEDEFINE_H__
-#define __TYPEDEFINE_H__
-
-#pragma region Include
-#include <cassert>
-#pragma endregion
-
-#pragma region TypeDefine
-
-typedef unsigned int uint;
-typedef unsigned char uchar;
-
-#pragma endregion
-
-#pragma region Switcher
-
+﻿#pragma once
 #define USE_PPL 0
-
 #if _DEBUG
 #	define USE_ASSERT 1
 #endif
 
-#pragma endregion
+#include <cassert>
+#include "tools/Vector2.hpp"
+#include "enumations.h"
 
-#pragma region MacroDefine
+#if USE_PPL
+#	include <ppl.h>
+#	include <concurrent_vector.h>
+using namespace Concurrency;
+#endif
+
+class LGraphHandle;
+class LPainter;
+struct RenderArgument;
+struct PhysicData;
+
+typedef unsigned int uint;
+typedef unsigned char uchar;
 
 #if USE_ASSERT
 #	define LAssert(x) assert(x)
@@ -37,22 +35,10 @@ typedef unsigned char uchar;
 #	define CheckRes(DxLibFunc) DxLibFunc;
 #endif // USE_ASSERT
 
-#if _MSC_VER >= 1800
-#	define DeleteFunc(FuncDef)	FuncDef = delete;
-#	define AssertSizeEqual(Type1, Type2) static_assert(sizeof(Type1) == sizeof(Type2), "sizeof(" #Type1 ") != sizeof(" #Type2 ")");
-#else
-#	define DeleteFunc(FuncDef)	FuncDef;
-#	define AssertSizeEqual(Type1, Type2)
-#endif
+#define AssertSizeEqual(Type1, Type2) static_assert(sizeof(Type1) == sizeof(Type2), "sizeof(" #Type1 ") != sizeof(" #Type2 ")");
 
 #ifndef _MSC_VER
 #	define __interface __declspec(novtable) struct
-#endif
-#ifdef PURE
-#	undef PURE
-#endif
-#ifndef PURE
-#	define PURE =0
 #endif
 
 #define Q2WSTR(qstr) ((const TCHAR*)qstr.utf16())
@@ -71,17 +57,6 @@ typedef unsigned char uchar;
 	}
 #	define parallel_begin(range)	(range).begin()
 #	define parallel_end(range)		(range).end()
-#endif
-
-#pragma endregion
-
-#include "Vector2.hpp"
-#include "enumations.h"
-
-#if USE_PPL
-#	include <ppl.h>
-#	include <concurrent_vector.h>
-using namespace Concurrency;
 #endif
 
 template <class T>
@@ -127,45 +102,35 @@ private:
 	T* m_ptr;
 };
 
-#pragma region Interfaces
-class LGraphHandle;
-class LPainter;
-struct RenderArgument;
-struct PhysicData;
-
 __interface IDestructible
 {
-	virtual void destory() PURE;
+	virtual void destory() = 0;
 };
 
 __interface IDrawable
 {
-	virtual void Draw(LPainter& painter) PURE;
-	virtual void DrawHitBox(LPainter& painter) PURE;
+	virtual void Draw(LPainter& painter) = 0;
 };
 
 __interface IDrawableObj : public IDrawable
 {
-	virtual const LGraphHandle GetGraphHandle() const PURE;
-	virtual const RenderArgument& GetRenderArgument() const PURE;
+	virtual const LGraphHandle GetGraphHandle() const = 0;
+	virtual const RenderArgument& GetRenderArgument() const = 0;
 };
 
 __interface IWalker : IDestructible
 {
-	virtual void nextStep(PhysicData& data) PURE;
+	virtual void nextStep(PhysicData& data) = 0;
 };
 
 __interface IGameObject : public IDrawableObj
 {
-	virtual void			Update()				PURE;
-	virtual bool			IsValid() const			PURE;
-	virtual void			SetValid(bool bValid)	PURE;
-	virtual IGameObject*	GetParent()				PURE;
-	virtual const Vector2&	GetPosition()			PURE;
+	virtual void			Update()				= 0;
+	virtual bool			IsValid() const			= 0;
+	virtual void			SetValid(bool bValid)	= 0;
+	virtual IGameObject*	GetParent()				= 0;
+	virtual const Vector2&	GetPosition()			= 0;
 };
-#pragma endregion
-
-#pragma region Structs
 
 struct PhysicData
 {
@@ -227,6 +192,3 @@ struct RenderArgument
 	}
 };
 
-#pragma endregion
-
-#endif

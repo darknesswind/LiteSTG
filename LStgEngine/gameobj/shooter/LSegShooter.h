@@ -6,10 +6,7 @@
 class LSegShooter : public LShooter
 {
 public:
-	explicit LSegShooter(IGameObject* pParent)
-		: LShooter(pParent)
-	{
-	}
+	explicit LSegShooter(IGameObject* pParent);
 	virtual ~LSegShooter(void){}
 
 	virtual void Update();

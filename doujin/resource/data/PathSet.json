@@ -1,0 +1,24 @@
+{
+	"Paths": [{
+		"id": 1,
+		"name": "test",
+		"Nodes": 
+		[{
+			"type": "Empty"
+			"time": 100
+		},
+		{
+			"type": "Line"
+			"time": 200,
+			"dx": 100,
+			"dy": 100
+		},
+		{
+			"type": "Sine"
+			"time": 400,
+			"dy": 100,
+			"sx": 10,
+			"sy": 100
+		}]
+	}]
+}

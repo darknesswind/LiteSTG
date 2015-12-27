@@ -1,6 +1,7 @@
 #ifndef InterDefine_H
 #define InterDefine_H
 #include "Vector2.hpp"
+#include "LHandle.h"
 
 typedef unsigned int uint;
 
@@ -10,6 +11,7 @@ enum class BulletType
 	SegmentLaser,
 	RayLaser,
 	CurveLaser,
+	Count
 };
 
 class LBulletStyle;
@@ -44,5 +46,13 @@ struct EntityData : public _InnerEntityData
 	{
 	}
 };
+
+class LPainter;
+__interface IComponent // 组件基类
+{
+	virtual void Update() = 0;
+	virtual void Draw(LPainter& painter) = 0;
+};
+
 
 #endif

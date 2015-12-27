@@ -12,12 +12,6 @@
     <Filter Include="Factory">
       <UniqueIdentifier>{acb872f6-08de-42ac-aa55-a3af125b77d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObj">
-      <UniqueIdentifier>{75df2707-3554-4a06-b26e-f860f4fc07b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObj\组件">
-      <UniqueIdentifier>{5f3cb3fa-37ac-4eef-a3bf-a88a7a5a5143}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ui">
       <UniqueIdentifier>{ba8e0c66-8736-421f-9aed-20c8a2059f25}</UniqueIdentifier>
     </Filter>
@@ -30,15 +24,12 @@
     <Filter Include="状态机">
       <UniqueIdentifier>{73ef8006-c372-417d-b0d0-9226fae3c484}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gameobj">
+      <UniqueIdentifier>{75df2707-3554-4a06-b26e-f860f4fc07b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="DebugInfo.cpp">
-      <Filter>GameObj\组件</Filter>
-    </ClCompile>
-    <ClCompile Include="resource.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Factory\EnemyFactory.cpp">
@@ -50,9 +41,6 @@
     <ClCompile Include="Factory\ShooterFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ui\stage\baseFrame.cpp">
       <Filter>ui\stage</Filter>
     </ClCompile>
@@ -62,22 +50,22 @@
     <ClCompile Include="Globle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugInfo.cpp">
+      <Filter>gameobj</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DebugInfo.h">
-      <Filter>GameObj\组件</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="State.h">
       <Filter>状态机</Filter>
     </ClInclude>
     <ClInclude Include="StateMachine.h">
       <Filter>状态机</Filter>
-    </ClInclude>
-    <ClInclude Include="DxLib.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Factory\EnemyFactory.h">
       <Filter>Factory</Filter>
@@ -98,6 +86,15 @@
       <Filter>ui\menu</Filter>
     </ClInclude>
     <ClInclude Include="Globle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugInfo.h">
+      <Filter>gameobj</Filter>
+    </ClInclude>
+    <ClInclude Include="DxLib.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

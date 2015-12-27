@@ -62,6 +62,7 @@ public:
 	void setFireSpeed(Vector2 speed);// ³õÊ¼Éä»÷ËÙ¶È
 	void setBulletFriction(float friction) { m_bulletData.friction = friction; }
 	void setBulletAcceleration(Vector2 gravitation) { m_bulletData.acceleration = gravitation; }
+	void setBulletStyle(LBulletStyle* style) { m_pBulletStyle = style; }
 
 protected:
 	void baseInit();

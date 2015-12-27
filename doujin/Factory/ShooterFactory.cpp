@@ -5,11 +5,12 @@
 #include "shooter/LShooter.h"
 #include "shooter/LRayShooter.h"
 #include "shooter/LSegShooter.h"
-#include "Engine.h"
+#include "bullet/LBulletStyles.h"
 
 void ShooterFactory::createNWaysFlower(LEnemy* pEnemy, int difficulty)
 {	
 	LShooter *pShooter = pEnemy->GetShooters()->AddNormalShooter(pEnemy);
+	pShooter->setBulletStyle(Engine::bulletStyles()->getStyle(__T("Á×µ¯")));
 	(*pShooter).setFireWays(6).setFireFreq(8).setAngleSpeed(Degree(3));
 	pShooter->setBulletAcceleration(Vector2(0, 0.01));
 
@@ -21,7 +22,7 @@ void ShooterFactory::createNWaysFlower(LEnemy* pEnemy, int difficulty)
 void ShooterFactory::createPlayerSnipe(LEnemy* pEnemy, int difficulty)
 {
 	LShooter *pShooter = pEnemy->GetShooters()->AddNormalShooter(pEnemy);
-	pShooter->bulletStyle().type = BulletClass::Ð¡Óñ2;
+	pShooter->setBulletStyle(Engine::bulletStyles()->getStyle(__T("Ð¡Óñ2")));
 	pShooter->setFollowPlayer(true);
 }
 
@@ -33,7 +34,6 @@ void ShooterFactory::createTest(LEnemy* pEnemy, int difficulty)
 	pShooter->setWidthExtRange(1);
 	pShooter->setLengthExtRange(30);
 	pShooter->setTurnFlag(true);
-	pShooter->bulletStyle().type = BulletClass::µûµ¯;
-	pShooter->bulletStyle().color = 2;
+	pShooter->setBulletStyle(Engine::bulletStyles()->getStyle(__T("µûµ¯")));
 	(*pShooter).setFollowPlayer(true).setFireWays(5).setFireRange(Degree(90));
 }

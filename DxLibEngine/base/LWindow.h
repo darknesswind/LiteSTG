@@ -33,8 +33,8 @@ private:
 	friend LRESULT CALLBACK InnerinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 private:
-	DeleteFunc(LWindow(const LWindow&));
-	DeleteFunc(void operator=(const LWindow&));
+	LWindow(const LWindow&) = delete;
+	void operator=(const LWindow&) = delete;
 
 private:
 	WNDPROC UserWinProc;

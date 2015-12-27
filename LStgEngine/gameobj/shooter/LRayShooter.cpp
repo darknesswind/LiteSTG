@@ -4,6 +4,7 @@
 #include "player/player.h"
 #include "bullet/LBullets.h"
 #include "Bullet/RayLaser.h"
+#include "bullet/LBulletStyles.h"
 
 LRayShooter::LRayShooter(IGameObject* pParent)
 	: LShooter(pParent)
@@ -16,6 +17,7 @@ LRayShooter::LRayShooter(IGameObject* pParent)
 	m_bTurnFlag = false;
 	m_warningLine.InitFromPolar(600, m_fireDegree);
 	ChangeState(Warning);
+	m_pBulletStyle = LStgEngine::bulletStyles()->getDefaultStyle(BulletType::RayLaser);
 }
 
 LRayShooter::~LRayShooter(void)

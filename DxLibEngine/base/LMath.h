@@ -1,7 +1,7 @@
 #ifndef __LMATH_H__
 #define __LMATH_H__
 #pragma once
-#include "typedef.h"
+
 #include <QtMath>
 
 #define SINE_COSINE_ACCUR_LEVEL 2

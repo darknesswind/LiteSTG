@@ -1,6 +1,4 @@
 #include "DxLib.h"
-#include "Graph.h"
-#include "Manager/comManage.h"
 
 /*#include "baseFrame.h"
 #include "Fps.h"*/

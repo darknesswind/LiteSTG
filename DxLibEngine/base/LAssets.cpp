@@ -78,6 +78,7 @@ void LAssets::LoadTextureList(LPCWSTR lpPath)
 	QJsonParseError err;
 	QJsonDocument doc = doc.fromJson(LoadRawData(lpPath), &err);
 
+	QString dir("resource\\");
 	QJsonObject obj = doc.object();
 	for (auto iter = obj.begin(); iter != obj.end(); ++iter)
 	{
@@ -116,7 +117,7 @@ void LAssets::LoadTextureList(LPCWSTR lpPath)
 		}
 		else
 		{
-			m_textureMap[name].path = path;
+			m_textureMap[name].path = dir + path;
 		}
 	}
 }

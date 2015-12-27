@@ -1,7 +1,7 @@
 ﻿#ifndef _BASEFRAME_H_
 #define _BASEFRAME_H_
 #pragma once
-#include "interfaceDef.h"
+
 #include "LImage.h"
 // 游戏中背景框的显示
 class BaseFrame : public IComponent

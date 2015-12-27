@@ -1,1 +1,1 @@
-#include "DxLibMake\DxLib.h"
+#include "..\DxLib\DxLibMake\DxLib.h"

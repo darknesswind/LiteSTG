@@ -3,6 +3,7 @@
 #include "move/LFollowWalker.h"
 #include "player/player.h"
 #include "bullet/LBullets.h"
+#include "bullet/LBulletStyles.h"
 
 LShooter::LShooter(IGameObject* pParent /*= nullptr*/)
 	: LGameObject(pParent)
@@ -24,10 +25,7 @@ void LShooter::baseInit()
 	setFireSpeed(Vector2(0, 1));
 
 	m_spWalker = LWalker::CreateFollowWalker(m_pParent);
-
-#if USE_FASTFUNC
-	funcList[0] = timerFunc(this, &LShooter::Fun_test);
-#endif
+	m_pBulletStyle = LStgEngine::bulletStyles()->getDefaultStyle(BulletType::Generic);
 }
 
 void LShooter::Update()

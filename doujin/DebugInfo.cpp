@@ -9,7 +9,6 @@
 #include "QString"
 #include "Input.h"
 #include "Vector3.hpp"
-#include "resource.h"
 
 #define TH_X 430
 #define TH_Y 15

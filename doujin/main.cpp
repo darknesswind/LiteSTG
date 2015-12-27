@@ -8,6 +8,6 @@ int WINAPI WinMain(
 	_In_ int nShowCmd
 	)
 {
-	LStgEngine engine;
+	Engine engine;
 	return engine.exec();
 }

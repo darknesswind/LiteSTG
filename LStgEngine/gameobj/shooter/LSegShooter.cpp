@@ -5,6 +5,13 @@
 #include "Bullet/SegmentLaser.h"
 
 #include "player/player.h"
+#include "bullet/LBulletStyles.h"
+
+LSegShooter::LSegShooter(IGameObject* pParent)
+	: LShooter(pParent)
+{
+	m_pBulletStyle = LStgEngine::bulletStyles()->getDefaultStyle(BulletType::SegmentLaser);
+}
 
 void LSegShooter::Update()
 {

@@ -1,0 +1,15 @@
+{
+    "image/bullet/etama.png": "etama",
+    "image/bullet/etama2.png": "etama2",
+    "image/bullet/etama6.png": "etama6",
+    "image/bullet/etama8.png": "etama8",
+    "image/bullet/etama9.png": "etama9",
+    "image/enemy/enemy.png": "enemy",
+    "image/front/bg_bottom.png": "bg_bottom",
+    "image/front/bg_left.png": "bg_left",
+    "image/front/bg_right.png": "bg_right",
+    "image/front/bg_top.png": "bg_top",
+    "image/player/pl00.png": "pl00",
+    "image/title/select.png": "title_select",
+    "image/title/title.png": "title"
+}

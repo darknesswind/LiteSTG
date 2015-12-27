@@ -156,8 +156,8 @@ public:
 
 private:
 	InputState(void);
-	DeleteFunc(InputState(const InputState&));
-	DeleteFunc(void operator=(const InputState&));
+	InputState(const InputState&) = delete;
+	void operator=(const InputState&) = delete;
 
 protected:
 	const static int KeyCount = 256;

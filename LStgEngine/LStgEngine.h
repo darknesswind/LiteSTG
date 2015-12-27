@@ -11,6 +11,7 @@ class LEnemys;
 class Player;
 class GameMenu;
 class ComManager;
+class LBulletStyles;
 typedef ComManager LCharacters;
 #pragma endregion
 
@@ -21,7 +22,7 @@ public:
 	LStgEngine(void);
 	~LStgEngine(void);
 
-public:
+protected:
 	virtual void BeforeDxInit() override;
 	virtual void AfterDxInit() override;
 	virtual bool LoopCheck() override;
@@ -32,6 +33,7 @@ public:
 public:
 	static LStgEngine* engine() { return static_cast<LStgEngine*>(s_pEngine); }
 	static LBullets* bullets() { return engine()->GetBullets(); }
+	static LBulletStyles* bulletStyles();
 
 public:
 	LBullets* GetBullets() { return m_spBullets.get(); }
@@ -39,18 +41,11 @@ public:
 public:
 	Player* GetActivePlayer();
 
-private:
-	void checkState();
-
 protected:
 	std::unique_ptr<LBullets> m_spBullets;
 	std::unique_ptr<LPlayers> m_spPlayers;
 	std::unique_ptr<LEnemys> m_spEnemys;
 	std::unique_ptr<ComManager> m_spComManage;
-
-private:
-	std::unique_ptr<GameMenu> m_spGameMenu;
-
 };
 
 #endif

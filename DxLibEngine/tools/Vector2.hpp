@@ -1,12 +1,7 @@
-﻿#ifndef _VECTOR2_H_
-#define _VECTOR2_H_
-#pragma once
+﻿#pragma once
 
 #include <utility>
-#include <iostream>
-#include "LPoint.h"
 #include "Angle.h"
-#include "DxLib.h"
 
 #pragma warning(disable:4244)
 class Vector2
@@ -25,9 +20,6 @@ public:
 		: cx((float)point.x()), cy((float)point.y())
 	{
 	}
-
-	explicit operator LPoint() { return LPoint(cx, cy); }
-	operator DxLib::VECTOR() { return *((DxLib::VECTOR*)this); }
 
 	~Vector2(void){};
 	
@@ -383,5 +375,3 @@ public:
 protected:
 	float cx, cy;
 };
-
-#endif

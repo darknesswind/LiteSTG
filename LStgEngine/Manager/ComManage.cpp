@@ -1,6 +1,5 @@
 ﻿#include "stdafx.h"
 #include "ComManage.h"
-#include "interfaceDef.h"
 #include "LRender.h"
 
 void ComManager::Update()

@@ -21,11 +21,15 @@ public:
 	~LBulletStyles();
 
 public:
-	void LoadBulletStyles();
+	void LoadBulletStyles(LPCWSTR path);
+	LBulletStyle* getDefaultStyle(BulletType type) { return getStyle(m_defStyles[(uint)type]); }
+	LBulletStyle* getStyle(LPCWSTR name);
+	LBulletStyle* getStyle(uint idx) { return &m_styles[idx]; }
 
 private:
 	std::vector<LBulletStyle> m_styles;
-	std::map<std::wstring, LBulletStyle*> m_nameMap;
+	std::map<std::wstring, uint> m_nameMap;
+	std::array<uint, (uint)BulletType::Count> m_defStyles;
 };
 
 #endif	// !__LBULLETSTYLES_H__

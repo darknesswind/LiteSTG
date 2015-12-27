@@ -4,21 +4,11 @@
 #include "LPainter.h"
 #include "Input.h"
 
-#include "ui/menu/GameMenu.h"
-#include "ui/stage/baseFrame.h"
-
 #include "bullet/LBullets.h"
+#include "bullet/LBulletStyles.h"
 #include "player/LPlayers.h"
 #include "enemy/LEnemys.h"
 #include "Manager/ComManage.h"
-
-// DEBUG
-#include "enemy/LEnemy.h"
-#include "Factory/ShooterFactory.h"
-#include "DebugInfo.h"
-DebugInfo debugInfo;
-// _DEBUG
-
 
 LStgEngine::LStgEngine(void)
 	: LEngine()
@@ -43,9 +33,6 @@ void LStgEngine::AfterDxInit()
 {
 	Base::AfterDxInit();
 
-	m_pathSet.load(L".\\resource\\data\\PathSet.xml");
-	Resource::loadPrimaryGameResource();
-	Resource::loadPlayerResource(NS_Resource::Reimu);
 
 	m_spBullets = std::make_unique<LBullets>();
 	m_spPlayers = std::make_unique<LPlayers>();
@@ -53,11 +40,9 @@ void LStgEngine::AfterDxInit()
 
 	m_spComManage = std::make_unique<ComManager>();
 
-	m_spGameMenu = std::make_unique<GameMenu>();
-
+	m_pathSet.load(L".\\resource\\data\\PathSet.xml");
+	m_spBullets->styles()->LoadBulletStyles(_T("resource\\bulletstyles.json"));
 	m_bDebugPause = false;
-
-	m_spComManage->push_back(m_spGameMenu.get());
 }
 
 bool LStgEngine::LoopCheck()
@@ -73,16 +58,10 @@ bool LStgEngine::LoopCheck()
 
 void LStgEngine::Update()
 {
-	//timeCount = GetNowCount();
-
 	m_spEnemys->Update();
 	m_spPlayers->Update();
 	m_spBullets->Update();
 	m_spComManage->Update();
-	debugInfo.Update();
-
-	if (isStateChange)
-		checkState();
 }
 
 void LStgEngine::Draw()
@@ -91,30 +70,6 @@ void LStgEngine::Draw()
 	m_spBullets->CommitRender();
 	m_spPlayers->CommitRender();
 	m_spComManage->Draw();
-
-	debugInfo.Draw(LStgEngine::render()->GetPainter());
-}
-
-void LStgEngine::checkState()
-{
-	static 	BaseFrame baseFrame;
-	switch (gameState)
-	{
-	case GAMESTATE_START:
-		m_spComManage->clear();
-		m_spComManage->push_back(&baseFrame);
-
-		m_spPlayers->Add(PlayerType::Controlled);
-		for (int i = 0; i < 1; ++i)
-		{
-			LEnemy* pEnemy = m_spEnemys->Add();
-			pEnemy->position().Init(100 + 20 * i, 100);
-			ShooterFactory::createNWaysFlower(pEnemy);
-		}
-		break;
-	}
-
-	isStateChange = false;
 }
 
 void LStgEngine::BeforeEnd()
@@ -124,6 +79,11 @@ void LStgEngine::BeforeEnd()
 	m_spBullets->Clear();
 
 	Base::BeforeEnd();
+}
+
+LBulletStyles* LStgEngine::bulletStyles()
+{
+	return engine()->bullets()->styles();
 }
 
 Player* LStgEngine::GetActivePlayer()

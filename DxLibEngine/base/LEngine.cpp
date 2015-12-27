@@ -8,8 +8,6 @@
 LEngine* LEngine::s_pEngine = nullptr;
 
 LEngine::LEngine(void)
-	: m_bDebugPause(false)
-	, m_bEndGame(false)
 {
 	LAssert(!s_pEngine);
 	s_pEngine = this;
@@ -66,7 +64,7 @@ int LEngine::exec()
 
 bool LEngine::LoopCheck()
 {
-	return (!m_bEndGame && 0 == DxLib::ProcessMessage());
+	return (!m_bEndFlag && 0 == DxLib::ProcessMessage());
 }
 
 bool LEngine::NeedUpdate()

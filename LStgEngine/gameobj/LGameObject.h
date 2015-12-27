@@ -9,7 +9,6 @@ public:
 	virtual ~LGameObject() {}
 
 public: // IGameObject
-	virtual void	DrawHitBox(LPainter& painter) override;
 	virtual bool	IsValid() const	final							{ return m_bValid; }
 	virtual void	SetValid(bool bValid) final						{ m_bValid = bValid; }
 	virtual const LGraphHandle GetGraphHandle() const override;
@@ -39,7 +38,7 @@ public:
 	}
 
 public:
-	virtual void DrawHitBox(LPainter& painter) final;
+	void DrawHitBox(LPainter& painter);
 
 public:
 	const EntityData& entity() const { return m_entity; }

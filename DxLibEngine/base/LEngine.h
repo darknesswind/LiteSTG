@@ -13,11 +13,15 @@ public:
 	LEngine(void);
 	virtual ~LEngine(void);
 
+public:
 	int exec();
 	LUnifiedTimer& unifiedTimer() { return m_centerTimer; }
 	LPathSet& pathSet() { return m_pathSet; }
 
 public:
+	void setEndFlag(bool bEnd) { m_bEndFlag = bEnd; }
+
+protected:
 	virtual void BeforeDxInit() { }
 	virtual void AfterDxInit();
 	virtual bool LoopCheck();
@@ -35,8 +39,8 @@ protected:
 	static LEngine* s_pEngine;
 
 protected:
-	bool m_bDebugPause;
-	bool m_bEndGame;
+	bool m_bDebugPause = false;
+	bool m_bEndFlag = false;
 
 	LUnifiedTimer m_centerTimer;
 	LPathSet m_pathSet;

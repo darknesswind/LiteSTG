@@ -5,6 +5,7 @@
 #include <array>
 #include "Vector2.hpp"
 #include "LRgb.h"
+#include "LPoint.h"
 
 #define  DebugPat DebugPainter::instance()
 class DebugPainter

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "GameMenu.h"
 #include "Globle.h"
-#include "resource.h"
 #include "Input.h"
 #include "LPainter.h"
 #include "LImage.h"
@@ -24,8 +23,6 @@ GameMenu::~GameMenu(void)
 
 void GameMenu::Draw( LPainter& painter )
 {
-	using namespace NS_Resource;
-
 	painter.drawGraph(0, 0, m_title, false);
 	painter.drawBox(410, 50 + 32 * m_menuSelect, 602, 82 + 32 * m_menuSelect, 0xffff, true);
 	for (int i = 0; i < MENU_SELECT_NUM; ++i)
@@ -45,7 +42,7 @@ void GameMenu::Update()
 			isStateChange = true;
 			break;
 		case MENU_QUIT:
-			endflag = true;
+			Engine::engine()->setEndFlag(true);
 			break;
 		default: break;
 		}
