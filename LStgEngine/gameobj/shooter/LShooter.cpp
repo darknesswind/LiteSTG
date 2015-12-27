@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "LShooter.h"
-#include "Engine.h"
 #include "move/LFollowWalker.h"
 #include "player/player.h"
 #include "bullet/LBullets.h"
@@ -38,7 +37,7 @@ void LShooter::Update()
 	{
 		m_counter = 0;
 		if (m_bFollowPlayer)
-			m_fireDegree = position().degreeBetween(StgEngine::engine()->GetActivePlayer()->position());
+			m_fireDegree = position().degreeBetween(LStgEngine::engine()->GetActivePlayer()->position());
 
 		m_fireDegree += m_angleSpeed;
 		m_angleSpeed += m_angleAccel;
@@ -48,7 +47,7 @@ void LShooter::Update()
 		angle = m_fireDegree - ((m_fireRange - m_angleIncrease) / 2);
 		for (int i = 0; i < m_fireWays; ++i)
 		{
-			Bullet *pBullet = StgEngine::bullets()->AddGenericBullet(this);
+			Bullet *pBullet = LStgEngine::bullets()->AddGenericBullet(this);
 			pBullet->setStyle(m_pBulletStyle, 0);
 			pBullet->setData(m_bulletData);
 			pBullet->setSpeed(m_bulletSpeed, angle);

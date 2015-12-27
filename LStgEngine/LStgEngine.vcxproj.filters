@@ -108,9 +108,6 @@
     <ClInclude Include="Manager\SpriteManager.h">
       <Filter>manager</Filter>
     </ClInclude>
-    <ClInclude Include="Engine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Graph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -122,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="script\LTcc.h">
       <Filter>script</Filter>
+    </ClInclude>
+    <ClInclude Include="LStgEngine.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -188,14 +188,14 @@
     <ClCompile Include="Manager\SpriteManager.cpp">
       <Filter>manager</Filter>
     </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Graph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="script\LTcc.cpp">
       <Filter>script</Filter>
+    </ClCompile>
+    <ClCompile Include="LStgEngine.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

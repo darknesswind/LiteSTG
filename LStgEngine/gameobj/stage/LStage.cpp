@@ -1,6 +1,5 @@
 ﻿#include "stdafx.h"
 #include "LStage.h"
-#include "Engine.h"
 #include "enemy/LEnemys.h"
 
 LStage::LStage(IGameObject* pParent)

@@ -4,7 +4,6 @@
 #include "player/player.h"
 #include "bullet/LBullets.h"
 #include "Bullet/RayLaser.h"
-#include "Engine.h"
 
 LRayShooter::LRayShooter(IGameObject* pParent)
 	: LShooter(pParent)
@@ -79,7 +78,7 @@ void LRayShooter::EntryShootingState()
 	Degree angle = m_fireDegree - ((m_fireRange - m_angleIncrease) / 2);
 	for (int i = 0; i < m_fireWays; ++i)
 	{
-		RayLaser* pLaser = StgEngine::bullets()->AddRayLaser(this);
+		RayLaser* pLaser = LStgEngine::bullets()->AddRayLaser(this);
 		pLaser->SetLife(m_durationTime);
 		pLaser->setPosition(position());
 		pLaser->setStyle(m_pBulletStyle, 0);
@@ -113,7 +112,7 @@ void LRayShooter::ExecWarning()
 {
 	if (m_bFollowPlayer)
 	{
-		Radian rad = position().radianBetween(StgEngine::engine()->GetActivePlayer()->position());
+		Radian rad = position().radianBetween(LStgEngine::engine()->GetActivePlayer()->position());
 		m_warningLine.InitFromPolar(600, rad);
 	}
 

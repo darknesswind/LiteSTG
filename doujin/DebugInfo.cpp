@@ -17,7 +17,7 @@
 
 void DebugInfo::Draw( LPainter& painter )
 {
-	Player* pPlayer = StgEngine::engine()->GetActivePlayer();
+	Player* pPlayer = LStgEngine::engine()->GetActivePlayer();
 	if (pPlayer)
 	{
 		painter.drawString(
@@ -27,11 +27,11 @@ void DebugInfo::Draw( LPainter& painter )
 	}
 	painter.drawString(
 		TH_X, TH_Y + TH_DY,
-		Q2WSTR(QString("Bullet: %1").arg(StgEngine::bullets()->GetCount())),
+		Q2WSTR(QString("Bullet: %1").arg(LStgEngine::bullets()->GetCount())),
 		LRgb::White);
 	painter.drawString(
 		0, 0,
-		Q2WSTR(QString::number(StgEngine::engine()->unifiedTimer().fps(), 'f', 2)),
+		Q2WSTR(QString::number(LStgEngine::engine()->unifiedTimer().fps(), 'f', 2)),
 		LRgb::White);
 }
 

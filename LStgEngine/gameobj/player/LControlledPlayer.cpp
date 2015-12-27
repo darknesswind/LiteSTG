@@ -20,8 +20,8 @@ LControlledPlayer::LControlledPlayer(int x, int y)
 
 	m_renderArg.uDepth = DepthCharacter;
 	m_hitboxClr = LRgb::Lime;
-	m_playerImg = StgEngine::assets()->GetSubGraphGroup(__T("灵梦"));
-	m_hHitBox = StgEngine::assets()->GetSubGraphGroup(__T("判定点"))[0];
+	m_playerImg = LStgEngine::assets()->GetSubGraphGroup(__T("灵梦"));
+	m_hHitBox = LStgEngine::assets()->GetSubGraphGroup(__T("判定点"))[0];
 }
 
 

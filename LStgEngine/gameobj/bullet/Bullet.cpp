@@ -1,7 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Bullet.h"
 #include "player/player.h"
-#include "Engine.h"
 #include "LPainter.h"
 #include "LImage.h"
 #include "move/LPhysicWalker.h"
@@ -32,7 +31,7 @@ void Bullet::Update()
 	m_spWalker->nextStep(m_phyData);
 
 #ifdef _DEBUG
-	if (CollideWith(*StgEngine::engine()->GetActivePlayer()))
+	if (CollideWith(*LStgEngine::engine()->GetActivePlayer()))
 	{
 		// 		PlaySoundMem(Resource::SE(NS_Resource::SE_Miss), DX_PLAYTYPE_BACK);
 		// 		Sleep(100);

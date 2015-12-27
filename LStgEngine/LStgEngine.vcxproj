@@ -132,7 +132,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine.h" />
+    <ClInclude Include="LStgEngine.h" />
     <ClInclude Include="gameobj\bullet\Bullet.h" />
     <ClInclude Include="gameobj\bullet\CurveLaser.h" />
     <ClInclude Include="gameobj\bullet\LBullets.h" />
@@ -161,7 +161,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="LStgEngine.cpp" />
     <ClCompile Include="gameobj\bullet\Bullet.cpp" />
     <ClCompile Include="gameobj\bullet\CurveLaser.cpp" />
     <ClCompile Include="gameobj\bullet\LBullets.cpp" />

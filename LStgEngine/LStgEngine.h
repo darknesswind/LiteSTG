@@ -14,12 +14,12 @@ class ComManager;
 typedef ComManager LCharacters;
 #pragma endregion
 
-class StgEngine : public LEngine
+class LStgEngine : public LEngine
 {
 public:
 	typedef LEngine Base;
-	StgEngine(void);
-	~StgEngine(void);
+	LStgEngine(void);
+	~LStgEngine(void);
 
 public:
 	virtual void BeforeDxInit() override;
@@ -30,7 +30,7 @@ public:
 	virtual void BeforeEnd() override;
 
 public:
-	static StgEngine* engine() { return static_cast<StgEngine*>(s_pEngine); }
+	static LStgEngine* engine() { return static_cast<LStgEngine*>(s_pEngine); }
 	static LBullets* bullets() { return engine()->GetBullets(); }
 
 public:

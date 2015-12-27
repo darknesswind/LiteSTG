@@ -6,7 +6,7 @@
 
 BaseFrame::BaseFrame()
 {
-	LAssets* pAssets = StgEngine::assets();
+	LAssets* pAssets = LStgEngine::assets();
 	m_leftFrame		= pAssets->GetTexture(_T("bg_left"));
 	m_topFrame		= pAssets->GetTexture(_T("bg_top"));
 	m_rightFrame	= pAssets->GetTexture(_T("bg_right"));

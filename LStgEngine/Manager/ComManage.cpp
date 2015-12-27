@@ -15,7 +15,7 @@ void ComManager::Draw() const
 {	
 	for each(auto *i in thisList)
 	{
-		i->Draw(StgEngine::render()->GetPainter());
+		i->Draw(LStgEngine::render()->GetPainter());
 	}
 }
 

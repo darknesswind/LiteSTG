@@ -20,16 +20,16 @@ DebugInfo debugInfo;
 // _DEBUG
 
 
-StgEngine::StgEngine(void)
+LStgEngine::LStgEngine(void)
 	: LEngine()
 {
 }
 
-StgEngine::~StgEngine(void)
+LStgEngine::~LStgEngine(void)
 {
 }
 
-void StgEngine::BeforeDxInit()
+void LStgEngine::BeforeDxInit()
 {
 	Base::BeforeDxInit();
 
@@ -39,7 +39,7 @@ void StgEngine::BeforeDxInit()
 	AppWindow.setRunWhenDeactivate(true);
 }
 
-void StgEngine::AfterDxInit()
+void LStgEngine::AfterDxInit()
 {
 	Base::AfterDxInit();
 
@@ -60,7 +60,7 @@ void StgEngine::AfterDxInit()
 	m_spComManage->push_back(m_spGameMenu.get());
 }
 
-bool StgEngine::LoopCheck()
+bool LStgEngine::LoopCheck()
 {
 	if (!Base::LoopCheck())
 		return false;
@@ -71,7 +71,7 @@ bool StgEngine::LoopCheck()
 	return true;
 }
 
-void StgEngine::Update()
+void LStgEngine::Update()
 {
 	//timeCount = GetNowCount();
 
@@ -85,17 +85,17 @@ void StgEngine::Update()
 		checkState();
 }
 
-void StgEngine::Draw()
+void LStgEngine::Draw()
 {
 	m_spEnemys->CommitRender();
 	m_spBullets->CommitRender();
 	m_spPlayers->CommitRender();
 	m_spComManage->Draw();
 
-	debugInfo.Draw(StgEngine::render()->GetPainter());
+	debugInfo.Draw(LStgEngine::render()->GetPainter());
 }
 
-void StgEngine::checkState()
+void LStgEngine::checkState()
 {
 	static 	BaseFrame baseFrame;
 	switch (gameState)
@@ -117,7 +117,7 @@ void StgEngine::checkState()
 	isStateChange = false;
 }
 
-void StgEngine::BeforeEnd()
+void LStgEngine::BeforeEnd()
 {
 	m_spEnemys->Clear();
 	m_spPlayers->Clear();
@@ -126,7 +126,7 @@ void StgEngine::BeforeEnd()
 	Base::BeforeEnd();
 }
 
-Player* StgEngine::GetActivePlayer()
+Player* LStgEngine::GetActivePlayer()
 {
 	return m_spPlayers->GetActiveItem();
 }

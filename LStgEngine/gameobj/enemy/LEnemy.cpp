@@ -1,11 +1,8 @@
 #include "stdafx.h"
 #include "LEnemy.h"
 #include "shooter/LShooters.h"
-#include "Engine.h"
-#include <cmath>
 #include "LPainter.h"
 #include "LImage.h"
-#include <QString>
 #include "shooter/LShooters.h"
 #include "move/LPathWalker.h"
 #include "LAssets.h"
