@@ -61,7 +61,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_HITBOX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine\;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\LStgEngine\;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine\;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4482;4100;4820;4127;4668;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -91,7 +91,7 @@
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine\;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\LStgEngine\;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine\;../DxLib;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -109,37 +109,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Factory\EnemyFactory.cpp" />
     <ClCompile Include="Factory\EntityFactory.cpp" />
     <ClCompile Include="Factory\ShooterFactory.cpp" />
-    <ClCompile Include="gameobj\bullet\Bullet.cpp" />
-    <ClCompile Include="gameobj\bullet\CurveLaser.cpp" />
-    <ClCompile Include="gameobj\bullet\LBullets.cpp" />
-    <ClCompile Include="gameobj\bullet\LBulletStyles.cpp" />
-    <ClCompile Include="gameobj\bullet\RayLaser.cpp" />
-    <ClCompile Include="gameobj\bullet\SegmentLaser.cpp" />
-    <ClCompile Include="gameobj\enemy\LEnemy.cpp" />
-    <ClCompile Include="gameobj\enemy\LEnemys.cpp" />
-    <ClCompile Include="gameobj\LGameObject.cpp" />
-    <ClCompile Include="gameobj\player\LControlledPlayer.cpp" />
-    <ClCompile Include="gameobj\player\LPlayers.cpp" />
-    <ClCompile Include="gameobj\player\player.cpp" />
-    <ClCompile Include="gameobj\shooter\LRayShooter.cpp" />
-    <ClCompile Include="gameobj\shooter\LSegShooter.cpp" />
-    <ClCompile Include="gameobj\shooter\LShooter.cpp" />
-    <ClCompile Include="gameobj\shooter\LShooters.cpp" />
-    <ClCompile Include="gameobj\stage\LStage.cpp" />
-    <ClCompile Include="Manager\ComManage.cpp" />
-    <ClCompile Include="Manager\MemoryManager.cpp" />
-    <ClCompile Include="Manager\SpriteManager.cpp" />
-    <ClCompile Include="script\LTcc.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="DebugInfo.cpp" />
     <ClCompile Include="Globle.cpp" />
-    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="resource.cpp" />
     <ClCompile Include="stdafx.cpp" />
@@ -148,41 +122,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DxLib.h" />
-    <ClInclude Include="Engine.h" />
     <ClInclude Include="Factory\EnemyFactory.h" />
     <ClInclude Include="Factory\EntityFactory.h" />
     <ClInclude Include="Factory\ShooterFactory.h" />
-    <ClInclude Include="gameobj\bullet\Bullet.h" />
-    <ClInclude Include="gameobj\bullet\CurveLaser.h" />
-    <ClInclude Include="gameobj\bullet\LBullets.h" />
-    <ClInclude Include="gameobj\bullet\LBulletStyles.h" />
-    <ClInclude Include="gameobj\bullet\RayLaser.h" />
-    <ClInclude Include="gameobj\bullet\SegmentLaser.h" />
-    <ClInclude Include="gameobj\enemy\LEnemy.h" />
-    <ClInclude Include="gameobj\enemy\LEnemys.h" />
-    <ClInclude Include="gameobj\LGameObject.h" />
-    <ClInclude Include="gameobj\player\LControlledPlayer.h" />
-    <ClInclude Include="gameobj\player\LPlayers.h" />
-    <ClInclude Include="gameobj\player\player.h" />
-    <ClInclude Include="gameobj\shooter\LRayShooter.h" />
-    <ClInclude Include="gameobj\shooter\LSegShooter.h" />
-    <ClInclude Include="gameobj\shooter\LShooter.h" />
-    <ClInclude Include="gameobj\shooter\LShooters.h" />
-    <ClInclude Include="gameobj\stage\LStage.h" />
-    <ClInclude Include="interfaceDef.h" />
-    <ClInclude Include="Manager\ComManage.h" />
-    <ClInclude Include="Manager\MemoryManager.h" />
-    <ClInclude Include="Manager\SpriteManager.h" />
-    <ClInclude Include="interdef.h" />
     <ClInclude Include="DebugInfo.h" />
     <ClInclude Include="Globle.h" />
-    <ClInclude Include="Graph.h" />
-    <ClInclude Include="MyTimer.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="script\LTcc.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="stdafx.h" />
@@ -190,14 +135,8 @@
     <ClInclude Include="ui\stage\baseFrame.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\事务处理.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DxLibEngine\DxLibEngine.vcxproj">
-      <Project>{30064ca8-f0f9-4477-b18d-475579bfc1c7}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\TinyCC\TinyCC.vcxproj">
-      <Project>{e9a7cdd2-463e-4f72-b1fc-afda7fcaf31c}</Project>
+    <ProjectReference Include="..\LStgEngine\LStgEngine.vcxproj">
+      <Project>{947a7433-b5d5-419a-a4d5-03f51039556d}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

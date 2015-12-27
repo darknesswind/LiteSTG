@@ -2,6 +2,9 @@
 #include "LAssets.h"
 #include "LHandle.h"
 #include <QTextStream>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
 
 LGraphHandles LAssets::s_emptyGraphHandles;
 
@@ -72,7 +75,50 @@ void LAssets::LoadAssetsList(LPCWSTR lpPath, LNamedAssetMap& map)
 
 void LAssets::LoadTextureList(LPCWSTR lpPath)
 {
-	LoadAssetsList(lpPath, m_textureMap);
+	QJsonParseError err;
+	QJsonDocument doc = doc.fromJson(LoadRawData(lpPath), &err);
+
+	QJsonObject obj = doc.object();
+	for (auto iter = obj.begin(); iter != obj.end(); ++iter)
+	{
+		QString path = iter.key();
+		if (path.isEmpty())
+			continue;
+
+		QString name = iter.value().toString();
+		if (name.isEmpty())
+		{
+			int nBegin = path.lastIndexOf(QRegExp("[\\\\/]"));
+			if (nBegin < 0)
+				nBegin = 0;
+			else
+				++nBegin;
+
+			int nEnd = path.indexOf('.', nBegin);
+			if (nEnd < 0)
+				nEnd = path.size();
+
+			if (nBegin >= path.size() || nBegin > nEnd)
+			{
+				static QString msg(R"(%1: Can not auto alloc name for "%2".)");
+				LLogger::PrintError(msg.arg(W2QSTR(lpPath)).arg(path));
+				continue;
+			}
+
+			name = path.mid(nBegin, nEnd - nBegin);
+		}
+
+		auto iterator = m_textureMap.find(name);
+		if (iterator != m_textureMap.end())
+		{
+			static QString msg(R"(%1: Name "%3" conflicted.)");
+			LLogger::PrintWarning(msg.arg(W2QSTR(lpPath)).arg(name));
+		}
+		else
+		{
+			m_textureMap[name].path = path;
+		}
+	}
 }
 
 void LAssets::LoadSoundEffectList(LPCWSTR lpPath)
@@ -82,27 +128,26 @@ void LAssets::LoadSoundEffectList(LPCWSTR lpPath)
 
 void LAssets::LoadSubGraphicsList(LPCWSTR lpPath)
 {
-	enum param { cName, cRef, cSrcX, cSrcY, cAllNum, cRowNum, cColNum, cWidth, cHeight, ParamCount };
-	LCsvTablePtr pTable = LAssets::LoadCSV(lpPath);
-	// 第一行标题
-	for (size_t i = 1; i < pTable->getRowCount(); ++i)
-	{
-		auto& rowDat = pTable->getRow(i);
-		if (rowDat.size() != ParamCount)
-		{
-			static QString msg(R"(%1(%2): Param number Error.)");
-			LLogger::PrintError(msg.arg(W2QSTR(lpPath)).arg(i));
-			continue;
-		}
-		LAssert(!rowDat[cName].isEmpty());
-		LSubGraphData& datas = m_subGraphics[rowDat[cName]];
+	enum param { cSrcX, cSrcY, cAllNum, cRowNum, cColNum, cWidth, cHeight, ParamCount };
 
+	QJsonParseError err;
+	QJsonDocument doc = doc.fromJson(LoadRawData(lpPath), &err);
+
+	QJsonArray array = doc.array();
+	for (auto iter = array.begin(); iter != array.end(); ++iter)
+	{
+		QJsonObject obj = (*iter).toObject();
+		QString name = obj["name"].toString();
+		LAssert(!name.isEmpty());
+
+		LSubGraphData& datas = m_subGraphics[name];
 		datas.infos.emplace_back(LSubGraphInfo());
 		LSubGraphInfo& d = datas.infos.back();
+		d.ref = obj["texture"].toString();
 
-		bool bOk = false;
-#define AssignIntData(name, idx) { d.name = rowDat[idx].toInt(&bOk); LAssert(bOk); }
-		d.ref = rowDat[cRef];
+		QJsonArray params = obj["params"].toArray();
+
+#define AssignIntData(name, idx) { d.name = params[idx].toInt(); }
 		AssignIntData(xSrc, cSrcX);
 		AssignIntData(ySrc, cSrcY);
 		AssignIntData(allNum, cAllNum);

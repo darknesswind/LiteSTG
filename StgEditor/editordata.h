@@ -27,11 +27,41 @@ struct SubGraphData
 };
 typedef std::vector<SubGraphData> SubGraphInfos;
 
+struct BulletStyle
+{
+	enum BulletType
+	{
+		tGeneral,
+		tRay,
+		tSegment,
+		tCurve,
+	};
+	enum CollideType
+	{
+		cCircle,
+		cRectangle,
+	};
+
+	QString name;
+	BulletType type;
+	
+	CollideType collide;
+	qreal centerX;
+	qreal centerY;
+	qreal radianX;
+	qreal radianY;
+
+	QString subGraph;
+};
+typedef std::vector<BulletStyle> BulletStyles;
+
 class EditorData
 {
 public:
 	EditorData();
 	static EditorData* instance();
+	static QString enum2String(BulletStyle::BulletType type);
+	static QString enum2String(BulletStyle::CollideType type);
 
 	void load();
 	void save();
@@ -41,8 +71,23 @@ public:
 
 	TextureMap& textureMap() { return m_textures; }
 	SubGraphInfos& subgraphies() { return m_subGraphes; }
+	BulletStyles& bulletStyles() { return m_bulletStyles; }
 
 	QPixmap getTexture(QString source);
+	QPixmap getTextureByName(QString name);
+	SubGraphData* getSubGraphByName(QString name);
+
+public:
+	void removeTexture(const QString& source);
+	void removeSubGraph(int idx);
+	void removeBulletStyle(int idx);
+	QString changeTextureName(const QString& source, const QString& newName);
+	bool commitSubGraph(int idx, const SubGraphData& newName);
+	bool commitBulletStyle(int idx, const BulletStyle& style);
+	bool canChangeSubGraphName(int idx, const QString& newName);
+	bool canChangeBulletStyleName(int idx, const QString& newName);
+
+protected:
 	void updateTextureRef(QString srcName, QString dstName);
 
 protected:
@@ -52,12 +97,14 @@ protected:
 	void saveTextures();
 	void loadSubGraphies();
 	void saveSubGraphies();
+	void loadBulletStyles();
+	void saveBulletStyles();
 
 private:
 	QString m_basePath;
 	TextureMap m_textures;
 	SubGraphInfos m_subGraphes;
-
+	BulletStyles m_bulletStyles;
 	QMap<QString, QPixmap> m_textureCache;
 };
 

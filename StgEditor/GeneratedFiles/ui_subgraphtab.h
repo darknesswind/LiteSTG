@@ -14,8 +14,6 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QComboBox>
-#include <QtWidgets/QDoubleSpinBox>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -27,6 +25,7 @@
 #include <QtWidgets/QTableWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include "previewwidget.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -61,14 +60,7 @@ public:
     QPushButton *btnCopy;
     QPushButton *btnAdd;
     QPushButton *btnRemove;
-    QVBoxLayout *verticalLayout_2;
-    QGraphicsView *graphicsView;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *label_11;
-    QLabel *lbSize;
-    QLabel *label_10;
-    QDoubleSpinBox *sbZoom;
-    QSpacerItem *horizontalSpacer_2;
+    PreviewWidget *preview;
 
     void setupUi(QWidget *SubGraphTab)
     {
@@ -239,53 +231,11 @@ public:
 
         horizontalLayout_3->addLayout(verticalLayout);
 
-        verticalLayout_2 = new QVBoxLayout();
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        graphicsView = new QGraphicsView(SubGraphTab);
-        graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setMouseTracking(true);
-        graphicsView->setDragMode(QGraphicsView::ScrollHandDrag);
-        graphicsView->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
-        graphicsView->setResizeAnchor(QGraphicsView::AnchorUnderMouse);
+        preview = new PreviewWidget(SubGraphTab);
+        preview->setObjectName(QStringLiteral("preview"));
+        preview->setMinimumSize(QSize(258, 0));
 
-        verticalLayout_2->addWidget(graphicsView);
-
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(6);
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        label_11 = new QLabel(SubGraphTab);
-        label_11->setObjectName(QStringLiteral("label_11"));
-
-        horizontalLayout_2->addWidget(label_11);
-
-        lbSize = new QLabel(SubGraphTab);
-        lbSize->setObjectName(QStringLiteral("lbSize"));
-
-        horizontalLayout_2->addWidget(lbSize);
-
-        label_10 = new QLabel(SubGraphTab);
-        label_10->setObjectName(QStringLiteral("label_10"));
-
-        horizontalLayout_2->addWidget(label_10);
-
-        sbZoom = new QDoubleSpinBox(SubGraphTab);
-        sbZoom->setObjectName(QStringLiteral("sbZoom"));
-        sbZoom->setDecimals(5);
-        sbZoom->setMaximum(1000);
-        sbZoom->setValue(1);
-
-        horizontalLayout_2->addWidget(sbZoom);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_2->addItem(horizontalSpacer_2);
-
-
-        verticalLayout_2->addLayout(horizontalLayout_2);
-
-
-        horizontalLayout_3->addLayout(verticalLayout_2);
+        horizontalLayout_3->addWidget(preview);
 
 #ifndef QT_NO_SHORTCUT
         label->setBuddy(edName);
@@ -316,9 +266,6 @@ public:
         btnCopy->setText(QApplication::translate("SubGraphTab", "Copy", 0));
         btnAdd->setText(QApplication::translate("SubGraphTab", "Add", 0));
         btnRemove->setText(QApplication::translate("SubGraphTab", "Remove", 0));
-        label_11->setText(QApplication::translate("SubGraphTab", "Size:", 0));
-        lbSize->setText(QApplication::translate("SubGraphTab", "0x0", 0));
-        label_10->setText(QApplication::translate("SubGraphTab", "  Zoom:", 0));
     } // retranslateUi
 
 };

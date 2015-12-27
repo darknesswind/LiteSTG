@@ -189,6 +189,17 @@
     <ClCompile Include="texturetab.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="tabbase.h" />
+    <CustomBuild Include="previewwidget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing previewwidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtWidgets" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtGui" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtANGLE" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtCore" "-I.\debug" "-I." "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\mkspecs\win32-msvc2013" "-I.\GeneratedFiles"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing previewwidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtWidgets" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtGui" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtANGLE" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtCore" "-I.\release" "-I." "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\mkspecs\win32-msvc2013" "-I.\GeneratedFiles"</Command>
+    </CustomBuild>
     <CustomBuild Include="bullettab.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing bullettab.h...</Message>
@@ -203,18 +214,9 @@
     <ClInclude Include="GeneratedFiles\ui_bullettab.h" />
     <ClInclude Include="GeneratedFiles\ui_mainwindow.h" />
     <ClInclude Include="GeneratedFiles\ui_optiondialog.h" />
+    <ClInclude Include="GeneratedFiles\ui_previewwidget.h" />
     <ClInclude Include="GeneratedFiles\ui_subgraphtab.h" />
     <ClInclude Include="GeneratedFiles\ui_texturetab.h" />
-    <CustomBuild Include="previewwidget.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing previewwidget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtWidgets" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtGui" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtANGLE" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtCore" "-I.\debug" "-I." "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\mkspecs\win32-msvc2013" "-I.\GeneratedFiles"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing previewwidget.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o "$(ConfigurationName)\moc_%(Filename).cpp"  -D_WINDOWS -DUNICODE -DWIN32 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DNDEBUG "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtWidgets" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtGui" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtANGLE" "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtCore" "-I.\release" "-I." "-I.\..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\mkspecs\win32-msvc2013" "-I.\GeneratedFiles"</Command>
-    </CustomBuild>
     <CustomBuild Include="subgraphtab.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing subgraphtab.h...</Message>
@@ -339,6 +341,18 @@ endlocal
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="bullettab.ui">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="previewwidget.ui">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>

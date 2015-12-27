@@ -4,18 +4,21 @@
 #include <QWidget>
 #include "ui_subgraphtab.h"
 #include <array>
+#include "tabbase.h"
+#include "editordata.h"
 
 class EditorData;
 struct SubGraphData;
-class SubGraphTab : public QWidget
+class SubGraphTab : public TabBase
 {
 	Q_OBJECT
 
 public:
 	SubGraphTab(QWidget *parent = 0);
 	~SubGraphTab();
-	void init();
-	void updateTextureName();
+
+	bool commitCache();
+	void enterTab();
 
 protected:
 	void onAdd();
@@ -24,11 +27,16 @@ protected:
 	void onNameChanged(const QString& name);
 	void onTextureChanged(const QString& texture);
 	void onInfoChanged();
-	void onSelectionChanged();
+	void onSelectionChanged(QTableWidgetItem* cur, QTableWidgetItem* prev);
 
+	void init();
+	void initContext();
+	void updateTextureName();
 	void updatePreview();
-
-	bool eventFilter(QObject* obj, QEvent* e) override;
+	bool commitCacheTo(int row);
+	int currentIdx();
+	void refreshCtrlData();
+	void refreshCache();
 
 	SubGraphData* getSelectedData();
 	QTableWidgetItem* getSelectedItem(int col);
@@ -39,9 +47,8 @@ private:
 	std::array<QSpinBox*, 7> m_spinBoxs;
 	bool m_bSelectUpdating;
 
-	QGraphicsScene* m_pGraphScene;
+	SubGraphData m_cache;
 	QPixmap m_cacheImg;
-	qreal m_zoom;
 };
 
 #endif // SUBGRAPHTAB_H

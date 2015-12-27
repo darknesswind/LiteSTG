@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="gameObject">
+      <UniqueIdentifier>{2c333b2f-5d98-441b-b25f-53a7f6a2d369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameObject\enemy">
+      <UniqueIdentifier>{9398ac87-eb8b-437b-ba14-ab8261b45cc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameObject\bullet">
+      <UniqueIdentifier>{c74e660b-9c74-483b-87f8-3209c2c46d8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameObject\player">
+      <UniqueIdentifier>{dabf7b40-b8a7-4199-8455-e1f4c6bc9b4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameObject\stage">
+      <UniqueIdentifier>{425f1789-1882-4625-8580-191d92132ea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameObject\shooter">
+      <UniqueIdentifier>{a763d47a-86c9-4b8f-9db8-debd2642fa81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="manager">
+      <UniqueIdentifier>{8b40ee30-eb16-4980-bfef-1623c70f134f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="script">
+      <UniqueIdentifier>{49e7c5c0-e998-49dd-a86c-221a91daa54b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\LGameObject.h">
+      <Filter>gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\stage\LStage.h">
+      <Filter>gameObject\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\shooter\LRayShooter.h">
+      <Filter>gameObject\shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\shooter\LSegShooter.h">
+      <Filter>gameObject\shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\shooter\LShooter.h">
+      <Filter>gameObject\shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\shooter\LShooters.h">
+      <Filter>gameObject\shooter</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\player\LControlledPlayer.h">
+      <Filter>gameObject\player</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\player\LPlayers.h">
+      <Filter>gameObject\player</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\player\player.h">
+      <Filter>gameObject\player</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\enemy\LEnemy.h">
+      <Filter>gameObject\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\enemy\LEnemys.h">
+      <Filter>gameObject\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\Bullet.h">
+      <Filter>gameObject\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\CurveLaser.h">
+      <Filter>gameObject\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\LBullets.h">
+      <Filter>gameObject\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\LBulletStyles.h">
+      <Filter>gameObject\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\RayLaser.h">
+      <Filter>gameObject\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\bullet\SegmentLaser.h">
+      <Filter>gameObject\bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\ComManage.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\MemoryManager.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\SpriteManager.h">
+      <Filter>manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaceDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="script\LTcc.h">
+      <Filter>script</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\LGameObject.cpp">
+      <Filter>gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\stage\LStage.cpp">
+      <Filter>gameObject\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\shooter\LRayShooter.cpp">
+      <Filter>gameObject\shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\shooter\LSegShooter.cpp">
+      <Filter>gameObject\shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\shooter\LShooter.cpp">
+      <Filter>gameObject\shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\shooter\LShooters.cpp">
+      <Filter>gameObject\shooter</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\player\LControlledPlayer.cpp">
+      <Filter>gameObject\player</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\player\LPlayers.cpp">
+      <Filter>gameObject\player</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\player\player.cpp">
+      <Filter>gameObject\player</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\enemy\LEnemy.cpp">
+      <Filter>gameObject\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\enemy\LEnemys.cpp">
+      <Filter>gameObject\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\Bullet.cpp">
+      <Filter>gameObject\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\CurveLaser.cpp">
+      <Filter>gameObject\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\LBullets.cpp">
+      <Filter>gameObject\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\LBulletStyles.cpp">
+      <Filter>gameObject\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\RayLaser.cpp">
+      <Filter>gameObject\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\bullet\SegmentLaser.cpp">
+      <Filter>gameObject\bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\ComManage.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\MemoryManager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Manager\SpriteManager.cpp">
+      <Filter>manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="script\LTcc.cpp">
+      <Filter>script</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

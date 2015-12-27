@@ -15,6 +15,9 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 
+protected:
+	bool eventFilter(QObject* o, QEvent* e) override;
+
 private slots:
 	void showOptionDlg();
 	void onTabChanged(int idx);

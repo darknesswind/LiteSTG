@@ -35,9 +35,11 @@ protected:
 	static LEngine* s_pEngine;
 
 protected:
+	bool m_bDebugPause;
+	bool m_bEndGame;
+
 	LUnifiedTimer m_centerTimer;
 	LPathSet m_pathSet;
-	bool m_bDebugPause;
 
 	std::unique_ptr<LRender> m_spRender;
 	std::unique_ptr<LAssets> m_spAssets;

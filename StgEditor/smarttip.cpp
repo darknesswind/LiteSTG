@@ -33,7 +33,7 @@ void SmartTip::showTexture(QPoint pos, QString source)
 		QWidget::show();
 }
 
-void SmartTip::paintEvent(QPaintEvent *e)
+void SmartTip::paintEvent(QPaintEvent*)
 {
 	QPainter painter(this);
 

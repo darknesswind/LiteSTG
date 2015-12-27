@@ -22,7 +22,6 @@
 #define MENU_QUIT	8
 #pragma endregion Menu_Select_Define
 
-extern bool endflag;
 extern bool isStateChange;
 extern int gameState;
 extern int menuSelect;

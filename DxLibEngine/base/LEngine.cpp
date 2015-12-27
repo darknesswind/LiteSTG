@@ -9,6 +9,7 @@ LEngine* LEngine::s_pEngine = nullptr;
 
 LEngine::LEngine(void)
 	: m_bDebugPause(false)
+	, m_bEndGame(false)
 {
 	LAssert(!s_pEngine);
 	s_pEngine = this;
@@ -24,9 +25,9 @@ LEngine::~LEngine(void)
 
 void LEngine::AfterDxInit()
 {
-	m_spAssets->LoadTextureList(L"resource\\data\\texture.csv");
+	m_spAssets->LoadTextureList(L"resource\\textures.json");
 	m_spAssets->LoadSoundEffectList(L"resource\\data\\se.csv");
-	m_spAssets->LoadSubGraphicsList(L"resource\\data\\subgraph.csv");
+	m_spAssets->LoadSubGraphicsList(L"resource\\subgraphics.json");
 }
 
 int LEngine::exec()
@@ -47,6 +48,8 @@ int LEngine::exec()
 		if (Input.isKeyPress(Keys::F9))
 			m_bDebugPause = !m_bDebugPause;
 #endif
+		Screen.clearDrawScreen();
+
 		m_centerTimer.update();
 		if (NeedUpdate())
 			Update();
@@ -63,8 +66,7 @@ int LEngine::exec()
 
 bool LEngine::LoopCheck()
 {
-	Screen.clearDrawScreen();
-	return (0 == DxLib::ProcessMessage());
+	return (!m_bEndGame && 0 == DxLib::ProcessMessage());
 }
 
 bool LEngine::NeedUpdate()

@@ -4,6 +4,9 @@
 #include "subgraphtab.h"
 #include "optiondialog.h"
 #include "editordata.h"
+#include "bullettab.h"
+#include <QMouseEvent>
+
 
 enum
 {
@@ -24,13 +27,36 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	ui->tabWidget->addTab(new TextureTab(), "Texture");
 	ui->tabWidget->addTab(new SubGraphTab(), "GraphGroup");
+	ui->tabWidget->addTab(new BulletTab(), "Bullet");
 
 	connect(ui->tabWidget, &QTabWidget::currentChanged, this, &MainWindow::onTabChanged);
+	ui->tabWidget->tabBar()->installEventFilter(this);
 }
 
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+bool MainWindow::eventFilter(QObject* o, QEvent* e)
+{
+	if (o == ui->tabWidget->tabBar() && e->type() == QEvent::MouseButtonPress)
+	{
+		QMouseEvent* pEvent = static_cast<QMouseEvent*>(e);
+		if (pEvent->button() == Qt::LeftButton)
+		{
+			TabBase* tab = dynamic_cast<TabBase*>(ui->tabWidget->currentWidget());
+			if (tab)
+			{
+				if (!tab->commitCache())
+				{
+					e->accept();
+					return true;
+				}
+			}
+		}
+	}
+	return QMainWindow::eventFilter(o, e);
 }
 
 void MainWindow::showOptionDlg()
@@ -41,14 +67,18 @@ void MainWindow::showOptionDlg()
 
 void MainWindow::onTabChanged(int idx)
 {
-	if (idx == idxSubGraph)
-	{
-		SubGraphTab* tab = qobject_cast<SubGraphTab*>(ui->tabWidget->currentWidget());
-		tab->updateTextureName();
-	}
+	TabBase* tab = dynamic_cast<TabBase*>(ui->tabWidget->currentWidget());
+	if (tab)
+		tab->enterTab();
 }
 
 void MainWindow::saveData()
 {
-	EditorData::instance()->save();
+	bool bDoSave = true;
+	TabBase* tab = dynamic_cast<TabBase*>(ui->tabWidget->currentWidget());
+	if (tab)
+		bDoSave = tab->commitCache();
+
+	if (bDoSave)
+		EditorData::instance()->save();
 }

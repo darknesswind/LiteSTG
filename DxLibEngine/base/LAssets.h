@@ -53,7 +53,7 @@ class LAssets
 	struct LSubGraphData
 	{
 		std::vector<LSubGraphInfo> infos;
-		std::vector<LGraphHandle> handles;
+		LGraphHandles handles;
 	};
 #pragma endregion
 	typedef QHash<QString, LAssetData> LNamedAssetMap;

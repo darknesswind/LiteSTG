@@ -87,7 +87,6 @@ void TextureTab::onAdd()
 
 void TextureTab::onRemove()
 {
-	TextureMap& textureMap = m_pEditorData->textureMap();
 	QList<QTableWidgetItem*> items = ui->tableWidget->selectedItems();
 
 	for (auto iter = items.begin(); iter != items.end(); ++iter)
@@ -96,7 +95,7 @@ void TextureTab::onRemove()
 		if (!item || item->column() != idxSource)
 			continue;
 
-		textureMap.remove(item->text());
+		m_pEditorData->removeTexture(item->text());
 		ui->tableWidget->removeRow(item->row());
 	}
 }
@@ -121,24 +120,8 @@ void TextureTab::onItemChanged(QTableWidgetItem* pNameItem)
 	if (!srcItem)
 		return;
 
-	TextureMap& textureMap = m_pEditorData->textureMap();
-	QString srcName = textureMap[srcItem->text()];
-	QString dstName = pNameItem->text();
-	if (srcName == dstName)
-		return;
-
-	for (auto iter = textureMap.begin(); iter != textureMap.end(); ++iter)
-	{
-		if (iter.value() == dstName && iter.key() != srcItem->text())
-		{
-			QMessageBox::warning(this, "conflit name", QString("conflit name with \"%1\"").arg(iter.key()));
-			pNameItem->setText(srcName);
-			return;
-		}
-	}
-
-	textureMap[srcItem->text()] = pNameItem->text();
-	m_pEditorData->updateTextureRef(srcName, dstName);
+	QString res = m_pEditorData->changeTextureName(srcItem->text(), pNameItem->text());
+	pNameItem->setText(res);
 }
 
 void TextureTab::hideTip()
