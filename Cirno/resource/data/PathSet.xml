@@ -1,0 +1,7 @@
+<PathSet>
+	<Path id="1" name="test">
+		<EmptyNode time="100" />
+		<LineNode time="200" dx="100" dy="100" />
+		<SineNode time="400" dy="100" sx="10" sy="100"/>
+	</Path>
+</PathSet>

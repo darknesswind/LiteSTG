@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{acb872f6-08de-42ac-aa55-a3af125b77d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{ba8e0c66-8736-421f-9aed-20c8a2059f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\menu">
+      <UniqueIdentifier>{398cd06b-2e6e-4639-a8fc-70da248417d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\stage">
+      <UniqueIdentifier>{8553b322-428e-4479-b97b-8400a7755852}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="状态机">
+      <UniqueIdentifier>{73ef8006-c372-417d-b0d0-9226fae3c484}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gameobj">
+      <UniqueIdentifier>{75df2707-3554-4a06-b26e-f860f4fc07b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui\loading">
+      <UniqueIdentifier>{7ee5dddd-d5eb-4ffe-a8ed-d02e7b9fd474}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\EnemyFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\EntityFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\ShooterFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\stage\baseFrame.cpp">
+      <Filter>ui\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\menu\GameMenu.cpp">
+      <Filter>ui\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Globle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugInfo.cpp">
+      <Filter>gameobj</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\loading\LoadingUI.cpp">
+      <Filter>ui\loading</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="State.h">
+      <Filter>状态机</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>状态机</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\EnemyFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\EntityFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\ShooterFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\stage\baseFrame.h">
+      <Filter>ui\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\menu\GameMenu.h">
+      <Filter>ui\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Globle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugInfo.h">
+      <Filter>gameobj</Filter>
+    </ClInclude>
+    <ClInclude Include="DxLib.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\loading\LoadingUI.h">
+      <Filter>ui\loading</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

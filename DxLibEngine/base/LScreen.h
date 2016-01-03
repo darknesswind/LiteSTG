@@ -36,8 +36,8 @@ private:
 	LScreen();
 
 private:
-	LScreen(const LScreen&);		// delete
-	void operator=(const LScreen&);	// delete
+	LScreen(const LScreen&) = delete;
+	void operator=(const LScreen&) = delete;
 };
 
 enum class DrawScreen : uint

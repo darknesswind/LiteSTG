@@ -11,7 +11,8 @@ public:
 	~LUnifiedTimer(void);
 
 	void update();
-	void start();	
+	void start();
+
 	float fps() const { return m_fps; }
 	qint64 curFrame() const { return m_currentFrame; }
 

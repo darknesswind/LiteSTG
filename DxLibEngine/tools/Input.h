@@ -1,7 +1,6 @@
 #ifndef __INPUT_H__
 #define __INPUT_H__
 #pragma once
-#include "typedef.h"
 #include "LPoint.h"
 
 #pragma region Enum Define
@@ -135,35 +134,43 @@ enum class KeyState : char
 
 #pragma endregion
 
-#define Input InputState::Instance
-class InputState
+class LInput
 {
 public:
-	static InputState Instance;
-	~InputState(void);
+	LInput(void);
+	~LInput(void);
 
 public:
-	void init();
 	bool update();	// 更新状态
+	void registerKey(uchar logicKey, Keys physicKey) { m_logicKeyMap[logicKey] = physicKey; }
 
+public: // Physic Input
 	bool isKeyPress(Keys key)	const	{ return (KeyState::Down == m_keyList[(uchar)key]); }		// 按键被按下
-	bool isKeyRelease(Keys key)	const	{ return (KeyState::Up == m_keyList[(uchar)key]); }		// 按键被松开
+	bool isKeyRelease(Keys key)	const	{ return (KeyState::Up == m_keyList[(uchar)key]); }			// 按键被松开
 	bool isKeyDown(Keys key)	const	{ return (0 != m_curKeyState[(uchar)key]); }				// 按键这帧处于按下状态
 	bool isKeyHold(Keys key)	const	{ return (KeyState::Hold == m_keyList[(uchar)key]); }		// 按键被按住
 	KeyState keyState(Keys key) const	{ return m_keyList[(uchar)key]; }							// 按键状态
 	
+public: // Logic Input
+	bool isLogicKeyPress(uchar key)		const { return isKeyPress(m_logicKeyMap[key]); }
+	bool isLogicKeyRelease(uchar key)	const { return isKeyRelease(m_logicKeyMap[key]); }
+	bool isLogicKeyDown(uchar key)		const { return isKeyDown(m_logicKeyMap[key]); }
+	bool isLogicKeyHold(uchar key)		const { return isKeyHold(m_logicKeyMap[key]); }
+	KeyState logicKeyState(uchar key)	const { return keyState(m_logicKeyMap[key]); }
+
+public: // Mouse
 	LPoint mousePos() const { return m_mousePos; }
 
 private:
-	InputState(void);
-	InputState(const InputState&) = delete;
-	void operator=(const InputState&) = delete;
+	LInput(const LInput&) = delete;
+	void operator=(const LInput&) = delete;
 
 protected:
 	const static int KeyCount = 256;
 
 	char m_curKeyState[KeyCount];
 	KeyState m_keyList[KeyCount];
+	std::array<Keys, 0x100> m_logicKeyMap;
 
 	LPoint m_mousePos;
 

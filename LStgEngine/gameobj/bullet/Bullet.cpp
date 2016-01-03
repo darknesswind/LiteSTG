@@ -2,7 +2,6 @@
 #include "Bullet.h"
 #include "player/player.h"
 #include "LPainter.h"
-#include "LImage.h"
 #include "move/LPhysicWalker.h"
 #include "Manager/MemoryManager.h"
 #include "LBulletStyles.h"
@@ -76,9 +75,9 @@ void Bullet::setSpeed(float speed, Degree direction)
 {
 	m_phyData.radian = direction.toRadian();
 #if SINE_COSINE_ACCUR_LEVEL == 1
-	m_phyData.speed.InitFromPolar(speed, direction);
+	m_phyData.speed.setPolar(speed, direction);
 #else
-	m_phyData.speed.InitFromPolar(speed, m_phyData.radian);
+	m_phyData.speed.setPolar(speed, m_phyData.radian);
 #endif
 }
 
@@ -104,7 +103,7 @@ void Bullet::setPosition(const Vector2& pos)
 	updateRadian();
 }
 
-const LGraphHandle Bullet::GetGraphHandle() const
+uint Bullet::GetSortKey() const
 {
 	return m_visual.hGraph;
 }

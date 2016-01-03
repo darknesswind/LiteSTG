@@ -13,7 +13,6 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
@@ -27,23 +26,21 @@ QT_BEGIN_NAMESPACE
 class Ui_TextureTab
 {
 public:
-    QGridLayout *gridLayout;
-    QHBoxLayout *horizontalLayout;
-    QTableWidget *tableWidget;
     QVBoxLayout *verticalLayout;
+    QTableWidget *tableWidget;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
     QPushButton *btnAdd;
     QPushButton *btnRemove;
-    QSpacerItem *verticalSpacer;
+    QPushButton *btnPreMulti;
 
     void setupUi(QWidget *TextureTab)
     {
         if (TextureTab->objectName().isEmpty())
             TextureTab->setObjectName(QStringLiteral("TextureTab"));
         TextureTab->resize(400, 300);
-        gridLayout = new QGridLayout(TextureTab);
-        gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        verticalLayout = new QVBoxLayout(TextureTab);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
         tableWidget = new QTableWidget(TextureTab);
         if (tableWidget->columnCount() < 2)
             tableWidget->setColumnCount(2);
@@ -55,32 +52,35 @@ public:
         tableWidget->setMouseTracking(true);
         tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
         tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+        tableWidget->horizontalHeader()->setStretchLastSection(true);
         tableWidget->verticalHeader()->setVisible(false);
         tableWidget->verticalHeader()->setDefaultSectionSize(25);
 
-        horizontalLayout->addWidget(tableWidget);
+        verticalLayout->addWidget(tableWidget);
 
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout->addItem(horizontalSpacer);
+
         btnAdd = new QPushButton(TextureTab);
         btnAdd->setObjectName(QStringLiteral("btnAdd"));
 
-        verticalLayout->addWidget(btnAdd);
+        horizontalLayout->addWidget(btnAdd);
 
         btnRemove = new QPushButton(TextureTab);
         btnRemove->setObjectName(QStringLiteral("btnRemove"));
 
-        verticalLayout->addWidget(btnRemove);
+        horizontalLayout->addWidget(btnRemove);
 
-        verticalSpacer = new QSpacerItem(20, 138, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        btnPreMulti = new QPushButton(TextureTab);
+        btnPreMulti->setObjectName(QStringLiteral("btnPreMulti"));
 
-        verticalLayout->addItem(verticalSpacer);
-
-
-        horizontalLayout->addLayout(verticalLayout);
+        horizontalLayout->addWidget(btnPreMulti);
 
 
-        gridLayout->addLayout(horizontalLayout, 0, 0, 1, 1);
+        verticalLayout->addLayout(horizontalLayout);
 
 
         retranslateUi(TextureTab);
@@ -97,6 +97,7 @@ public:
         ___qtablewidgetitem1->setText(QApplication::translate("TextureTab", "Name", 0));
         btnAdd->setText(QApplication::translate("TextureTab", "Add", 0));
         btnRemove->setText(QApplication::translate("TextureTab", "Remove", 0));
+        btnPreMulti->setText(QApplication::translate("TextureTab", "pre-multi", 0));
     } // retranslateUi
 
 };

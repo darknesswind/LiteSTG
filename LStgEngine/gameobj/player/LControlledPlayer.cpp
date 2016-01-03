@@ -2,14 +2,14 @@
 #include "LControlledPlayer.h"
 #include "Input.h"
 #include "LPainter.h"
-#include "LImage.h"
 #include "move/LWalker.h"
 #include "LAssets.h"
 
 LControlledPlayer::LControlledPlayer(int x, int y)
 {
+	m_pInput = LStgEngine::input();
 	m_spWalker = LWalker::CreateControlledWalker();
-	m_phyData.position.Init(x, y);
+	m_phyData.position.reset(x, y);
 	m_actionState = 5;
 	m_nStarImg = 0;
 	m_nEndImg = 7;
@@ -43,7 +43,7 @@ void LControlledPlayer::Update()
 	switch (m_actionState)
 	{	
 	case 4:
-		if (!Input.isKeyDown(Keys::Left) || Input.isKeyDown(Keys::Right))	
+		if (!m_pInput->isLogicKeyDown(StgKey::Left) || m_pInput->isLogicKeyDown(StgKey::Right))
 		{
 			m_actionState += 1;
 			m_imgCount = 0;
@@ -52,14 +52,14 @@ void LControlledPlayer::Update()
 		}
 		break;
 	case 5:
-		if (Input.isKeyDown(Keys::Left)) 
+		if (m_pInput->isLogicKeyDown(StgKey::Left))
 		{
 			m_actionState -= 1;
 			m_imgCount = 8;
 			m_nStarImg = 11;
 			m_nEndImg = 15;
 		}
-		if (Input.isKeyDown(Keys::Right))
+		if (m_pInput->isLogicKeyDown(StgKey::Right))
 		{
 			m_actionState += 1;
 			m_imgCount = 16;
@@ -68,7 +68,7 @@ void LControlledPlayer::Update()
 		}
 		break;
 	case 6:
-		if (!Input.isKeyDown(Keys::Right) || Input.isKeyDown(Keys::Left))	
+		if (!m_pInput->isLogicKeyDown(StgKey::Right) || m_pInput->isLogicKeyDown(StgKey::Left))
 		{
 			m_actionState -= 1;
 			m_imgCount = 0;
@@ -87,8 +87,8 @@ void LControlledPlayer::Update()
 
 void LControlledPlayer::Draw( LPainter& painter )
 {
-	painter.drawRotaGraphF(m_phyData.position, 1, Radian0, LImage(GetGraphHandle()), true);
-	if (Input.isKeyDown(Keys::LShift))
+	painter.drawRotaGraphF(m_phyData.position, 1, Radian0, GetSortKey(), true);
+	if (m_pInput->isLogicKeyDown(StgKey::Slow))
 	{
 		painter.setDrawMode(DxDrawMode::Bilinear);
 		painter.drawRotaGraphF(m_phyData.position, 1, -m_phyData.radian, m_hHitBox, true);
@@ -98,7 +98,7 @@ void LControlledPlayer::Draw( LPainter& painter )
 	DrawHitBox(painter);
 }
 
-const LGraphHandle LControlledPlayer::GetGraphHandle() const
+uint LControlledPlayer::GetSortKey() const
 {
 	return m_playerImg[m_imgCount];
 }

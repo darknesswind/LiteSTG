@@ -72,7 +72,8 @@ public:
 	bool checkValidType(DxHandleType targetType) const;
 	const DxLib::HANDLEINFO* innerData() const;
 
-protected:
+public:
+	static const uint hInvalid = 0xffffffff;
 	static const uint hNoneGraph = 0xfffffffb;
 
 protected:
@@ -80,6 +81,8 @@ protected:
 };
 typedef LHandle LSoundHandle;
 
+
+class LSize;
 class LGraphHandle : public LHandle
 {
 public:
@@ -101,12 +104,12 @@ public:
 	}
 
 public:
-	const DxLib::IMAGEDATA2* innerData() const { return (DxLib::IMAGEDATA2*)LHandle::innerData(); }
+	const DxLib::IMAGEDATA2* imgData() const { return (DxLib::IMAGEDATA2*)LHandle::innerData(); }
+	void getSize(LSize& size);
+	void getSize(int* px, int* py) { CheckRes(DxLib::GetGraphSize(m_handle, px, py)); }
 
+public:
 	static LGraphHandle NoneGraph;
-
-private:
-
 };
 typedef std::vector<LGraphHandle> LGraphHandles;
 

@@ -1,12 +1,11 @@
 ﻿#include "stdafx.h"
 #include "CurveLaser.h"
 #include "LPainter.h"
-#include "LImage.h"
 #include "Input.h"
 
 void CurveLaser::Update()
 {
-	Vector2 curPos(Input.mousePos());
+	Vector2 curPos(LStgEngine::input()->mousePos());
 
 	if (m_grids.empty())
 	{

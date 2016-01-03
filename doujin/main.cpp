@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include <Windows.h>
 #include "Engine.h"
+
+Engine engine;
+
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -8,6 +11,5 @@ int WINAPI WinMain(
 	_In_ int nShowCmd
 	)
 {
-	Engine engine;
 	return engine.exec();
 }

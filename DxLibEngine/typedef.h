@@ -114,8 +114,13 @@ __interface IDrawable
 
 __interface IDrawableObj : public IDrawable
 {
-	virtual const LGraphHandle GetGraphHandle() const = 0;
+	virtual uint GetSortKey() const = 0;
 	virtual const RenderArgument& GetRenderArgument() const = 0;
+};
+
+__interface IUIObject : public IDrawableObj
+{
+	virtual void Update() = 0;
 };
 
 __interface IWalker : IDestructible
@@ -160,18 +165,18 @@ struct PaintArgument
 
 	bool operator< (const PaintArgument& rhs) const
 	{
-		if (drawMode < rhs.drawMode)
+		const int lMode = *(const int*)this;
+		const int rMode = *(const int*)&rhs;
+
+		if (lMode < rMode)
 			return true;
-		else if (drawMode > rhs.drawMode)
-			return false;
-		else if (blendMode < rhs.blendMode)
-			return true;
-		else if (blendMode > rhs.blendMode)
+		else if (lMode > rMode)
 			return false;
 		else
 			return (blendParam < rhs.blendParam);
 	}
 };
+static_assert(sizeof(PaintArgument) == sizeof(ushort) * 2 + sizeof(int), "PaintArgument Layout Error!");
 
 struct RenderArgument
 {

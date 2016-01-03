@@ -221,10 +221,16 @@ void LAssets::LoadDivGraphics(LSubGraphData& data)
 	for each (const LSubGraphInfo& info in data.infos)
 	{
 		LGraphHandle hSrcGraph = GetTexture(info.ref);
+
+		int sizeX = 0, sizeY = 0;
+		DxLib::GetGraphSize(hSrcGraph, &sizeX, &sizeY);
 		for (int i = 0; i < info.allNum; ++i)
 		{
 			int srcX = info.xSrc + info.width * (i % info.xNum);
 			int srcY = info.ySrc + info.height * (i / info.xNum);
+			if (srcX + info.width > sizeX || srcY + info.height > sizeY)
+				continue;
+
 			LGraphHandle hDivGraph = DxLib::DerivationGraph(
 				srcX, srcY, info.width, info.height, hSrcGraph);
 

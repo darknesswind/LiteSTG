@@ -1,7 +1,4 @@
-﻿#ifndef __ENUMATIONS_H__
-#define __ENUMATIONS_H__
-
-#include "DxLib.h"
+﻿#include "DxLib.h"
 
 enum class WalkerType
 {
@@ -12,7 +9,7 @@ enum class WalkerType
 	Follow,
 };
 
-enum class DxBlendMode
+enum class DxBlendMode : ushort
 {
 	NoBlend				= 0,	// 无混合
 	Alpha				= 1,	// α混合
@@ -41,7 +38,7 @@ enum class DxBlendMode
 	Num					= 23,	// 混合模式总数
 };
 
-enum class DxDrawMode
+enum class DxDrawMode : ushort
 {
 	Nearest		= 0,	// 最邻近插值
 	Bilinear	= 1,	// 双线性插值
@@ -52,11 +49,11 @@ enum class DxDrawMode
 // 图元类型
 enum class PrimitiveType
 {
-	PointList		= DX_PRIMTYPE_POINTLIST,			// 点集
+	PointList		= DX_PRIMTYPE_POINTLIST,		// 点集
 	LineList		= DX_PRIMTYPE_LINELIST,			// 线段集
-	LineStrip		= DX_PRIMTYPE_LINESTRIP,			// 连续线段
+	LineStrip		= DX_PRIMTYPE_LINESTRIP,		// 连续线段
 	TriangleList	= DX_PRIMTYPE_TRIANGLELIST,		// 三角形集
-	TriangleStrip	= DX_PRIMTYPE_TRIANGLESTRIP,		// 连续三角形
+	TriangleStrip	= DX_PRIMTYPE_TRIANGLESTRIP,	// 连续三角形
 	TriangleFan		= DX_PRIMTYPE_TRIANGLEFAN,		// 
 };
 
@@ -71,4 +68,22 @@ enum RenderDepthBase
 	DepthDebug		= 0xF0000000,
 };
 
-#endif
+namespace StgKey
+{
+	enum StgKey
+	{
+		Left,
+		Right,
+		Up,
+		Down,
+		Shot,
+		Bomb,
+		Slow,
+		Pause,
+
+		Ok = Shot,
+		Cancel = Bomb,
+
+		UserDefine
+	};
+}

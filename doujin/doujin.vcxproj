@@ -49,11 +49,13 @@
     <LibraryPath>$(SolutionDir)Qt\lib;$(LibraryPath)</LibraryPath>
     <IncludePath>$(SolutionDir)Qt\include;$(IncludePath)</IncludePath>
     <SourcePath>$(SolutionDir)Qt\src;$(SourcePath)</SourcePath>
+    <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>E:\STGproject\boost;$(IncludePath)</IncludePath>
     <SourcePath>E:\STGproject\boost;$(IncludePath);$(SourcePath)</SourcePath>
+    <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

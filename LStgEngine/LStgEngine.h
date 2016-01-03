@@ -24,7 +24,7 @@ public:
 
 protected:
 	virtual void BeforeDxInit() override;
-	virtual void AfterDxInit() override;
+	virtual void OnLoading() override;
 	virtual bool LoopCheck() override;
 	virtual void Update() override;
 	virtual void Draw() override;

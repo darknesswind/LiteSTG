@@ -26,6 +26,7 @@ protected:
 protected slots:
 	void onAdd();
 	void onRemove();
+	void onPreMulti();
 	void queryEdit(const QModelIndex& idx);
 	void onItemChanged(QTableWidgetItem* item);
 	void checkTip();

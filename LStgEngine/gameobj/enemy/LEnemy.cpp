@@ -2,7 +2,6 @@
 #include "LEnemy.h"
 #include "shooter/LShooters.h"
 #include "LPainter.h"
-#include "LImage.h"
 #include "shooter/LShooters.h"
 #include "move/LPathWalker.h"
 #include "LAssets.h"
@@ -12,7 +11,7 @@ LEnemy::LEnemy(IGameObject* pParent, int _enemyStyle)
 	, m_pGraphGroup(nullptr)
 {
 	m_spShooters = std::make_unique<LShooters>();
-	m_phyData.position.Init(256, 256);
+	m_phyData.position.reset(256, 256);
 	m_enemyStyle = _enemyStyle;
 	m_counter = 0;
 	m_imgCount = 0;
@@ -46,7 +45,7 @@ void LEnemy::Draw( LPainter& painter )
 #endif
 }
 
-const LGraphHandle LEnemy::GetGraphHandle() const
+uint LEnemy::GetSortKey() const
 {
 	return m_pGraphGroup->at(m_imgCount);
 }

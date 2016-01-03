@@ -10,9 +10,9 @@ LGameObject::LGameObject(IGameObject* pParent /*= nullptr*/)
 
 }
 
-const LGraphHandle LGameObject::GetGraphHandle() const
+uint LGameObject::GetSortKey() const
 {
-	return LGraphHandle::NoneGraph;
+	return LGraphHandle::hNoneGraph;
 }
 
 //////////////////////////////////////////////////////////////////////////

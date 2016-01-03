@@ -32,61 +32,53 @@ public:
 
 	void reset()	{ memset(this, 0, sizeof(Vector2)); }
 
-	void Init(float xpos, float ypos)
+	void reset(float xpos, float ypos)
 	{
 		cx = xpos;
 		cy = ypos;
 	}
 
-	void InitFromPolar(float len, Degree deg)	// 用极坐标方式初始化
+	template<typename Angle>
+	void setPolar(float len, Angle angle)	// 用极坐标方式初始化
 	{
 		float sine = 0, cosine = 0;
-		deg.getSinCos(sine, cosine);
+		angle.sincos(sine, cosine);
 		cx = len * cosine;
 		cy = len * sine;
 	}
-	void InitFromPolar(float len, Radian rad)
-	{
-		float sine = 0, cosine = 0;
-		rad.getSinCos(sine, cosine);
-		cx = len * cosine;
-		cy = len * sine;
-	}	
 
-	static Vector2 fromPolarRad(const float len, const float rad)
+	template<typename Angle>
+	static Vector2 fromPolar(float len, Angle angle)
 	{
 		float sine = 0, cosine = 0;
-		SinCos(rad, sine, cosine);
-		return Vector2(len * cosine, len * sine);
-	}
-	static Vector2 fromPolarDeg(const float len, const float deg)
-	{
-		float sine = 0, cosine = 0;
-		SinCosDeg(deg, sine, cosine);
+		angle.sincos(sine, cosine);
 		return Vector2(len * cosine, len * sine);
 	}
 
-	Vector2 rotated(Radian rad) const	// 返回旋转rad后的向量
+	template<typename Angle>
+	Vector2 rotated(Angle angle) const	// 返回旋转rad后的向量
 	{
 		float tx(cx), ty(cy);
 		float sine, cosine;
-		rad.getSinCos(sine, cosine);
+		angle.sincos(sine, cosine);
 		return Vector2(tx * cosine + ty * sine, tx * sine - ty * cosine);
 	}
-	Vector2& rotate(Radian rad)	// 将向量旋转rad
+	template<typename Angle>
+	Vector2& rotate(Angle angle)	// 将向量旋转rad
 	{
 		float tx(cx), ty(cy);
 		float sine = 0, cosine = 0;
-		rad.getSinCos(sine, cosine);
+		angle.sincos(sine, cosine);
 		cx = tx * cosine + ty * sine;
 		cy = tx * sine - ty * cosine;
 		return *this;
 	}
-	Vector2& rotateAt(const Vector2 &origin, Radian rad)
+	template<typename Angle>
+	Vector2& rotateAt(const Vector2 &origin, Angle angle)	// 绕指定点旋转
 	{
 		float tx(cx - origin.cx), ty(cy - origin.cy);
 		float sine = 0, cosine = 0;
-		rad.getSinCos(sine, cosine);
+		angle.sincos(sine, cosine);
 		cx = tx * cosine - ty * sine + origin.cx;
 		cy = tx * sine + ty * cosine + origin.cy;
 		return *this;

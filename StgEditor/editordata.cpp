@@ -33,13 +33,17 @@ bool EditorData::setBasePath(QString path)
 	return true;
 }
 
+QString EditorData::getTextureFullPath(QString source)
+{
+	return m_basePath + QDir::separator() + source;
+}
+
 QPixmap EditorData::getTexture(QString source)
 {
 	QPixmap& img = m_textureCache[source];
 	if (img.isNull())
 	{
-		QString path = m_basePath + QDir::separator() + source;
-		img = QPixmap::fromImage(QImage(path));
+		img = QPixmap::fromImage(QImage(getTextureFullPath(source)));
 	}
 	return img;
 }
@@ -166,11 +170,11 @@ bool EditorData::commitBulletStyle(int idx, const BulletStyle& style)
 
 bool EditorData::canChangeSubGraphName(int idx, const QString& newName)
 {
-	for (uint i = 0; i < m_subGraphes.size(); ++i)
-	{
-		if (i != idx && m_subGraphes[i].name == newName)
-			return false;
-	}
+// 	for (uint i = 0; i < m_subGraphes.size(); ++i)
+// 	{
+// 		if (i != idx && m_subGraphes[i].name == newName)
+// 			return false;
+// 	}
 	return true;
 }
 

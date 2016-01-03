@@ -7,6 +7,8 @@
 
 class LRender;
 class LAssets;
+class LInput;
+class LUIRoot;
 class LEngine
 {
 public:
@@ -23,17 +25,23 @@ public:
 
 protected:
 	virtual void BeforeDxInit() { }
-	virtual void AfterDxInit();
+	virtual void PreLoad();
+	virtual void OnLoading();
 	virtual bool LoopCheck();
 	virtual bool NeedUpdate();
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void BeforeEnd();
 
+private:
+	void innerInit();
+
 public:
 	static LEngine* engine() { return s_pEngine; }
 	static LRender* render() { return s_pEngine->m_spRender.get(); }
 	static LAssets* assets() { return s_pEngine->m_spAssets.get(); }
+	static LInput* input() { return s_pEngine->m_spInput.get(); }
+	static LUIRoot* rootUI() { return s_pEngine->m_spRootUI.get(); }
 
 protected:
 	static LEngine* s_pEngine;
@@ -47,6 +55,8 @@ protected:
 
 	std::unique_ptr<LRender> m_spRender;
 	std::unique_ptr<LAssets> m_spAssets;
+	std::unique_ptr<LInput> m_spInput;
+	std::unique_ptr<LUIRoot> m_spRootUI;
 };
 
 #endif

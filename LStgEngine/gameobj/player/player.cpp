@@ -6,7 +6,7 @@
 Player::Player(int x, int y)
 	: LCollideObject()
 {
-	m_phyData.position.Init(x, y);
+	m_phyData.position.reset(x, y);
 	m_spWalker = LWalker::CreateStableWalker();
 	m_renderArg.uDepth = DepthBackground;
 }

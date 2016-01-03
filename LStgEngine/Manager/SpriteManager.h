@@ -49,9 +49,10 @@ public:
 
 	void CommitRender()
 	{
+		LRender* pRender = LEngine::render();
 		for each(T* pItem in m_thisList)
 		{
-			LEngine::render()->PushItem(pItem);
+			pRender->PushItem(pItem);
 		}
 	}
 

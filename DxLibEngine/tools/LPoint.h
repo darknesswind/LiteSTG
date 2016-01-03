@@ -6,15 +6,7 @@
 class LPoint : public QPoint
 {
 public:
-	LPoint()
-	{
-	}
-
-	LPoint(int xpos, int ypos) : QPoint(xpos, ypos)
-	{
-	}
-
+	using QPoint::QPoint;
 };
-typedef QPointF LPointF;
 
 #endif

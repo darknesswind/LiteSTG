@@ -73,6 +73,7 @@ public:
 	SubGraphInfos& subgraphies() { return m_subGraphes; }
 	BulletStyles& bulletStyles() { return m_bulletStyles; }
 
+	QString getTextureFullPath(QString source);
 	QPixmap getTexture(QString source);
 	QPixmap getTextureByName(QString name);
 	SubGraphData* getSubGraphByName(QString name);

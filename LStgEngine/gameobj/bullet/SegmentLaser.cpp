@@ -1,7 +1,6 @@
 ﻿#include "stdafx.h"
 #include "SegmentLaser.h"
 #include "LPainter.h"
-#include "LImage.h"
 
 void SegmentLaser::Update()
 {

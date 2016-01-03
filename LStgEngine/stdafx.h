@@ -23,6 +23,7 @@
 #include "typedef.h"
 #include "LHandle.h"
 #include "tools/LLogger.h"
+#include "LPainter.h"
 
 // LStgEngine
 #include "interdef.h"

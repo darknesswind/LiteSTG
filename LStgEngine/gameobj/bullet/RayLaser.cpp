@@ -2,7 +2,7 @@
 #include "RayLaser.h"
 #include "Graph.h"
 #include "LPainter.h"
-#include "LImage.h"
+#include "LHandle.h"
 
 RayLaser::RayLaser(IGameObject* pParent)
 	: Bullet(pParent)
@@ -48,10 +48,10 @@ void RayLaser::Update()
 
 void RayLaser::Draw( LPainter& painter )
 {
-	LImage imgBullet(GetGraphHandle());
-	int bulletWidth = imgBullet.width();
+	int bulletWidth = 0;
+	m_visual.hGraph.getSize(&bulletWidth, nullptr);
 	bulletWidth /= 16;
-	painter.drawExtRotaGraph(m_phyData.position, t_wid, m_length, m_phyData.radian + Radian90, imgBullet, turnFlag);
+	painter.drawExtRotaGraph(m_phyData.position, t_wid, m_length, m_phyData.radian + Radian90, m_visual.hGraph, turnFlag);
 // 	painter.drawRotaGraphF(m_phyData.position, bulletWidth * t_wid, Radian0, LImage(Resource::laserEffect((m_style.color + 15) & 0x7/*%8*/)), true);
 
 	DrawHitBox(painter);

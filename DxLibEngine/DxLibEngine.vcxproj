@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{30064CA8-F0F9-4477-B18D-475579BFC1C7}</ProjectGuid>
     <RootNamespace>DxLibEngine</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,6 +43,10 @@
     <IncludePath>$(SolutionDir)Qt\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Qt\lib;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SolutionDir)Qt\src;$(SourcePath)</SourcePath>
+    <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,7 +113,6 @@
     <ClInclude Include="move\LPhysicWalker.h" />
     <ClInclude Include="move\LWalker.h" />
     <ClInclude Include="painting\DebugPainter.h" />
-    <ClInclude Include="painting\LImage.h" />
     <ClInclude Include="painting\LPainter.h" />
     <ClInclude Include="painting\LRender.h" />
     <ClInclude Include="painting\LRgb.h" />
@@ -124,11 +128,15 @@
     <ClInclude Include="tools\LLogger.h" />
     <ClInclude Include="tools\LMessageBox.h" />
     <ClInclude Include="tools\LObjectPool.hpp" />
+    <ClInclude Include="tools\LRect.h" />
+    <ClInclude Include="tools\LSize.h" />
     <ClInclude Include="tools\LUnifiedTimer.h" />
     <ClInclude Include="tools\LPoint.h" />
     <ClInclude Include="tools\Vector2.hpp" />
     <ClInclude Include="typedef.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ui\LUIImage.h" />
+    <ClInclude Include="ui\LUIObjBase.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\DxHandleManager.cpp" />
@@ -146,7 +154,6 @@
     <ClCompile Include="move\LPhysicWalker.cpp" />
     <ClCompile Include="move\LWalker.cpp" />
     <ClCompile Include="painting\DebugPainter.cpp" />
-    <ClCompile Include="painting\LImage.cpp" />
     <ClCompile Include="painting\LPainter.cpp" />
     <ClCompile Include="painting\LRender.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -162,6 +169,8 @@
     <ClCompile Include="tools\LMessageBox.cpp" />
     <ClCompile Include="tools\LUnifiedTimer.cpp" />
     <ClCompile Include="tools\LPoint.cpp" />
+    <ClCompile Include="ui\LUIImage.cpp" />
+    <ClCompile Include="ui\LUIObjBase.cpp" />
     <ClInclude Include="tools\Vector3.hpp">
       <FileType>CppCode</FileType>
     </ClInclude>

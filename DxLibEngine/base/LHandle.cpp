@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "LHandle.h"
 #include "DxHandle.h"
+#include "LSize.h"
 
 LGraphHandle LGraphHandle::NoneGraph;
 
@@ -29,4 +30,9 @@ const DxLib::HANDLEINFO* LHandle::innerData() const
 {
 	LAssert(checkValidType(type()));
 	return DxLib::HandleManageArray[(uint)type()].Handle[index()];
+}
+
+void LGraphHandle::getSize(LSize& size)
+{
+	CheckRes(DxLib::GetGraphSize(m_handle, &size.rwidth(), &size.rheight()));
 }

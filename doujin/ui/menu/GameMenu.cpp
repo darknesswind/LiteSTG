@@ -6,16 +6,30 @@
 #include "LImage.h"
 #include "LAssets.h"
 
+enum
+{
+	MENU_GAME_START,
+	MENU_EXTRA_START,
+	MENU_PRACTICE_START,
+	MENU_SPELL_PRACTICE,
+	MENU_REPLAY,
+	MENU_PLAYER_DATA,
+	MENU_MUSIC_ROOM,
+	MENU_OPTION,
+	MENU_QUIT,
+	MENU_SELECT_NUM
+};
+
 GameMenu::GameMenu(void)
 	: m_pSelections(nullptr)
 {
+	m_pInput = LEngine::input();
 	m_menuSelect = 0;
 	m_timeCount = 0;
 	m_title = LEngine::assets()->GetTexture(_T("title"));
 	m_pSelections = &LEngine::assets()->GetSubGraphGroup(_T("标题选项"));
 // 	MenuClass = NULL;
 }
-
 
 GameMenu::~GameMenu(void)
 {
@@ -33,7 +47,7 @@ void GameMenu::Draw( LPainter& painter )
 
 void GameMenu::Update()
 {	
-	if (Input.isKeyDown(Keys::Z))
+	if (m_pInput->isLogicKeyDown(StgKey::Ok))
 	{
 		switch (m_menuSelect)
 		{
@@ -47,7 +61,7 @@ void GameMenu::Update()
 		default: break;
 		}
 	}
-	if (Input.isKeyDown(Keys::X))
+	if (m_pInput->isLogicKeyDown(StgKey::Cancel))
 	{
 		m_menuSelect = MENU_SELECT_NUM - 1;
 		m_canMove = false;
@@ -61,10 +75,10 @@ void GameMenu::Update()
 		}
 		return;
 	}
-	if (Input.isKeyDown(Keys::Down) || Input.isKeyDown(Keys::Up))
+	if (m_pInput->isLogicKeyDown(StgKey::Down) || m_pInput->isLogicKeyDown(StgKey::Up))
 	{
-		m_menuSelect = (m_menuSelect + Input.isKeyDown(Keys::Down)) % MENU_SELECT_NUM;
-		m_menuSelect = (m_menuSelect + Input.isKeyDown(Keys::Up) * (MENU_SELECT_NUM - 1)) % MENU_SELECT_NUM;
+		m_menuSelect = (m_menuSelect + m_pInput->isLogicKeyDown(StgKey::Down)) % MENU_SELECT_NUM;
+		m_menuSelect = (m_menuSelect + m_pInput->isLogicKeyDown(StgKey::Up) * (MENU_SELECT_NUM - 1)) % MENU_SELECT_NUM;
 		m_canMove = false;
 	}		
 	return;

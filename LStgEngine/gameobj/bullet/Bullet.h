@@ -20,7 +20,7 @@ public:
 public: // IGameObjBase
 	virtual void	Update() override;
 	virtual void	Draw(LPainter& painter) override;
-	virtual const LGraphHandle GetGraphHandle() const override;
+	virtual uint GetSortKey() const override;
 
 public: // Bullet
 	virtual BulletType GetType() const { return BulletType::Generic; }
@@ -32,8 +32,8 @@ public:
 	void	setSpeed(float speed, Degree direction);
 	void	setSpeedValue(float speed)					{ m_phyData.speed = speed * m_phyData.speed.normalized(); }
 	void	setFriction(float friction)					{ m_phyData.friction = friction; }
-	void	setAcceleration(float accel, Degree deg)	{ m_phyData.acceleration.InitFromPolar(accel, deg); }
-	void	setAcceleration(float accel, Radian rad)	{ m_phyData.acceleration.InitFromPolar(accel, rad); }
+	void	setAcceleration(float accel, Degree deg)	{ m_phyData.acceleration.setPolar(accel, deg); }
+	void	setAcceleration(float accel, Radian rad)	{ m_phyData.acceleration.setPolar(accel, rad); }
 
 	void	setStyle(LBulletStyle* pStyle, uint elem);
 

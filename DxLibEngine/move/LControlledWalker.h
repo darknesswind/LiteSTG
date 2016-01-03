@@ -2,6 +2,7 @@
 #define __LPLAYERWALKER_H__
 #include "LWalker.h"
 
+class LInput;
 class LControlledWalker : public LWalker
 {
 public:
@@ -24,6 +25,7 @@ private:
 
 private:
 	float m_speeds[4];
+	LInput* m_pInput;
 };
 
 #endif // __LPLAYERWALKER_H__

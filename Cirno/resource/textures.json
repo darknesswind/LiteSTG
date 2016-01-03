@@ -1,0 +1,15 @@
+{
+    "image/ascii/ascii.png": "ascii",
+    "image/ascii/loading.png": "loading",
+    "image/ascii/medal00.png": "medal00",
+    "image/ascii/pause.png": "pause",
+    "image/bullet/etama.png": "etama",
+    "image/bullet/etama2.png": "etama2",
+    "image/bullet/etama6.png": "etama6",
+    "image/bullet/etama8.png": "etama8",
+    "image/bullet/etama9.png": "etama9",
+    "image/enemy/enemy.png": "enemy",
+    "image/loading/sig.png": "sig",
+    "image/title/select00.png": "select00",
+    "image/title/title01.png": "title01"
+}

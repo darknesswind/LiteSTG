@@ -23,7 +23,7 @@ public:
 	LRayShooter& setDirection(Degree deg)
 	{
 		m_fireDegree = deg;
-		m_warningLine.InitFromPolar(600, deg);
+		m_warningLine.setPolar(600, deg);
 	}
 	void setWarningTime(int time)		{ m_warningTime = time; }
 	void setDurationTime(int time)		{ m_durationTime = time; }

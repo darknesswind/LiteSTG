@@ -14,7 +14,7 @@ public:
 public:	// IGameObject
 	virtual void	Update() override;
 	virtual void Draw(LPainter& painter) override;
-	virtual const LGraphHandle GetGraphHandle() const override;
+	virtual uint GetSortKey() const override;
 
 public:
 	LShooters* GetShooters() { return m_spShooters.get(); }

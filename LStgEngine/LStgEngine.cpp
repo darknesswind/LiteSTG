@@ -29,10 +29,16 @@ void LStgEngine::BeforeDxInit()
 	AppWindow.setRunWhenDeactivate(true);
 }
 
-void LStgEngine::AfterDxInit()
+void LStgEngine::OnLoading()
 {
-	Base::AfterDxInit();
-
+	Base::OnLoading();
+	m_spInput->registerKey(StgKey::Left, Keys::Left);
+	m_spInput->registerKey(StgKey::Right, Keys::Right);
+	m_spInput->registerKey(StgKey::Up, Keys::Up);
+	m_spInput->registerKey(StgKey::Down, Keys::Down);
+	m_spInput->registerKey(StgKey::Shot, Keys::Z);
+	m_spInput->registerKey(StgKey::Bomb, Keys::X);
+	m_spInput->registerKey(StgKey::Slow, Keys::LShift);
 
 	m_spBullets = std::make_unique<LBullets>();
 	m_spPlayers = std::make_unique<LPlayers>();
@@ -42,15 +48,11 @@ void LStgEngine::AfterDxInit()
 
 	m_pathSet.load(L".\\resource\\data\\PathSet.xml");
 	m_spBullets->styles()->LoadBulletStyles(_T("resource\\bulletstyles.json"));
-	m_bDebugPause = false;
 }
 
 bool LStgEngine::LoopCheck()
 {
 	if (!Base::LoopCheck())
-		return false;
-
-	if (!Input.update())
 		return false;
 
 	return true;
@@ -77,6 +79,7 @@ void LStgEngine::BeforeEnd()
 	m_spEnemys->Clear();
 	m_spPlayers->Clear();
 	m_spBullets->Clear();
+	m_spComManage->clear();
 
 	Base::BeforeEnd();
 }

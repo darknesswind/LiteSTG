@@ -121,7 +121,13 @@ void SubGraphTab::onNameChanged(const QString& name)
 
 void SubGraphTab::onTextureChanged(const QString& texture)
 {
+	QTableWidgetItem* pItem = getSelectedItem(idxTexture);
+	if (!pItem)
+		return;
+
 	m_cache.texture = texture;
+	pItem->setText(texture);
+
 	updatePreview();
 }
 

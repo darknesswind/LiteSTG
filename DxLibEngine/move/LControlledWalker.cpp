@@ -25,6 +25,7 @@ enum DirectionFlag
 LControlledWalker::LControlledWalker()
 	: m_speeds{ 3.5 ,2 }
 {
+	m_pInput = LEngine::input();
 	m_speeds[sDiagNormal] = L_SQRT1_2 * m_speeds[sNormal];
 	m_speeds[sDiagFocus] = L_SQRT1_2 * m_speeds[sFocus];
 }
@@ -40,14 +41,14 @@ void LControlledWalker::setSpeed(float fNormal, float fFocus)
 void LControlledWalker::nextStep(PhysicData& data)
 {
 	int movetype = Stop;
-	int detlaIdx = Input.isKeyDown(Keys::LShift) ? sFocus : sNormal;
+	int detlaIdx = m_pInput->isLogicKeyDown(StgKey::Slow) ? sFocus : sNormal;
 	float speed = m_speeds[detlaIdx];
 	float diagSpeed = m_speeds[detlaIdx | sDiagFlag];
 
-	if (Input.isKeyDown(Keys::Up))		movetype |= MoveUp;
-	if (Input.isKeyDown(Keys::Down))	movetype |= MoveDown;
-	if (Input.isKeyDown(Keys::Left))	movetype |= MoveLeft;
-	if (Input.isKeyDown(Keys::Right))	movetype |= MoveRight;
+	if (m_pInput->isLogicKeyDown(StgKey::Up))	movetype |= MoveUp;
+	if (m_pInput->isLogicKeyDown(StgKey::Down))	movetype |= MoveDown;
+	if (m_pInput->isLogicKeyDown(StgKey::Left))	movetype |= MoveLeft;
+	if (m_pInput->isLogicKeyDown(StgKey::Right))	movetype |= MoveRight;
 
 	switch (movetype)
 	{

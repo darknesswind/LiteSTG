@@ -25,6 +25,9 @@
     <Filter Include="move">
       <UniqueIdentifier>{b6936c78-1d93-4243-ada5-285a60946426}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{6ef8be09-167e-4047-8fbc-127e95d5b0c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="typedef.h">
@@ -56,9 +59,6 @@
     </ClInclude>
     <ClInclude Include="tools\EnumHandle.hpp">
       <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="painting\LImage.h">
-      <Filter>painting</Filter>
     </ClInclude>
     <ClInclude Include="painting\LPainter.h">
       <Filter>painting</Filter>
@@ -132,6 +132,18 @@
     <ClInclude Include="tools\LLogger.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="ui\LUIObjBase.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\LRect.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\LUIImage.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\LSize.h">
+      <Filter>tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\LEngine.cpp">
@@ -151,9 +163,6 @@
     </ClCompile>
     <ClCompile Include="base\LWindow.cpp">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="painting\LImage.cpp">
-      <Filter>painting</Filter>
     </ClCompile>
     <ClCompile Include="painting\LPainter.cpp">
       <Filter>painting</Filter>
@@ -208,6 +217,12 @@
     </ClCompile>
     <ClCompile Include="tools\LLogger.cpp">
       <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\LUIObjBase.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\LUIImage.cpp">
+      <Filter>ui</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

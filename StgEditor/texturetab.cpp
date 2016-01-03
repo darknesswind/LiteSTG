@@ -1,12 +1,17 @@
 ﻿#include "texturetab.h"
 #include "ui_texturetab.h"
-#include <QFileDialog>
-#include <QFileInfo>
 #include "editordata.h"
 #include "smarttip.h"
+
+#include <QFileDialog>
+#include <QFileInfo>
 #include <QCursor>
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <QImage>
+
+#include <set>
+#include <cassert>
 
 enum TableItemIdx
 {
@@ -24,6 +29,8 @@ TextureTab::TextureTab(QWidget *parent) :
 
 	connect(ui->btnAdd, &QPushButton::clicked, this, &TextureTab::onAdd);
 	connect(ui->btnRemove, &QPushButton::clicked, this, &TextureTab::onRemove);
+	connect(ui->btnPreMulti, &QPushButton::clicked, this, &TextureTab::onPreMulti);
+
 	connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &TextureTab::queryEdit);
 	connect(ui->tableWidget, &QTableWidget::itemChanged, this, &TextureTab::onItemChanged);
 	connect(&m_timer, &QTimer::timeout, this, &TextureTab::checkTip);
@@ -89,14 +96,46 @@ void TextureTab::onRemove()
 {
 	QList<QTableWidgetItem*> items = ui->tableWidget->selectedItems();
 
+	std::set<int> removeRows;
 	for (auto iter = items.begin(); iter != items.end(); ++iter)
 	{
 		QTableWidgetItem* item = *iter;
 		if (!item || item->column() != idxSource)
 			continue;
 
-		m_pEditorData->removeTexture(item->text());
-		ui->tableWidget->removeRow(item->row());
+		if (removeRows.find(item->row()) == removeRows.end())
+		{
+			removeRows.insert(item->row());
+			m_pEditorData->removeTexture(item->text());
+		}
+	}
+
+	for (auto iter = removeRows.rbegin(); iter != removeRows.rend(); ++iter)
+		ui->tableWidget->removeRow(*iter);
+}
+
+void TextureTab::onPreMulti()
+{
+	QList<QTableWidgetItem*> items = ui->tableWidget->selectedItems();
+
+	std::set<int> removeRows;
+	for (auto iter = items.begin(); iter != items.end(); ++iter)
+	{
+		QTableWidgetItem* item = *iter;
+		if (!item || item->column() != idxSource)
+			continue;
+
+		QPixmap texture = EditorData::instance()->getTexture(item->text());
+		QImage target = texture.toImage();
+		if (target.format() != QImage::Format_ARGB32)
+		{
+			QImage newImg = target.convertToFormat(QImage::Format_ARGB32);
+			if (!newImg.isNull())
+			{
+				bool bSucc = newImg.save(EditorData::instance()->getTextureFullPath(item->text()), "PNG");
+				assert(bSucc);
+			}
+		}
 	}
 }
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "LPainter.h"
-#include "LImage.h"
 #include "LPoint.h"
+#include "LSize.h"
 #include "Vector2.hpp"
 
 LPainter::LPainter()
@@ -77,19 +77,20 @@ void LPainter::drawVString(int x, int y, LPCWSTR pStr, LRgb Color, LRgb EdgeColo
 
 #pragma region Õº–ŒªÊ÷∆
 
-void LPainter::drawGraph(int x, int y, LImage img, bool TransFlag)
+void LPainter::drawGraph(int x, int y, LGraphHandle hGraph, bool TransFlag)
 {
-	CheckRes(DxLib::DrawGraph(x, y, img.m_handle, TransFlag));
+	CheckRes(DxLib::DrawGraph(x, y, hGraph, TransFlag));
 }
 
-void LPainter::drawRotaGraphF(float xf, float yf, double ExRate, Radian Angle, LImage img, bool TransFlag, bool TurnFlag /*= false*/)
+void LPainter::drawRotaGraphF(float xf, float yf, double ExRate, Radian Angle, LGraphHandle hGraph, bool TransFlag, bool TurnFlag /*= false*/)
 {
-	CheckRes(DxLib::DrawRotaGraphF(xf, yf, ExRate, Angle.radian(), img.m_handle, TransFlag, TurnFlag));
+	CheckRes(DxLib::DrawRotaGraphF(xf, yf, ExRate, Angle.radian(), hGraph, TransFlag, TurnFlag));
 }
 
-void LPainter::drawExtRotaGraph(float fx, float fy, float ExRateX, float ExRateY, Radian RAD, LImage img, bool turnFlag /*= false*/)
+void LPainter::drawExtRotaGraph(float fx, float fy, float ExRateX, float ExRateY, Radian RAD, LGraphHandle hGraph, bool turnFlag /*= false*/)
 {
-	QSize size = img.size();
+	LSize size;
+	hGraph.getSize(size);
 	float x = size.width() / 2.0f, y = size.height() / 2.0f;
 
 	Vector2 p1(-x * ExRateX, -y);
@@ -115,7 +116,7 @@ void LPainter::drawExtRotaGraph(float fx, float fy, float ExRateX, float ExRateY
 	// 	DrawCircle(pos.x, pos.y, 2, 0xFFFF, 0);
 	// 	DrawQuadrangle(p1.x, p1.y,	p2.x, p2.y,
 	// 		p3.x, p3.y,	p4.x, p4.y, 0xFFFFFF, false);
-	CheckRes(DxLib::DrawModiGraphF(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y(), p4.x(), p4.y(), img.m_handle, true));
+	CheckRes(DxLib::DrawModiGraphF(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y(), p4.x(), p4.y(), hGraph, true));
 }
 
 #pragma endregion

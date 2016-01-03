@@ -24,17 +24,9 @@ private:
 
 private:
 	typedef std::vector<IDrawableObj*> RenderItems;
-	typedef std::map<LGraphHandle, RenderItems> RenderImages;
-	typedef std::map<RenderArgument, RenderImages> RenderQueue;
+	typedef std::map<RenderArgument, RenderItems> RenderQueue;
 
-	typedef std::unordered_map<int, RenderItems> RenderImages2;
-	typedef std::map<uint, RenderImages2> RenderQueue2;
-#ifndef __RenderQueueTest__
 	RenderQueue m_renderQueue;
-#else
-	RenderQueue2 m_renderQueue;
-#endif
-
 	LPainter m_painter;
 };
 

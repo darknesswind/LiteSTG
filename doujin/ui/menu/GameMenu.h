@@ -19,5 +19,6 @@ private:
 	int m_timeCount;
 	LImage m_title;
 	const LGraphHandles* m_pSelections;
+	LInput* m_pInput;
 };
 #endif

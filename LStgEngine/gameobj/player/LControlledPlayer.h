@@ -12,7 +12,7 @@ public:
 public:	// IGameobj
 	virtual void	Update() override;
 	virtual void	Draw(LPainter& painter) override;
-	virtual const LGraphHandle GetGraphHandle() const override;
+	virtual uint GetSortKey() const override;
 
 public:	// Player
 	virtual PlayerType GetType() const override { return PlayerType::Controlled; }
@@ -30,5 +30,6 @@ private:
 
 	LGraphHandles m_playerImg;
 	LGraphHandle m_hHitBox;
+	LInput* m_pInput;
 };
 #endif
