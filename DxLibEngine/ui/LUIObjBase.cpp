@@ -2,15 +2,15 @@
 #include "LUIObjBase.h"
 #include "painting/LRender.h"
 
-LUIObjBase::LUIObjBase(LUIObjBase* parent /*= nullptr*/, bool bAutoDel /*= false*/)
+LUIObjBase::LUIObjBase(LUIObjBase* parent /*= nullptr*/)
 	: m_pParent(parent)
-	, m_bAutoDelete(bAutoDel)
+	, m_bAutoDelete(false)
 {
 // 	if (!m_pParent)
 // 		m_pParent = LEngine::rootUI();
 
 	if (m_pParent)
-		m_pParent->m_children.push_back(this);
+		m_pParent->pushChild(this);
 
 	m_renderArg.uDepth = RenderDepthBase::DepthUI;
 }
@@ -32,27 +32,54 @@ void LUIObjBase::Draw(LPainter& painter)
 		pChild->Draw(painter);
 }
 
-bool LUIObjBase::addChild(LUIObjBase* pChild)
+LUIObjBase* LUIObjBase::pushChild(LUIObjBase* pChild, bool bAutoDel /*= false*/)
 {
-	if (!pChild)
-		return false;
+	LAssert(pChild);
 
 	LUIObjBase* pOldParent = pChild->m_pParent;
 	if (this == pOldParent)
-		return true;
+		return pChild;
 	else if (pOldParent)
-		pOldParent->removeChild(pChild);
+		pOldParent->takeChild(pChild);
+	LAssert(!pOldParent || pChild->autoDelete() == bAutoDel);
 
 	pChild->m_pParent = this;
+	pChild->setAutoDelete(bAutoDel);
 	m_children.push_back(pChild);
-	return true;
+	return pChild;
 }
 
-bool LUIObjBase::removeChild(LUIObjBase* child)
+void LUIObjBase::popChild()
+{
+	if (m_children.empty())
+		return;
+
+	LUIObjBase* pChild = m_children.back();
+	m_children.pop_back();
+	if (pChild->autoDelete())
+		delete pChild;
+}
+
+bool LUIObjBase::removeChild(LUIObjBase* pChild)
 {
 	for (auto iter = m_children.begin(); iter != m_children.end(); ++iter)
 	{
-		if (*iter == child)
+		if (*iter == pChild)
+		{
+			m_children.erase(iter);
+			if (pChild->autoDelete())
+				delete pChild;
+			return true;
+		}
+	}
+	return false;
+}
+
+bool LUIObjBase::takeChild(LUIObjBase* pChild)
+{
+	for (auto iter = m_children.begin(); iter != m_children.end(); ++iter)
+	{
+		if (*iter == pChild)
 		{
 			m_children.erase(iter);
 			return true;
@@ -71,14 +98,14 @@ void LUIObjBase::clearChildren()
 	m_children.clear();
 }
 
-void LUIObjBase::commitRender(LRender* pRender)
+void LUIObjBase::CommitRender(LRender* pRender)
 {
 	pRender->PushItem(this);
 	for each (LUIObjBase* pChild in m_children)
-		pChild->commitRender(pRender);
+		pChild->CommitRender(pRender);
 }
 
-void LUIRoot::commitRender()
+void LUIRoot::CommitRender()
 {
-	LUIObjBase::commitRender(LEngine::render());
+	LUIObjBase::CommitRender(LEngine::render());
 }

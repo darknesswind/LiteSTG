@@ -97,6 +97,8 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rdparty\EmbeddedList.h" />
+    <ClInclude Include="3rdparty\FastFunc.hpp" />
     <ClInclude Include="base\DxHandleManager.h" />
     <ClInclude Include="base\LEngine.h" />
     <ClInclude Include="base\LHandle.h" />
@@ -121,9 +123,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="tools\EmbeddedList.h" />
     <ClInclude Include="tools\EnumHandle.hpp" />
-    <ClInclude Include="tools\FastFunc.hpp" />
     <ClInclude Include="tools\Input.h" />
     <ClInclude Include="tools\LLogger.h" />
     <ClInclude Include="tools\LMessageBox.h" />
@@ -135,7 +135,9 @@
     <ClInclude Include="tools\Vector2.hpp" />
     <ClInclude Include="typedef.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="ui\LUIAnime.h" />
     <ClInclude Include="ui\LUIImage.h" />
+    <ClInclude Include="ui\LUIMenu.h" />
     <ClInclude Include="ui\LUIObjBase.h" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +172,7 @@
     <ClCompile Include="tools\LUnifiedTimer.cpp" />
     <ClCompile Include="tools\LPoint.cpp" />
     <ClCompile Include="ui\LUIImage.cpp" />
+    <ClCompile Include="ui\LUIMenu.cpp" />
     <ClCompile Include="ui\LUIObjBase.cpp" />
     <ClInclude Include="tools\Vector3.hpp">
       <FileType>CppCode</FileType>

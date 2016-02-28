@@ -4,7 +4,7 @@
 class LoadingUI : public LUIObjBase
 {
 public:
-	LoadingUI(LUIObjBase* parent, bool bAutoDel);
+	LoadingUI(LUIObjBase* parent = nullptr);
 	~LoadingUI();
 
 public:

@@ -50,12 +50,6 @@
     <ClCompile Include="ui\menu\GameMenu.cpp">
       <Filter>ui\menu</Filter>
     </ClCompile>
-    <ClCompile Include="Globle.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="DebugInfo.cpp">
       <Filter>gameobj</Filter>
     </ClCompile>
@@ -65,11 +59,11 @@
     <ClCompile Include="ui\loading\LoadingUI.cpp">
       <Filter>ui\loading</Filter>
     </ClCompile>
+    <ClCompile Include="CirnoEngine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="State.h">
-      <Filter>状态机</Filter>
-    </ClInclude>
     <ClInclude Include="StateMachine.h">
       <Filter>状态机</Filter>
     </ClInclude>
@@ -91,12 +85,6 @@
     <ClInclude Include="ui\menu\GameMenu.h">
       <Filter>ui\menu</Filter>
     </ClInclude>
-    <ClInclude Include="Globle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="DebugInfo.h">
       <Filter>gameobj</Filter>
     </ClInclude>
@@ -105,6 +93,9 @@
     </ClInclude>
     <ClInclude Include="ui\loading\LoadingUI.h">
       <Filter>ui\loading</Filter>
+    </ClInclude>
+    <ClInclude Include="CirnoEngine.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,23 +1,14 @@
 #ifndef _GAMEMENU_H_
 #define _GAMEMENU_H_
-
 #pragma once
+#include "ui/LUIObjBase.h"
+
 // Ö÷²Ëµ¥
-class GameMenu : public IComponent
+class GameMenu : public LUIObjBase
 {
 public:
-	GameMenu(void);
-	~GameMenu(void);
-	virtual void Draw(LPainter& painter);
-	virtual void Update();
+	GameMenu(LUIObjBase* parent = nullptr);
 
 private:
-	// 	void *MenuClass;
-	bool m_canMove;
-	int m_menuSelect;
-	int m_timeCount;
-	LGraphHandle m_title;
-	const LGraphHandles* m_pSelections;
-	LInput* m_pInput;
 };
 #endif

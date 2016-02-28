@@ -44,7 +44,7 @@ void LScreen::setDrawScreen(int hScreenGraph)
 
 void LScreen::screenFlip()
 {
-	CheckRes(DxLib::ScreenFlip());
+	DxLib::ScreenFlip();
 }
 
 void LScreen::setWaitVSync(bool bVSync)

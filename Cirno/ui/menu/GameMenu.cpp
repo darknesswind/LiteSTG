@@ -1,84 +1,70 @@
 #include "stdafx.h"
 #include "GameMenu.h"
-#include "Globle.h"
-#include "Input.h"
-#include "LPainter.h"
 #include "LAssets.h"
+#include "ui/LUIMenu.h"
+#include "ui/LUIImage.h"
 
-enum
+enum MainMenuEnum
 {
-	MENU_GAME_START,
-	MENU_EXTRA_START,
-	MENU_PRACTICE_START,
-	MENU_SPELL_PRACTICE,
-	MENU_REPLAY,
-	MENU_PLAYER_DATA,
-	MENU_MUSIC_ROOM,
-	MENU_OPTION,
-	MENU_QUIT,
-	MENU_SELECT_NUM
+	Menu_Start,
+	Menu_Replay,
+	Menu_Result,
+	Menu_Music,
+	Menu_Option,
+	Menu_Quit,
+	Menu_Count
 };
 
-GameMenu::GameMenu(void)
-	: m_pSelections(nullptr)
+class MainMenu : public LUIMenu
 {
-	m_pInput = LEngine::input();
-	m_menuSelect = 0;
-	m_timeCount = 0;
-	m_title = LEngine::assets()->GetTexture(_T("select00"));
-	m_pSelections = &LEngine::assets()->GetSubGraphGroup(_T("标题选项"));
-	// 	MenuClass = NULL;
-}
+public:
+	using LUIMenu::LUIMenu;
 
-GameMenu::~GameMenu(void)
-{
-}
-
-void GameMenu::Draw(LPainter& painter)
-{
-	painter.drawGraph(0, 0, m_title, false);
-	painter.drawBox(410, 50 + 32 * m_menuSelect, 602, 82 + 32 * m_menuSelect, 0xffff, true);
-	for (int i = 0; i < MENU_SELECT_NUM; ++i)
+	void OnOk() override
 	{
-		painter.drawGraph(410, 50 + 32 * i, m_pSelections->at(i), true);
-	}
-}
-
-void GameMenu::Update()
-{
-	if (m_pInput->isLogicKeyDown(StgKey::Ok))
-	{
-		switch (m_menuSelect)
+		switch (m_activeIdx)
 		{
-		case MENU_GAME_START:
-			gameState = 1;
-			isStateChange = true;
+		case Menu_Start:
+			CirnoEngine::engine()->ChangeState(GameState::Test);
 			break;
-		case MENU_QUIT:
-			Engine::engine()->setEndFlag(true);
+		case Menu_Quit:
+			CirnoEngine::engine()->setEndFlag(true);
 			break;
 		default: break;
 		}
 	}
-	if (m_pInput->isLogicKeyDown(StgKey::Cancel))
+
+	void OnCancel() override
 	{
-		m_menuSelect = MENU_SELECT_NUM - 1;
-		m_canMove = false;
+		m_activeIdx = Menu_Quit;
 	}
-	if (!m_canMove) // 速度控制
+};
+
+GameMenu::GameMenu(LUIObjBase* parent /*= nullptr*/)
+	: LUIObjBase(parent)
+{
+	LGraphHandle hTitleBG = LEngine::assets()->GetTexture(_T("select00"));
+	pushChild(new LUIImage(hTitleBG), true);
+
+	LGraphHandle hCirno = LEngine::assets()->GetTexture(_T("title00a"));
+	pushChild(new LUIImage(hCirno), true);
+
+	LGraphHandle hLogo = LEngine::assets()->GetTexture(_T("title_logo"));
+	pushChild(new LUIImage(hLogo), true)->setPos(200, 0);
+
+	LGraphHandle hCopyright = LEngine::assets()->GetTexture(_T("copyright"));
+	pushChild(new LUIImage(hCopyright), true)->setPos(0, 460);
+
+	LGraphHandle hVersion = LEngine::assets()->GetTexture(_T("title_ver"));
+	pushChild(new LUIImage(hVersion), true)->setPos(320, 440);
+
+	const LGraphHandles& selItems = LEngine::assets()->GetSubGraphGroup(_T("主菜单白"));
+	const LGraphHandles& unselItems = LEngine::assets()->GetSubGraphGroup(_T("主菜单蓝"));
+
+	LUIMenu* pMenu = (LUIMenu*)pushChild(new LUIMenu(), true);
+	for (int i = 0; i < Menu_Count; ++i)
 	{
-		if (m_timeCount++ > 8)
-		{
-			m_timeCount = 0;
-			m_canMove = true;
-		}
-		return;
+		pMenu->addMenuItem(selItems[i], unselItems[i]);
 	}
-	if (m_pInput->isLogicKeyDown(StgKey::Down) || m_pInput->isLogicKeyDown(StgKey::Up))
-	{
-		m_menuSelect = (m_menuSelect + m_pInput->isLogicKeyDown(StgKey::Down)) % MENU_SELECT_NUM;
-		m_menuSelect = (m_menuSelect + m_pInput->isLogicKeyDown(StgKey::Up) * (MENU_SELECT_NUM - 1)) % MENU_SELECT_NUM;
-		m_canMove = false;
-	}
-	return;
+	pMenu->setPos(450, 300);
 }

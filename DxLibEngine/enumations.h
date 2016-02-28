@@ -68,21 +68,33 @@ enum RenderDepthBase
 	DepthDebug		= 0xF0000000,
 };
 
-namespace StgKey
+namespace BaseKey
 {
-	enum StgKey
+	enum BaseKey
 	{
 		Left,
 		Right,
 		Up,
 		Down,
-		Shot,
-		Bomb,
+		Ok,
+		Cancel,
+
+		UserDefine
+	};
+}
+
+namespace StgKey
+{
+	enum StgKey
+	{
+		Left	= BaseKey::Left,
+		Right	= BaseKey::Right,
+		Up		= BaseKey::Up,
+		Down	= BaseKey::Down,
+		Shot	= BaseKey::Ok,
+		Bomb	= BaseKey::Cancel,
 		Slow,
 		Pause,
-
-		Ok = Shot,
-		Cancel = Bomb,
 
 		UserDefine
 	};

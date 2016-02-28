@@ -4,21 +4,24 @@
 #include "LPainter.h"
 #include "ui/LUIImage.h"
 
-LoadingUI::LoadingUI(LUIObjBase* parent, bool bAutoDel)
-	: LUIObjBase(parent, bAutoDel)
+LoadingUI::LoadingUI(LUIObjBase* parent /*= nullptr*/)
+	: LUIObjBase(parent)
 {
-	LAssets* pAssets = Engine::assets();
+	LAssets* pAssets = CirnoEngine::assets();
 
 	LGraphHandle hGB = pAssets->GetTexture(__T("sig"));
-	LUIImage* pBackground = new LUIImage(hGB, this, true);
+	pushChild(new LUIImage(hGB), true);
 
 	LGraphHandles txLoading = pAssets->GetSubGraphGroup(__T("加载中"));
-	LUIFlashImage* pMajorText = new LUIFlashImage(txLoading[0], this, true);
+	LUIImage* pMajorText = new LUIImage(txLoading[0]);
 	pMajorText->setFlash(90);
+	pMajorText->setPos(500, 440);
+	pushChild(pMajorText, true);
 
-	LUIFlashImage* pMinorText = new LUIFlashImage(txLoading[1], this, true);
+	LUIImage* pMinorText = new LUIImage(txLoading[1]);
 	pMinorText->setFlash(60);
-	pMinorText->setPos(30, 30);
+	pMinorText->setPos(520, 450);
+	pushChild(pMinorText, true);
 
 	m_snow = pAssets->GetSubGraphGroup(__T("加载雪花"))[0];
 }

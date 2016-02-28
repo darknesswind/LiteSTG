@@ -5,6 +5,17 @@
 #include "LUnifiedTimer.h"
 #include "move/LPathSet.h"
 
+namespace GameState
+{
+	enum BaseState
+	{
+		None,
+		Loading,
+		Menu,
+		Test,
+	};
+}
+
 class LRender;
 class LAssets;
 class LInput;
@@ -16,25 +27,29 @@ public:
 	virtual ~LEngine(void);
 
 public:
-	int exec();
 	LUnifiedTimer& unifiedTimer() { return m_centerTimer; }
 	LPathSet& pathSet() { return m_pathSet; }
 
 public:
+	int exec();
 	void setEndFlag(bool bEnd) { m_bEndFlag = bEnd; }
+	bool ChangeState(uint nextState);
 
 protected:
 	virtual void BeforeDxInit() { }
 	virtual void PreLoad();
-	virtual void OnLoading();
+	virtual void OnAsyncLoading();
 	virtual bool LoopCheck();
 	virtual bool NeedUpdate();
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void BeforeEnd();
 
+	virtual void OnEnterState(uint state) = 0;
+	virtual void OnExecState(uint state) = 0;
+	virtual bool OnExitState(uint state) = 0;
 private:
-	void innerInit();
+	void BeginLoading();
 
 public:
 	static LEngine* engine() { return s_pEngine; }
@@ -49,6 +64,9 @@ protected:
 protected:
 	bool m_bDebugPause = false;
 	bool m_bEndFlag = false;
+	bool m_bLoadReady = true;
+
+	uint m_curState;
 
 	LUnifiedTimer m_centerTimer;
 	LPathSet m_pathSet;

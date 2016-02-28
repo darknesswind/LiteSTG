@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include <Windows.h>
-#include "Engine.h"
+#include "CirnoEngine.h"
 int WINAPI WinMain(
 	_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -8,6 +8,6 @@ int WINAPI WinMain(
 	_In_ int nShowCmd
 	)
 {
-	Engine engine;
+	CirnoEngine engine;
 	return engine.exec();
 }

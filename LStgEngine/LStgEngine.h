@@ -9,7 +9,6 @@ class LBullets;
 class LPlayers;
 class LEnemys;
 class Player;
-class GameMenu;
 class ComManager;
 class LBulletStyles;
 typedef ComManager LCharacters;
@@ -24,8 +23,8 @@ public:
 
 protected:
 	virtual void BeforeDxInit() override;
-	virtual void OnLoading() override;
-	virtual bool LoopCheck() override;
+	virtual void PreLoad() override;
+	virtual void OnAsyncLoading() override;
 	virtual void Update() override;
 	virtual void Draw() override;
 	virtual void BeforeEnd() override;

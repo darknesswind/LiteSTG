@@ -5,7 +5,7 @@ class LRender;
 class LUIObjBase : public IUIObject
 {
 public:
-	LUIObjBase(LUIObjBase* parent = nullptr, bool bAutoDel = false);
+	LUIObjBase(LUIObjBase* parent = nullptr);
 	virtual ~LUIObjBase();
 
 public:
@@ -17,8 +17,10 @@ public:
 public:
 	LUIObjBase* parent()				{ return m_pParent; }
 	const LUIObjBase* parent() const	{ return m_pParent; }
-	bool addChild(LUIObjBase* pChild);
+	LUIObjBase* pushChild(LUIObjBase* pChild, bool bAutoDel = false);
+	void popChild();
 	bool removeChild(LUIObjBase* pChild);
+	bool takeChild(LUIObjBase* pChild);
 	void clearChildren();
 	
 	bool autoDelete() const				{ return m_bAutoDelete; }
@@ -28,7 +30,7 @@ public:
 	void setPos(int x, int y) { m_rect.setPos(x, y); }
 
 protected:
-	void commitRender(LRender* pRender);
+	void CommitRender(LRender* pRender);
 
 protected:
 	LUIObjBase* m_pParent;
@@ -55,7 +57,7 @@ public:
 	using LUIObjBase::LUIObjBase;
 	~LUIRoot() override = default;
 
-	void commitRender();
+	void CommitRender();
 private:
 
 };

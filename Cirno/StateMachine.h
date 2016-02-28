@@ -1,49 +1,60 @@
 #ifndef _STATEMACHINE_H_
 #define _STATEMACHINE_H_
 #pragma once
-#include "State.h"
-template <class entityType>
+
+template <class UserType>
+class State
+{
+public:
+	virtual void Enter(UserType*) = 0;
+	virtual void Execute(UserType*) = 0;
+	// 	virtual void Draw(entityType*) = 0;
+	virtual void Exit(UserType*) = 0;
+	virtual ~State(void) {}
+};
+
+template <class UserType>
 class StateMachine
 {
 public:
-	StateMachine(entityType *o) : owner(o), currentState(nullptr), previousState(nullptr), globalState(nullptr)	{}
-	virtual ~StateMachine(void){};
+	typedef State<UserType> StateType;
+	typedef UserType DataType;
+public:
+	StateMachine(UserType *d)
+		: m_pData(d)
+		, m_pCurState(nullptr)
+		, m_pPrevState(nullptr)
+		, m_pGlobalState(nullptr)
+	{}
+	virtual ~StateMachine(void) {};
 
 	void Update() const
 	{
-		if (globalState) globalState->Execute(owner);
-		if (currentState) currentState->Execute(owner);
+		if (m_pGlobalState) m_pGlobalState->Execute(m_pData);
+		if (m_pCurState) m_pCurState->Execute(m_pData);
 	}
-	void Draw() const
-	{
-		if (globalState) globalState->Draw(owner);
-		if (currentState) currentState->Draw(owner);
-	}
-	void setCurrentState(State<entityType>* state)
-	{
-		currentState = state;
-	}
-	void setPreviousState(State<entityType>* state)
-	{
-		previousState = state;
-	}
-	void setGlobalState(State<entityType>* state)
-	{
-		globalState = state;
-	}
-	void ChangeState(State<entityType>* state)
+// 	void Draw() const
+// 	{
+// 		if (globalState) globalState->Draw(owner);
+// 		if (currentState) currentState->Draw(owner);
+// 	}
+	void SetCurrentState(StateType* state) { m_pCurState = state; }
+	void SetPreviousState(StateType* state) { m_pPrevState = state; }
+	void SetGlobalState(StateType* state) { m_pGlobalState = state; }
+	void ChangeState(StateType* state) 
 	{
 		if (!state) return;
-		if (currentState) currentState->Exit(owner);
-		previousState = currentState;
-		currentState = state;
-		currentState->Enter(owner);
+		if (m_pCurState) m_pCurState->Exit(m_pData);
+
+		m_pPrevState = m_pCurState;
+		m_pCurState = state;
+		m_pCurState->Enter(m_pData);
 	}
 private:
-	entityType *owner;
-	State<entityType> *currentState;
-	State<entityType> *previousState;
-	State<entityType> *globalState;
+	UserType* m_pData;
+	StateType* m_pCurState;
+	StateType* m_pPrevState;
+	StateType* m_pGlobalState;
 };
 
 #endif

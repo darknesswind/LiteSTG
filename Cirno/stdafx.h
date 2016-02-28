@@ -14,4 +14,4 @@ typedef const wchar_t* LPCWSTR;
 #include "../LStgEngine/interdef.h"
 
 // this project
-#include "Engine.h"
+#include "CirnoEngine.h"

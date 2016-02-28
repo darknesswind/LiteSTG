@@ -28,6 +28,9 @@
     <Filter Include="ui">
       <UniqueIdentifier>{6ef8be09-167e-4047-8fbc-127e95d5b0c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rdparty">
+      <UniqueIdentifier>{1fbec98f-8f41-484e-86f8-cfee484dffb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="typedef.h">
@@ -47,12 +50,6 @@
     </ClInclude>
     <ClInclude Include="base\LScreen.h">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\EmbeddedList.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\FastFunc.hpp">
-      <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="base\LWindow.h">
       <Filter>base</Filter>
@@ -144,6 +141,18 @@
     <ClInclude Include="tools\LSize.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="ui\LUIAnime.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\LUIMenu.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\EmbeddedList.h">
+      <Filter>3rdparty</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\FastFunc.hpp">
+      <Filter>3rdparty</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\LEngine.cpp">
@@ -222,6 +231,9 @@
       <Filter>ui</Filter>
     </ClCompile>
     <ClCompile Include="ui\LUIImage.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\LUIMenu.cpp">
       <Filter>ui</Filter>
     </ClCompile>
   </ItemGroup>

@@ -5,9 +5,7 @@
 #include "painting/LRender.h"
 #include "LAssets.h"
 #include "ui/LUIObjBase.h"
-
 #include <thread>
-#include <atomic>
 
 LEngine* LEngine::s_pEngine = nullptr;
 
@@ -36,30 +34,24 @@ void LEngine::PreLoad()
 	m_spAssets->LoadSubGraphicsList(L"resource\\subgraphics.json");
 }
 
-void LEngine::innerInit()
+void LEngine::BeginLoading()
 {
 	PreLoad();
-
-	std::atomic_bool bReady(false);
-	std::thread initThread([this, &bReady]()
+	m_bLoadReady = false;
+	std::thread initThread([this]()
 	{
-		OnLoading();
-		bReady = true;
+		auto beginFrame = m_centerTimer.curFrame();
+		OnAsyncLoading();
+		while (m_centerTimer.curFrame() - beginFrame < 180)
+		{
+		}
+		m_bLoadReady = true;
 	});
 	initThread.detach();
-
-	uint minShowTime = 600;
-	while (LoopCheck() && (!bReady || --minShowTime > 0))
-	{
-		Screen.clearDrawScreen();
-		m_spRootUI->Update();
-		m_spRootUI->commitRender();
-		m_spRender->DoRender();
-		Screen.screenFlip();
-	}
+	ChangeState(GameState::Loading);
 }
 
-void LEngine::OnLoading()
+void LEngine::OnAsyncLoading()
 {
 // 	m_spAssets->LoadSoundEffectList(L"resource\\data\\se.csv");
 }
@@ -71,7 +63,7 @@ int LEngine::exec()
 	{
 		return -1;
 	}
-	innerInit();
+	BeginLoading();
 
 	while (LoopCheck())
 	{
@@ -122,4 +114,14 @@ void LEngine::BeforeEnd()
 {
 	m_pathSet.clear();
 	m_spRootUI->clearChildren();
+}
+
+bool LEngine::ChangeState(uint nextState)
+{
+	if (!OnExitState(m_curState))
+		return false;
+
+	m_curState = nextState;
+	OnEnterState(m_curState);
+	return true;
 }
