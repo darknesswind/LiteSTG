@@ -1,7 +1,7 @@
 #pragma once
 #include "LUIObjBase.h"
 #include "LHandle.h"
-#include "LUIAnime.h"
+#include "LUITransfer.h"
 
 class LUIImage : public LUIObjBase
 {
@@ -16,8 +16,10 @@ public:
 
 public:
 	void setFlash(uint interval);
+	int width() const { return m_rect.width(); }
+	int height() const { return m_rect.height(); }
 
 protected:
 	LGraphHandle m_hGraph;
-	LUIAnimation m_anime;
+	LUITransfer m_anime;
 };

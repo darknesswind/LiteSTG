@@ -64,13 +64,15 @@ void CirnoEngine::OnEnterState(uint state)
 		m_spRootUI->pushChild(new LoadingUI(), true);
 		break;
 	case GameState::Menu:
-		m_spRootUI->pushChild(new GameMenu(), true);
+		if (!m_spMainMenu)
+			m_spMainMenu = std::make_unique<GameMenu>();
+		m_spRootUI->pushChild(m_spMainMenu.get());
 		break;
 	case GameState::Test:
 		{
-			static 	BaseFrame baseFrame;
-			m_spComManage->clear();
-			m_spComManage->push_back(&baseFrame);
+			if (!m_spPane)
+				m_spPane = std::make_unique<BaseFrame>();
+			m_spRootUI->pushChild(m_spPane.get());
 
 			m_spPlayers->Add(PlayerType::Controlled);
 			for (int i = 0; i < 1; ++i)
@@ -94,10 +96,6 @@ void CirnoEngine::OnExecState(uint state)
 		if (m_bLoadReady)
 			ChangeState(GameState::Menu);
 		break;
-	case GameState::Menu:
-		break;
-	case GameState::Test:
-		break;
 	default:
 		break;
 	}
@@ -111,6 +109,7 @@ bool CirnoEngine::OnExitState(uint state)
 		m_spRootUI->popChild();
 		break;
 	case GameState::Menu:
+		m_spRootUI->popChild();
 		break;
 	case GameState::Test:
 		break;

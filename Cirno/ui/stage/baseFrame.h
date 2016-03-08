@@ -1,22 +1,16 @@
 ﻿#ifndef _BASEFRAME_H_
 #define _BASEFRAME_H_
 #pragma once
+#include "ui/LUIObjBase.h"
 
 // 游戏中背景框的显示
-class BaseFrame : public IComponent
+class BaseFrame : public LUIObjBase
 {
 public:
 	BaseFrame();
-	virtual ~BaseFrame(void){};
 
-	virtual void Update() override;
-	virtual void Draw(LPainter& painter) override;
 
 private:
-	LGraphHandle m_leftFrame;
-	LGraphHandle m_topFrame;
-	LGraphHandle m_rightFrame;
-	LGraphHandle m_bottomFrame;
 };
 
 #endif

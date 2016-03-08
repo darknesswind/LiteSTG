@@ -23,6 +23,13 @@ LUIMenuItem* LUIMenu::addMenuItem(LGraphHandle hActive, LGraphHandle hDeactive)
 	return pItem;
 }
 
+void LUIMenu::setCurrentIndex(int idx)
+{
+	int prev = m_activeIdx;
+	m_activeIdx = idx;
+	OnIndexChanged(prev, idx);
+}
+
 void LUIMenu::Update()
 {
 	if (!m_bEnable)

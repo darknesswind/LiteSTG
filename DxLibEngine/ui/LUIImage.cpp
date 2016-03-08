@@ -29,7 +29,7 @@ void LUIImage::setFlash(uint interval)
 	if (interval)
 	{
 		m_renderArg.paintArg.blendMode = DxBlendMode::Alpha;
-		m_anime.AddChild(new LUICosineAnima<int>(&m_renderArg.paintArg.blendParam, interval, 0xFF));
+		m_anime.AddChild(new LUICosineTransfer<int>(&m_renderArg.paintArg.blendParam, interval, 0xFF));
 	}
 	else
 	{

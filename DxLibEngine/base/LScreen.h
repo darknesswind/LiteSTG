@@ -21,10 +21,10 @@ public:
 	int getPixel(const LPoint& point);
 	void setDrawScreen(DrawScreen drawScreen);	// 设置绘制目标
 	void setDrawScreen(int hScreenGraph);
+	const LSize& getScreenSize() const { return m_screenSize; }
 
 public:	// Dx初始化前调用
 	void setGraphMode(int ScreenSizeX, int ScreenSizeY, int ColorBitDepth, int RefreshRate = 60);	// 取得当前的图形模式（分辨率等）
-	void setGraphMode(const LPoint& point, int ColorBitDepth, int RefreshRate = 60);
 	void setWaitVSync(bool bVSync);
 	bool getWaitVSync();
 
@@ -38,6 +38,9 @@ private:
 private:
 	LScreen(const LScreen&) = delete;
 	void operator=(const LScreen&) = delete;
+
+private:
+	LSize m_screenSize;
 };
 
 enum class DrawScreen : uint

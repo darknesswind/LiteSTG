@@ -61,7 +61,7 @@ GameMenu::GameMenu(LUIObjBase* parent /*= nullptr*/)
 	const LGraphHandles& selItems = LEngine::assets()->GetSubGraphGroup(_T("主菜单白"));
 	const LGraphHandles& unselItems = LEngine::assets()->GetSubGraphGroup(_T("主菜单蓝"));
 
-	LUIMenu* pMenu = (LUIMenu*)pushChild(new LUIMenu(), true);
+	MainMenu* pMenu = (MainMenu*)pushChild(new MainMenu(), true);
 	for (int i = 0; i < Menu_Count; ++i)
 	{
 		pMenu->addMenuItem(selItems[i], unselItems[i]);

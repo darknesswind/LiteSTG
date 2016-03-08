@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "LScreen.h"
-#include "LPoint.h"
+#include "LSize.h"
 
 LScreen LScreen::Instance;
 
@@ -25,11 +25,7 @@ int LScreen::getPixel(const LPoint& point)
 void LScreen::setGraphMode(int ScreenSizeX, int ScreenSizeY, int ColorBitDepth, int RefreshRate /*= 60*/)
 {
 	CheckRes(DxLib::SetGraphMode(ScreenSizeX, ScreenSizeY, ColorBitDepth, RefreshRate));
-}
-
-void LScreen::setGraphMode(const LPoint& point, int ColorBitDepth, int RefreshRate /*= 60*/)
-{
-	CheckRes(DxLib::SetGraphMode(point.x(), point.y(), ColorBitDepth, RefreshRate));
+	CheckRes(DxLib::GetScreenState(&m_screenSize.rwidth(), &m_screenSize.rheight(), nullptr));
 }
 
 void LScreen::setDrawScreen(DrawScreen drawScreen)

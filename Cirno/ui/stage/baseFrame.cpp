@@ -2,25 +2,25 @@
 #include "baseFrame.h"
 #include "LPainter.h"
 #include "LAssets.h"
+#include "ui/LUIImage.h"
 
 BaseFrame::BaseFrame()
 {
 	LAssets* pAssets = LStgEngine::assets();
-	m_leftFrame		= pAssets->GetTexture(_T("bg_left"));
-	m_topFrame		= pAssets->GetTexture(_T("bg_top"));
-	m_rightFrame	= pAssets->GetTexture(_T("bg_right"));
-	m_bottomFrame	= pAssets->GetTexture(_T("bg_bottom"));
-}
+	auto paneLR = pAssets->GetSubGraphGroup(_T("主面板左右"));
+	auto paneTB = pAssets->GetSubGraphGroup(_T("主面板上下"));
 
-void BaseFrame::Update()
-{
+	LUIImage* pPaneLeft = new LUIImage(paneLR[0]);
+	LUIImage* pPaneRight = new LUIImage(paneLR[1]);
+	LUIImage* pPaneTop = new LUIImage(paneTB[0]);
+	LUIImage* pPaneBottom = new LUIImage(paneTB[1]);
 
-}
+	pPaneRight->setPos(pPaneLeft->width() + pPaneTop->width(), 0);
+	pPaneTop->setPos(pPaneLeft->width(), 0);
+	pPaneBottom->setPos(pPaneLeft->width(), 480 - pPaneBottom->height());
 
-void BaseFrame::Draw( LPainter& painter )
-{
-	painter.drawGraph(0, 0, m_leftFrame, false);
-	painter.drawGraph(32, 0, m_topFrame, false);
-	painter.drawGraph(416, 0, m_rightFrame, false);
-	painter.drawGraph(32, 464, m_bottomFrame, false);
+	pushChild(pPaneLeft, true);
+	pushChild(pPaneRight, true);
+	pushChild(pPaneTop, true);
+	pushChild(pPaneBottom, true);
 }

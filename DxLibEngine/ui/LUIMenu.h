@@ -10,16 +10,22 @@ public:
 
 	LUIMenuItem* addMenuItem(LGraphHandle hActive, LGraphHandle hDeactive);
 
+	int currentIndex() const { return m_activeIdx; }
+	void setCurrentIndex(int idx);
+
 public:
 	void Update() override;
 	void Draw(LPainter& painter) override;
 
 	virtual void OnOk() {}
 	virtual void OnCancel() {}
+	virtual void OnIndexChanged(int prev, int cur) {}
 
 protected:
 	std::vector<LUIMenuItem*> m_items;
 	bool m_bEnable;
+
+private:
 	bool m_bCanMove;
 	int m_activeIdx;
 	int m_timeCount;

@@ -2,6 +2,7 @@
 #include "LStgEngine.h"
 
 class GameMenu;
+class BaseFrame;
 class CirnoEngine : public LStgEngine
 {
 	typedef LStgEngine Base;
@@ -27,5 +28,6 @@ protected:
 	bool OnExitState(uint state) override;
 
 private:
-	std::unique_ptr<GameMenu> m_spGameMenu;
+	std::unique_ptr<GameMenu> m_spMainMenu;
+	std::unique_ptr<BaseFrame> m_spPane;
 };

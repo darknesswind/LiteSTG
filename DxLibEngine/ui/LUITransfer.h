@@ -1,40 +1,39 @@
 #pragma once
 
-class LUIAnimeBase
+class LUITransferBase
 {
 public:
-	virtual ~LUIAnimeBase() {};
+	virtual ~LUITransferBase() {};
 	virtual void Update() = 0;
 };
 
-
-class LUIAnimation
+class LUITransferSet
 {
 public:
-	LUIAnimation() = default;
-	~LUIAnimation()
+	LUITransferSet() = default;
+	~LUITransferSet()
 	{
-		for each (LUIAnimeBase* pItem in m_animas)
+		for each (LUITransferBase* pItem in m_animas)
 			delete pItem;
 	}
 	void Update()
 	{
-		for each (LUIAnimeBase* pItem in m_animas)
+		for each (LUITransferBase* pItem in m_animas)
 			pItem->Update();
 	}
-	void AddChild(LUIAnimeBase* pChild)
+	void AddChild(LUITransferBase* pChild)
 	{
 		m_animas.push_back(pChild);
 	}
 private:
-	std::vector<LUIAnimeBase*> m_animas;
+	std::vector<LUITransferBase*> m_animas;
 };
 
 template <typename DatType>
-class LUICosineAnima : public LUIAnimeBase
+class LUICosineTransfer : public LUITransferBase
 {
 public:
-	LUICosineAnima(DatType* pDat, uint interval, float amplitude)
+	LUICosineTransfer(DatType* pDat, uint interval, float amplitude)
 		: m_pData(pDat)
 		, m_interval(interval)
 		, m_amplitude(amplitude)
