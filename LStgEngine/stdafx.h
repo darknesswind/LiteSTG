@@ -21,9 +21,10 @@
 
 // DxLibEngine
 #include "typedef.h"
-#include "LHandle.h"
+#include "base/LHandle.h"
 #include "tools/LLogger.h"
-#include "LPainter.h"
+#include "tools/LString.h"
+#include "painting/LPainter.h"
 
 // LStgEngine
 #include "interdef.h"

@@ -2,7 +2,7 @@
 #define __LENGINE_H__
 #pragma once
 
-#include "LUnifiedTimer.h"
+#include "tools/LUnifiedTimer.h"
 #include "move/LPathSet.h"
 
 namespace GameState
@@ -20,6 +20,8 @@ class LRender;
 class LAssets;
 class LInput;
 class LUIRoot;
+typedef std::unique_ptr<LAssets> LAssetsUPtr;
+
 class LEngine
 {
 public:
@@ -33,11 +35,10 @@ public:
 public:
 	int exec();
 	void setEndFlag(bool bEnd) { m_bEndFlag = bEnd; }
-	bool ChangeState(uint nextState);
+	bool changeState(uint nextState);
 
 protected:
-	virtual void BeforeDxInit() { }
-	virtual void PreLoad();
+	virtual bool Init();
 	virtual void OnAsyncLoading();
 	virtual bool LoopCheck();
 	virtual bool NeedUpdate();
@@ -48,8 +49,11 @@ protected:
 	virtual void OnEnterState(uint state) = 0;
 	virtual void OnExecState(uint state) = 0;
 	virtual bool OnExitState(uint state) = 0;
+
+	virtual LAssetsUPtr createAssets();
+
 private:
-	void BeginLoading();
+	void StartSyncLoad();
 
 public:
 	static LEngine* engine() { return s_pEngine; }

@@ -62,7 +62,7 @@ public:
 
 public:
 	bool empty() const { return !m_handle; }
-	bool hasError() const { return m_handle & ErrorMask; }
+	bool hasError() const { return 0 != (m_handle & ErrorMask); }
 	uint index() const { return m_handle & IndexMask; }
 	DxHandleType type() const 
 	{
@@ -83,6 +83,8 @@ typedef LHandle LSoundHandle;
 
 
 class LSize;
+class LGraphHandle;
+typedef std::vector<LGraphHandle> LGraphHandles;
 class LGraphHandle : public LHandle
 {
 public:
@@ -107,10 +109,11 @@ public:
 	const DxLib::IMAGEDATA2* imgData() const { return (DxLib::IMAGEDATA2*)LHandle::innerData(); }
 	void getSize(LSize& size);
 	void getSize(int* px, int* py) { CheckRes(DxLib::GetGraphSize(m_handle, px, py)); }
+	LGraphHandles split(int xSrc, int ySrc, int allNum, int xNum, int yNum, int width, int height);
+	LGraphHandle subGraph(int xSrc, int ySrc, int width, int height);
 
 public:
 	static LGraphHandle NoneGraph;
 };
-typedef std::vector<LGraphHandle> LGraphHandles;
 
 #endif	// __LHANDLE_H__

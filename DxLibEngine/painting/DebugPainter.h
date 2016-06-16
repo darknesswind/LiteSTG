@@ -3,9 +3,9 @@
 #pragma once
 #include <vector>
 #include <array>
-#include "Vector2.hpp"
+#include "tools/Vector2.hpp"
 #include "LRgb.h"
-#include "LPoint.h"
+#include "tools/LPoint.h"
 
 #define  DebugPat DebugPainter::instance()
 class DebugPainter

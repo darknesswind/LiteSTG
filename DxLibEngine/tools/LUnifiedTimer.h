@@ -1,7 +1,24 @@
 #ifndef __LUNIFIEDTIMER_H__
 #define __LUNIFIEDTIMER_H__
 #pragma once
-#include <QElapsedTimer>
+
+class LPerformanceTimer
+{
+public:
+	LPerformanceTimer();
+
+	inline int64 start();
+	inline int64 getTickCount();
+	inline int64 elapsed();
+
+public:
+	static inline int64 ticksToNanoseconds(int64 ticks);
+
+private:
+	static int64 s_counterFrequency;
+
+	int64 m_tBegin = 0;
+};
 
 // 计算Fps与帧率控制
 class LUnifiedTimer
@@ -14,19 +31,19 @@ public:
 	void start();
 
 	float fps() const { return m_fps; }
-	qint64 curFrame() const { return m_currentFrame; }
+	int64 curFrame() const { return m_currentFrame; }
 
 private:
 	static const int FpsUpdateInterval = 30;
 	static const int cacheSize = 30;
-	qint64 m_cache[cacheSize];
-	qint64 m_totalMsec;
-	qint64 m_nFpsUpdateFrame;
-	qint64 m_cursor;
-	qint64 m_startTime;
-	qint64 m_currentFrame;
+	int64 m_cache[cacheSize];
+	int64 m_totalMsec;
+	int64 m_nFpsUpdateFrame;
+	int64 m_cursor;
+	int64 m_startTime;
+	int64 m_currentFrame;
 	float m_fps;
-	QElapsedTimer m_timer;
+	LPerformanceTimer m_timer;
 };
 
 #endif	// __LUNIFIEDTIMER_H__

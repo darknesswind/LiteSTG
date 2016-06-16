@@ -2,8 +2,6 @@
 #define __LMATH_H__
 #pragma once
 
-#include <QtMath>
-
 #define SINE_COSINE_ACCUR_LEVEL 2
 
 // π
@@ -15,7 +13,7 @@
 // √π
 #define L_PI_SQR 9.86960440108935861883449099987615114
 // √0.5
-#define L_SQRT1_2 M_SQRT1_2
+#define L_SQRT1_2 0.707106781186547524401
 
 #define L_EPSIONF FLT_EPSILON
 
@@ -39,72 +37,62 @@ inline double Rad2Deg(double radians)
 	return radians * (180 / L_PI);
 }
 
-extern const float lookuptbl[360];
-#ifdef _DEBUG
-template <typename T> float LookUpSinDeg(T x)
+// Qt的计算方法
+#define QT_SINE_TABLE_SIZE 256
+extern const double qt_sine_table[QT_SINE_TABLE_SIZE];
+inline double qFastSin(double x)
 {
-	int index = (int)(x + 0.5f) % 360;
-	if (index < 0) index += 360;
-	return lookuptbl[index];
+	int si = int(x * (0.5 * QT_SINE_TABLE_SIZE / L_PI)); // Would be more accurate with qRound, but slower.
+	double d = x - si * (2.0 * L_PI / QT_SINE_TABLE_SIZE);
+	int ci = si + QT_SINE_TABLE_SIZE / 4;
+	si &= QT_SINE_TABLE_SIZE - 1;
+	ci &= QT_SINE_TABLE_SIZE - 1;
+	return qt_sine_table[si] + (qt_sine_table[ci] - 0.5 * qt_sine_table[si] * d) * d;
 }
-template <typename T> float LookUpCosDeg(T x)
+
+inline double qFastCos(double x)
 {
-	int index = (int)(x + 90.5f) % 360;
-	if (index < 0) index += 360;
-	return lookuptbl[index];
+	int ci = int(x * (0.5 * QT_SINE_TABLE_SIZE / L_PI)); // Would be more accurate with qRound, but slower.
+	double d = x - ci * (2.0 * L_PI / QT_SINE_TABLE_SIZE);
+	int si = ci + QT_SINE_TABLE_SIZE / 4;
+	si &= QT_SINE_TABLE_SIZE - 1;
+	ci &= QT_SINE_TABLE_SIZE - 1;
+	return qt_sine_table[si] - (qt_sine_table[ci] + 0.5 * qt_sine_table[si] * d) * d;
 }
-template <typename T> float LookUpSin(T x)
+#pragma warning( push )
+#pragma warning( disable: 4244 )
+template <typename ResType>
+inline void qFastSinCos(double x, ResType& sine, ResType& cosine)
 {
-	return LookUpSinDeg(Rad2Deg(x));
+	int xi = int(x * (0.5 * QT_SINE_TABLE_SIZE / L_PI)); // Would be more accurate with qRound, but slower.
+	double d = x - xi * (2.0 * L_PI / QT_SINE_TABLE_SIZE);
+	int yi = xi + QT_SINE_TABLE_SIZE / 4;
+
+	xi &= QT_SINE_TABLE_SIZE - 1;
+	yi &= QT_SINE_TABLE_SIZE - 1;
+
+	sine = qt_sine_table[xi] + (qt_sine_table[yi] - 0.5 * qt_sine_table[xi] * d) * d;
+	cosine = qt_sine_table[yi] - (qt_sine_table[xi] + 0.5 * qt_sine_table[yi] * d) * d;
 }
-template <typename T> float LookUpCos(T x)
-{
-	return LookUpCosDeg(Rad2Deg(x));
-}
-#else
-#define LookUpSinDeg(x) lookuptbl[(int)((x) + 360.5f) % 360]
-#define LookUpCosDeg(x) lookuptbl[(int)((x) + 450.5f) % 360]
-#define LookUpSin(x) LookUpSinDeg(Rad2Deg(x))
-#define LookUpCos(x) LookUpCosDeg(Rad2Deg(x))
-#endif
+#pragma warning( pop )
 
 #if 1 == SINE_COSINE_ACCUR_LEVEL
-#	define Sin(x) LookUpSin(x)
-#	define Cos(x) LookUpCos(x)
-#	define SinDeg(x) LookUpSinDeg(x)
-#	define CosDeg(x) LookUpCosDeg(x)
-#	define SinCosDeg(x, sine, cosine)	\
-{										\
-	(sine) = SinDeg(x);					\
-	(cosine) = CosDeg(x);				\
-}
-#else
-#if 2 == SINE_COSINE_ACCUR_LEVEL
-#	define Sin(x) qFastSin(x)
-#	define Cos(x) qFastCos(x)
-#else
 #	define Sin(x) sin(x)
 #	define Cos(x) cos(x)
-#endif // lv2
-#	define SinDeg(x) Sin(Deg2Rad(x))
-#	define CosDeg(x) Cos(Deg2Rad(x))
-#	define SinCosDeg(x, sine, cosine)	\
-{										\
-	auto radians = qDegreesToRadians(x);\
-	(sine) = Sin(radians);				\
-	(cosine) = Cos(radians);			\
-}
-#endif // lv1
 #	define SinCos(x, sine, cosine)	\
 {									\
 	(sine) = Sin(x);				\
 	(cosine) = Cos(x);				\
 }
+#elif 2 == SINE_COSINE_ACCUR_LEVEL
+#	define Sin(x) qFastSin(x)
+#	define Cos(x) qFastCos(x)
+#	define SinCos(x, sine, cosine) qFastSinCos(x, sine, cosine)
+#endif // lv1
 
-template <uint i>
-struct factorial { static const uint value = i * factorial<i - 1>::value; };
-template <>
-struct factorial<1> { static const uint value = 1; };
+#define SinDeg(x) Sin(Deg2Rad(x))
+#define CosDeg(x) Cos(Deg2Rad(x))
+#define SinCosDeg(x, sine, cosine)	SinCos(Deg2Rad(x), sine, cosine)
 
 inline bool isSameSign(int lhs, int rhs)
 {
@@ -123,6 +111,37 @@ inline bool isSameSign(float lhs, float rhs)
 	iLhs.f = lhs;
 	iRhs.f = rhs;
 	return isSameSign(iLhs.i, iRhs.i);
+}
+
+static inline bool qFuzzyIsNull(double d)
+{
+	return fabs(d) <= 0.000000000001;
+}
+
+static inline bool qFuzzyIsNull(float f)
+{
+	return fabs(f) <= 0.00001f;
+}
+
+static inline bool qIsNull(double d)
+{
+	union U {
+		double d;
+		unsigned long long u;
+	};
+	U val;
+	val.d = d;
+	return (val.u & 0x7fffffffffffffffui64) == 0;
+}
+
+static inline bool qFuzzyCompare(double p1, double p2)
+{
+	return (fabs(p1 - p2) * 1000000000000. <= fmin(fabs(p1), fabs(p2)));
+}
+
+static inline bool qFuzzyCompare(float p1, float p2)
+{
+	return (fabs(p1 - p2) * 100000.f <= fmin(fabs(p1), fabs(p2)));
 }
 
 #endif // !__LMATH_H__

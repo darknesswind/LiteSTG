@@ -1,0 +1,84 @@
+﻿syntax = "proto3";
+option optimize_for = LITE_RUNTIME;
+package proto;
+
+message Textures {
+	map<string, string> map = 1;
+}
+
+message SubGraphics {
+	message SubGraphInfo {
+		string texture = 1;
+		int32 xSrc = 2;
+		int32 ySrc = 3;
+		int32 allNum = 4;
+		int32 xNum = 5;
+		int32 yNum = 6;
+		int32 width = 7;
+		int32 height = 8;
+	}
+	message SubInfos {
+		repeated SubGraphInfo info = 1;
+	}
+
+	map<string, SubInfos> map = 1;
+}
+
+message Collide {
+	enum CollideType {
+		cCircle = 0;
+		cRectangle = 1;
+	};
+	CollideType type = 1;
+	int32 centerX = 2;
+	int32 centerY = 3;
+	int32 radianX = 4;
+	int32 radianY = 5;
+}
+
+message BulletStyle {
+	enum BulletType {
+		tGeneral = 0;
+		tRay = 1;
+		tSegment = 2;
+		tCurve = 3;
+	};
+	BulletType type = 1;
+	Collide collide = 2;
+	string graphGroup = 3;
+}
+
+message BulletStyles {
+	map<string, BulletStyle> map = 1;
+}
+
+message EmptyNode {
+	uint32 time = 1;
+}
+message LineNode {
+	uint32 time = 1;
+	int32 xDetla = 2;
+	int32 yDetla = 3;
+}
+message SineNode {
+	uint32 time = 1;
+	int32 xDetla = 2;
+	int32 yDetla = 3;
+	int32 xScale = 4;
+	int32 yScale = 5;
+}
+message PathNode {
+	oneof PathNode {
+		EmptyNode emptyNode = 1;
+		LineNode lineNode = 2;
+		SineNode sineNode = 3;
+	}
+}
+
+message Path {
+	string name = 2;
+	repeated PathNode node = 3;
+}
+message PathSet {
+	repeated Path path = 1;
+}

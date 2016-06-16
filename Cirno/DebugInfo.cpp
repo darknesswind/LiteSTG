@@ -5,7 +5,6 @@
 #include "CirnoEngine.h"
 #include "bullet/LBullets.h"
 #include "LPainter.h"
-#include "QString"
 #include "Input.h"
 #include "Vector3.hpp"
 
@@ -20,16 +19,16 @@ void DebugInfo::Draw( LPainter& painter )
 	{
 		painter.drawString(
 			TH_X, TH_Y,
-			Q2WSTR(QString("Player (%1, %2)").arg(pPlayer->position().x()).arg(pPlayer->position().y())),
+			LStrBuilder(L"Player (%1, %2)").arg(pPlayer->position().x()).arg(pPlayer->position().y()).apply().c_str(),
 			LRgb::White);
 	}
 	painter.drawString(
 		TH_X, TH_Y + TH_DY,
-		Q2WSTR(QString("Bullet: %1").arg(LStgEngine::bullets()->GetCount())),
+		LStrBuilder(L"Bullet: %1").arg(LStgEngine::bullets()->GetCount()).apply().c_str(),
 		LRgb::White);
 	painter.drawString(
 		0, 0,
-		Q2WSTR(QString::number(LStgEngine::engine()->unifiedTimer().fps(), 'f', 2)),
+		LString::number(LStgEngine::engine()->unifiedTimer().fps(), 2).c_str(),
 		LRgb::White);
 }
 

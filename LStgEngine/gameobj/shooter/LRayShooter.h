@@ -30,7 +30,6 @@ public:
 	void setLoop(bool loop)				{ m_bLoop = loop; }
 	void setWidthExtRange(float wid)	{ m_widthExt = wid; }
 	void setLengthExtRange(float len)	{ m_lengthExt = len; }
-	void setTurnFlag(bool f)			{ m_bTurnFlag = f; }
 
 protected:
 	void ChangeState(State targetState);
@@ -41,7 +40,6 @@ protected:
 
 private:
 	bool m_bLoop;
-	bool m_bTurnFlag;
 	int m_warningTime;	// 预警时间
 	int m_durationTime;	// 持续时间
 	float m_widthExt;		// 宽度倍率

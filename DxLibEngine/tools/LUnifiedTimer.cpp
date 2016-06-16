@@ -1,6 +1,49 @@
 #include "stdafx.h"
 #include "LUnifiedTimer.h"
 
+int64 LPerformanceTimer::s_counterFrequency = 0;
+
+LPerformanceTimer::LPerformanceTimer()
+{
+	if (0 == s_counterFrequency)
+	{
+		LARGE_INTEGER frequency;
+		BOOL bSucceed = QueryPerformanceFrequency(&frequency);
+		LAssert(bSucceed);
+		s_counterFrequency = frequency.QuadPart;
+	}
+}
+
+int64 LPerformanceTimer::ticksToNanoseconds(int64 ticks)
+{
+	// QueryPerformanceCounter uses an arbitrary frequency
+	int64 seconds = ticks / s_counterFrequency;
+	int64 nanoSeconds = (ticks - seconds * s_counterFrequency) * 1000000000 / s_counterFrequency;
+	return seconds * 1000000000 + nanoSeconds;
+}
+
+int64 LPerformanceTimer::start()
+{
+	m_tBegin = getTickCount();
+	return m_tBegin;
+}
+
+int64 LPerformanceTimer::getTickCount()
+{
+	LARGE_INTEGER counter;
+	// On systems that run Windows XP or later, the function will always succeed and will thus never return zero.
+	BOOL bSucceed = QueryPerformanceCounter(&counter);
+	LAssert(bSucceed);
+	return counter.QuadPart;
+}
+
+int64 LPerformanceTimer::elapsed()
+{
+	int64 elapsed = getTickCount() - m_tBegin;
+	return ticksToNanoseconds(elapsed) / 1000000;
+}
+
+//////////////////////////////////////////////////////////////////////////
 LUnifiedTimer::LUnifiedTimer(void)
 	: m_startTime(0), m_fps(0), m_totalMsec(0)
 	, m_cursor(0), m_nFpsUpdateFrame(FpsUpdateInterval), m_currentFrame(0)
@@ -40,12 +83,12 @@ void LUnifiedTimer::update()
 		m_fps = cacheSize * 1000.0f / m_totalMsec;
 	}
 
-	qint64 spendTime = m_timer.elapsed() - m_startTime;
+	int64 spendTime = m_timer.elapsed() - m_startTime;
 	int nSleepTime = 17 - spendTime;
 	if (nSleepTime > 1)
 		Sleep(nSleepTime);
 
-	qint64 curTime = m_timer.elapsed();
+	int64 curTime = m_timer.elapsed();
 	// 覆盖最旧的数据，更新总和
 	spendTime = curTime - m_startTime;
 	m_totalMsec += spendTime - m_cache[m_cursor];

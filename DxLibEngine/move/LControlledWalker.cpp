@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "LControlledWalker.h"
-#include "Input.h"
+#include "base/Input.h"
 
 enum DirectionFlag
 {

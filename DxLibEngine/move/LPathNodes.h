@@ -1,7 +1,6 @@
 ﻿#ifndef __LPATHNODES_H__
 #define __LPATHNODES_H__
 #include "LWalker.h"
-#include <QString>
 
 class LPathNode;
 class LLinePathNode;
@@ -22,7 +21,7 @@ public:
 
 	uint size() const { return m_nodes.size(); }
 	bool empty() const { return m_nodes.empty(); }
-	const QString& getName() const { return m_name; }
+	const LString& getName() const { return m_name; }
 	uint getID() const { return m_id; }
 
 protected:
@@ -30,7 +29,7 @@ protected:
 	LLinePathNode* AddLineNode(const Vector2& detla, uint frames);
 	LSinePathNode* AddSineNode(const Vector2& detla, const Vector2& scale, uint frames);
 	void setID(uint id) { m_id = id; }
-	void setName(const QString& name) { m_name = name; }
+	void setName(const LString& name) { m_name = name; }
 	void clear();
 
 	friend class LPathSet;
@@ -42,7 +41,7 @@ private:
 private:
 	uint m_id;
 	NodeList m_nodes;
-	QString m_name;
+	LString m_name;
 };
 
 // 空节点（待机）

@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v140_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -44,22 +44,25 @@
     <LibraryPath>$(SolutionDir)Qt\lib;$(LibraryPath)</LibraryPath>
     <SourcePath>$(SolutionDir)Qt\src;$(SourcePath)</SourcePath>
     <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../DxLib/DxLibMake;..\Qt\include\;..\Qt\include\QtCore;.\base;.\tools;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../DxLib/DxLibMake;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <BrowseInformation>true</BrowseInformation>
       <PreprocessorDefinitions>DXLIB_ENG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -80,13 +83,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./;../DxLib/DxLibMake;..\Qt\include\;..\Qt\include\QtCore;.\base;.\tools;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../DxLib/DxLibMake;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PreprocessorDefinitions>DXLIB_ENG;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -99,7 +103,9 @@
   <ItemGroup>
     <ClInclude Include="3rdparty\EmbeddedList.h" />
     <ClInclude Include="3rdparty\FastFunc.hpp" />
+    <ClInclude Include="anime\LAnime.h" />
     <ClInclude Include="base\DxHandleManager.h" />
+    <ClInclude Include="base\Input.h" />
     <ClInclude Include="base\LEngine.h" />
     <ClInclude Include="base\LHandle.h" />
     <ClInclude Include="base\LMath.h" />
@@ -124,24 +130,26 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="tools\EnumHandle.hpp" />
-    <ClInclude Include="tools\Input.h" />
     <ClInclude Include="tools\LLogger.h" />
     <ClInclude Include="tools\LMessageBox.h" />
     <ClInclude Include="tools\LObjectPool.hpp" />
     <ClInclude Include="tools\LRect.h" />
     <ClInclude Include="tools\LSize.h" />
+    <ClInclude Include="tools\LString.h" />
     <ClInclude Include="tools\LUnifiedTimer.h" />
     <ClInclude Include="tools\LPoint.h" />
     <ClInclude Include="tools\Vector2.hpp" />
     <ClInclude Include="typedef.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="ui\LUIAnime.h" />
+    <ClInclude Include="ui\LUITransfer.h" />
     <ClInclude Include="ui\LUIImage.h" />
     <ClInclude Include="ui\LUIMenu.h" />
     <ClInclude Include="ui\LUIObjBase.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="anime\LAnime.cpp" />
     <ClCompile Include="base\DxHandleManager.cpp" />
+    <ClCompile Include="base\Input.cpp" />
     <ClCompile Include="base\LEngine.cpp" />
     <ClCompile Include="base\LHandle.cpp" />
     <ClCompile Include="base\LMath.cpp" />
@@ -166,9 +174,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="tools\Input.cpp" />
     <ClCompile Include="tools\LLogger.cpp" />
     <ClCompile Include="tools\LMessageBox.cpp" />
+    <ClCompile Include="tools\LString.cpp" />
     <ClCompile Include="tools\LUnifiedTimer.cpp" />
     <ClCompile Include="tools\LPoint.cpp" />
     <ClCompile Include="ui\LUIImage.cpp" />
@@ -177,6 +185,11 @@
     <ClInclude Include="tools\Vector3.hpp">
       <FileType>CppCode</FileType>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\protobuf\protobuf.vcxproj">
+      <Project>{28bd9d52-7097-4a9a-ae97-b88be72f59f1}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

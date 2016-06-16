@@ -20,24 +20,21 @@ LStgEngine::~LStgEngine(void)
 {
 }
 
-void LStgEngine::BeforeDxInit()
+bool LStgEngine::Init()
 {
-	Base::BeforeDxInit();
-
 	AppWindow.setIsWindowMode(true);
 	Screen.setGraphMode(640, 480, 32);
 	Screen.setWaitVSync(false);
 	AppWindow.setRunWhenDeactivate(true);
-}
+	
+	bool bSucceed = Base::Init();
 
-void LStgEngine::PreLoad()
-{
-	Base::PreLoad();
 	m_spBullets = std::make_unique<LBullets>();
 	m_spPlayers = std::make_unique<LPlayers>();
 	m_spEnemys = std::make_unique<LEnemys>();
-
 	m_spComManage = std::make_unique<ComManager>();
+
+	return bSucceed;
 }
 
 void LStgEngine::OnAsyncLoading()
@@ -51,8 +48,8 @@ void LStgEngine::OnAsyncLoading()
 	m_spInput->registerKey(StgKey::Bomb, Keys::X);
 	m_spInput->registerKey(StgKey::Slow, Keys::LShift);
 
-	m_pathSet.load(L".\\resource\\data\\PathSet.xml");
-	m_spBullets->styles()->LoadBulletStyles(_T("resource\\bulletstyles.json"));
+	m_pathSet.load(L".\\resource\\PathSet.pb");
+	m_spBullets->styles()->LoadBulletStyles(L"resource\\bulletstyles.pb");
 }
 
 void LStgEngine::Update()

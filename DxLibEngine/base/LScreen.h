@@ -1,7 +1,7 @@
 #ifndef __LSCREEN_H__
 #define __LSCREEN_H__
 #pragma once
-
+#include "tools/LSize.h"
 #define Screen LScreen::Instance
 
 #pragma region pre-define

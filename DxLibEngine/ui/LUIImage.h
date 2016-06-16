@@ -1,6 +1,6 @@
 #pragma once
 #include "LUIObjBase.h"
-#include "LHandle.h"
+#include "base/LHandle.h"
 #include "LUITransfer.h"
 
 class LUIImage : public LUIObjBase
@@ -21,5 +21,5 @@ public:
 
 protected:
 	LGraphHandle m_hGraph;
-	LUITransfer m_anime;
+	LUITransferSet m_anime;
 };

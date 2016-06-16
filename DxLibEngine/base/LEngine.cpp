@@ -15,7 +15,7 @@ LEngine::LEngine(void)
 	s_pEngine = this;
 
 	m_spRender = std::make_unique<LRender>();
-	m_spAssets = std::make_unique<LAssets>();
+	m_spAssets = createAssets();
 	m_spRootUI = std::make_unique<LUIRoot>();
 }
 
@@ -24,19 +24,22 @@ LEngine::~LEngine(void)
 	DxLib::DxLib_End();
 }
 
-void LEngine::PreLoad()
+bool LEngine::Init()
 {
+	if (DxLib::DxLib_Init() == -1)
+		return false;
+
 	Screen.setDrawScreen(DrawScreen::dsBack);
 	m_centerTimer.start();
 
 	m_spInput = std::make_unique<LInput>();
-	m_spAssets->LoadTextureList(L"resource\\textures.json");
-	m_spAssets->LoadSubGraphicsList(L"resource\\subgraphics.json");
+	m_spAssets->LoadTextureList(L"resource\\textures.pb");
+	m_spAssets->LoadSubGraphicsList(L"resource\\subgraphics.pb");
+	return true;
 }
 
-void LEngine::BeginLoading()
+void LEngine::StartSyncLoad()
 {
-	PreLoad();
 	m_bLoadReady = false;
 	std::thread initThread([this]()
 	{
@@ -48,7 +51,7 @@ void LEngine::BeginLoading()
 		m_bLoadReady = true;
 	});
 	initThread.detach();
-	ChangeState(GameState::Loading);
+	changeState(GameState::Loading);
 }
 
 void LEngine::OnAsyncLoading()
@@ -58,12 +61,10 @@ void LEngine::OnAsyncLoading()
 
 int LEngine::exec()
 {
-	BeforeDxInit();
-	if (DxLib::DxLib_Init() == -1)
-	{
+	if (!Init())
 		return -1;
-	}
-	BeginLoading();
+
+	StartSyncLoad();
 
 	while (LoopCheck())
 	{
@@ -116,7 +117,12 @@ void LEngine::BeforeEnd()
 	m_spRootUI->clearChildren();
 }
 
-bool LEngine::ChangeState(uint nextState)
+LAssetsUPtr LEngine::createAssets()
+{
+	return std::make_unique<LAssets>();
+}
+
+bool LEngine::changeState(uint nextState)
 {
 	if (!OnExitState(m_curState))
 		return false;

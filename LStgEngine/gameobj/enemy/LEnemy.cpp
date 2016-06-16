@@ -41,7 +41,8 @@ void LEnemy::Draw( LPainter& painter )
 {
 	painter.drawRotaGraphF(m_phyData.position, 1, Radian0, m_pGraphGroup->at(m_imgCount), true, m_bFace);
 #ifdef _DEBUG
-	painter.drawString(m_phyData.position, Q2WSTR(QString("%1, %2").arg(m_phyData.position.x()).arg(m_phyData.position.y())), LRgb::White);
+	LString sPos = LStrBuilder(L"%1, %2").arg(m_phyData.position.x()).arg(m_phyData.position.y()).apply();
+	painter.drawString(m_phyData.position, sPos.c_str(), LRgb::White);
 #endif
 }
 

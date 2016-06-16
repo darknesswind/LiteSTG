@@ -24,10 +24,10 @@ public:
 protected:
 	std::vector<LUIMenuItem*> m_items;
 	bool m_bEnable;
+	int m_activeIdx;
 
 private:
 	bool m_bCanMove;
-	int m_activeIdx;
 	int m_timeCount;
 };
 

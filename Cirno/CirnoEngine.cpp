@@ -25,14 +25,9 @@ CirnoEngine::~CirnoEngine()
 {
 }
 
-void CirnoEngine::BeforeDxInit()
+bool CirnoEngine::Init()
 {
-	Base::BeforeDxInit();
-}
-
-void CirnoEngine::PreLoad()
-{
-	Base::PreLoad();
+	return Base::Init();
 // 	m_spRootUI->addChild(new LoadingUI(nullptr, true));
 }
 
@@ -94,7 +89,7 @@ void CirnoEngine::OnExecState(uint state)
 	{
 	case GameState::Loading:
 		if (m_bLoadReady)
-			ChangeState(GameState::Menu);
+			changeState(GameState::Menu);
 		break;
 	default:
 		break;

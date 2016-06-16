@@ -33,7 +33,7 @@ void ShooterFactory::createTest(LEnemy* pEnemy, int difficulty)
 	pShooter->setDurationTime(120);
 	pShooter->setWidthExtRange(1);
 	pShooter->setLengthExtRange(30);
-	pShooter->setTurnFlag(true);
+// 	pShooter->setTurnFlag(true);
 	pShooter->setBulletStyle(CirnoEngine::bulletStyles()->getStyle(__T("µûµ¯")));
 	(*pShooter).setFollowPlayer(true).setFireWays(5).setFireRange(Degree(90));
 }

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "LLogger.h"
-#include <QDebug>
+#include "LMessageBox.h"
 
 LLogger::LLogger()
 {
@@ -12,11 +12,12 @@ LLogger::~LLogger()
 
 }
 
-void LLogger::Print(LogLevel level, const QString& msg)
+void LLogger::Print(LogLevel level, LPCWSTR msg)
 {
-	if (Error == level)
+	if (lvError == level)
 	{
-		LAssert(!L"Error happened!");
+		LMessageBox::message(msg, _T("Error"));
+		if (IsDebuggerPresent())
+			__asm { int 3 }
 	}
-	qDebug() << msg;
 }

@@ -37,6 +37,9 @@
     <Filter Include="gameobj\shooter">
       <UniqueIdentifier>{a763d47a-86c9-4b8f-9db8-debd2642fa81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{b74c16bb-c09f-4faf-b1c6-a34cbf0f3fc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -120,6 +123,9 @@
     <ClInclude Include="LStgEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gameobj\player\LPlayerModle.h">
+      <Filter>gameobj\player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -193,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="LStgEngine.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\player\LPlayerModle.cpp">
+      <Filter>gameobj\player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

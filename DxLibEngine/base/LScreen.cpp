@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "LScreen.h"
-#include "LSize.h"
 
 LScreen LScreen::Instance;
 
@@ -50,7 +49,7 @@ void LScreen::setWaitVSync(bool bVSync)
 
 bool LScreen::getWaitVSync()
 {
-	return DxLib::GetWaitVSyncFlag();
+	return (0 != DxLib::GetWaitVSyncFlag());
 }
 
 void LScreen::clearDrawScreen()

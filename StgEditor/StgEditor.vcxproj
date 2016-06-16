@@ -45,19 +45,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)build\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StgEditor</TargetName>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)build\$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StgEditor</TargetName>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtWidgets;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtGui;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtANGLE;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtCore;release;.;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\mkspecs\win32-msvc2013;.\GeneratedFiles;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtWidgets;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtGui;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtANGLE;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtCore;..\include\;release;.;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\mkspecs\win32-msvc2013;.\GeneratedFiles;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -FS -Zc:strictStrings -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>release\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -97,7 +97,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtWidgets;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtGui;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtANGLE;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtCore;debug;.;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\mkspecs\win32-msvc2013;.\GeneratedFiles;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtWidgets;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtGui;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtANGLE;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\include\QtCore;..\include\;debug;.;..\..\..\..\develop\qt\qt5.4.0\5.4\msvc2013\mkspecs\win32-msvc2013;.\GeneratedFiles;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 -FS -w34100 -w34189 %(AdditionalOptions)</AdditionalOptions>
       <AssemblerListingLocation>debug\</AssemblerListingLocation>
       <BrowseInformation>false</BrowseInformation>
@@ -362,6 +362,11 @@ endlocal
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\ui_%(Filename).h;%(Outputs)</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\GeneratedFiles\ui_%(Filename).h" "%(FullPath)"</Command>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\protobuf\protobuf-MDd.vcxproj">
+      <Project>{e207e282-b4a9-4544-9c79-d12574e39782}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

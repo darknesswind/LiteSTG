@@ -14,7 +14,6 @@ LRayShooter::LRayShooter(IGameObject* pParent)
 	m_widthExt = 1;		// ¿í¶È
 	m_lengthExt = 70;
 	m_counter = 0;
-	m_bTurnFlag = false;
 	m_warningLine.setPolar(600, m_fireDegree);
 	ChangeState(Warning);
 	m_pBulletStyle = LStgEngine::bulletStyles()->getDefaultStyle(BulletType::RayLaser);
@@ -88,7 +87,6 @@ void LRayShooter::EntryShootingState()
 
 		pLaser->setWidthExtRange(m_widthExt);
 		pLaser->setLengthExtRange(m_lengthExt);
-		pLaser->setTurnFlag(m_bTurnFlag);
 
 		angle += m_angleIncrease;
 	}

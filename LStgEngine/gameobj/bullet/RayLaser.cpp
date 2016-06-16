@@ -51,7 +51,7 @@ void RayLaser::Draw( LPainter& painter )
 	int bulletWidth = 0;
 	m_visual.hGraph.getSize(&bulletWidth, nullptr);
 	bulletWidth /= 16;
-	painter.drawExtRotaGraph(m_phyData.position, t_wid, m_length, m_phyData.radian + Radian90, m_visual.hGraph, turnFlag);
+	painter.drawExtRotaGraph(m_phyData.position, t_wid, m_length, m_phyData.radian + Radian90, m_visual.hGraph, false);
 // 	painter.drawRotaGraphF(m_phyData.position, bulletWidth * t_wid, Radian0, LImage(Resource::laserEffect((m_style.color + 15) & 0x7/*%8*/)), true);
 
 	DrawHitBox(painter);

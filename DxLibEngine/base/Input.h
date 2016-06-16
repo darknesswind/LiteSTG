@@ -1,7 +1,7 @@
 #ifndef __INPUT_H__
 #define __INPUT_H__
 #pragma once
-#include "LPoint.h"
+#include "tools/LPoint.h"
 
 #pragma region Enum Define
 

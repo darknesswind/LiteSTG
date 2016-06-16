@@ -5,6 +5,14 @@
 #endif
 
 #include <cassert>
+
+typedef unsigned int uint;
+typedef unsigned short ushort;
+typedef unsigned char uchar;
+typedef long long int64;
+typedef unsigned long long uint64;
+typedef std::vector<uchar> LByteArray;
+
 #include "tools/Vector2.hpp"
 #include "enumations.h"
 
@@ -19,11 +27,8 @@ class LPainter;
 struct RenderArgument;
 struct PhysicData;
 
-typedef unsigned int uint;
-typedef unsigned char uchar;
-
 #if USE_ASSERT
-#	define LAssert(x) assert(x)
+#	define LAssert(x) {assert(x);}
 #	define LASSERT(x) LAssert(x)
 #	define CheckRes(DxLibFunc)		\
 	{								\

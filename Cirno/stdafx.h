@@ -8,7 +8,8 @@ typedef const wchar_t* LPCWSTR;
 
 // DxlibEngine
 #include "../DxLibEngine/typedef.h"
-#include "Vector2.hpp"
+#include "tools/Vector2.hpp"
+#include "tools/LString.h"
 
 // LStgEngine
 #include "../LStgEngine/interdef.h"

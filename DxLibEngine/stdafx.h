@@ -4,9 +4,9 @@
 #include <vector>
 #include <map>
 #include <unordered_map>
-#include <QString>
 
 #include "typedef.h"
 #include "tools/LLogger.h"
-#include "LEngine.h"
+#include "tools/LString.h"
+#include "base/LEngine.h"
 #include "painting/LPainter.h"

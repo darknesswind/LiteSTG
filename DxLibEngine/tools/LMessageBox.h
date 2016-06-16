@@ -9,7 +9,6 @@ public:
 
 public:
 	static void message(LPCWSTR lpMsg, LPCWSTR lpTitle);
-	static void message(const QString& sMsg, const QString& sTitle);
 
 };
 

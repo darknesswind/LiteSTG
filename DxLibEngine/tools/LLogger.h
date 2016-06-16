@@ -7,9 +7,9 @@ class LLogger
 public:
 	enum LogLevel
 	{
-		Info,
-		Warning,
-		Error,
+		lvInfo,
+		lvWarning,
+		lvError,
 	};
 
 public:
@@ -17,10 +17,12 @@ public:
 	~LLogger();
 
 public:
-	static void Print(LogLevel level, const QString& msg);
-	static void PrintInfo(const QString& msg) { Print(Info, msg); };
-	static void PrintWarning(const QString& msg) { Print(Warning, msg); };
-	static void PrintError(const QString& msg) { Print(Error, msg); };
+	static void Print(LogLevel level, LPCWSTR msg);
+	static void Info(LPCWSTR msg) { Print(lvInfo, msg); };
+	static void Warning(LPCWSTR msg) { Print(lvWarning, msg); };
+	static void Error(LPCWSTR msg) { Print(lvError, msg); };
+	static void Warning(const std::wstring& msg) { Warning(msg.c_str()); };
+	static void Error(const std::wstring& msg) { Error(msg.c_str()); };
 
 private:
 

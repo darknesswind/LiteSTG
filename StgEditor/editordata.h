@@ -101,6 +101,7 @@ protected:
 	void loadBulletStyles();
 	void saveBulletStyles();
 
+	void savePathSet();
 private:
 	QString m_basePath;
 	TextureMap m_textures;

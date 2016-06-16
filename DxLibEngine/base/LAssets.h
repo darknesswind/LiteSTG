@@ -4,12 +4,10 @@
 #pragma once
 #include "typedef.h"
 #include "LHandle.h"
-#include <QHash>
-#include <QStringList>
 
 class LCsvTable
 {
-	typedef QStringList LCsvRowData;
+	typedef std::vector<std::wstring> LCsvRowData;
 	typedef std::vector<LCsvRowData> LCsvData;
 public:
 	LCsvTable();
@@ -18,9 +16,9 @@ public:
 	void insertRow(LCsvRowData row);
 
 	size_t getRowCount() const { return m_data.size(); }
-	LCsvRowData& getRow(int i) { return m_data[i]; }
-	QString getString(int row, int col) const;
-	int getInt(int row, int col, int def = 0) const;
+	LCsvRowData& getRow(uint i) { return m_data[i]; }
+	std::wstring getString(uint row, uint col) const;
+	int getInt(uint row, uint col, int def = 0) const;
 
 private:
 	LCsvTable(const LCsvTable&) = delete;
@@ -29,19 +27,19 @@ private:
 private:
 	LCsvData m_data;
 };
-typedef std::shared_ptr<LCsvTable> LCsvTablePtr;
+typedef std::shared_ptr<LCsvTable> LCsvTableSPtr;
 
 class LAssets
 {
 #pragma region Structs
 	struct LAssetData
 	{
-		QString path;
+		std::wstring path;
 		LHandle handle;
 	};
 	struct LSubGraphInfo
 	{
-		QString ref;
+		std::wstring ref;
 		int xSrc;
 		int ySrc;
 		int allNum;
@@ -56,13 +54,12 @@ class LAssets
 		LGraphHandles handles;
 	};
 #pragma endregion
-	typedef QHash<QString, LAssetData> LNamedAssetMap;
-	typedef QHash<QString, LSubGraphData> LSubGraphAssetMap;
-// 	typedef std::unordered_map<std::wstring, LAssetData> LNamedAssetMap;
+	typedef std::unordered_map<LString, LAssetData, std::hash<std::wstring>> LNamedAssetMap;
+	typedef std::unordered_map<LString, LSubGraphData, std::hash<std::wstring>> LSubGraphAssetMap;
 
 public:
 	LAssets();
-	~LAssets();
+	virtual ~LAssets();
 
 public:
 	void LoadTextureList(LPCWSTR lpPath);
@@ -70,18 +67,17 @@ public:
 	void LoadSubGraphicsList(LPCWSTR lpPath);
 
 public:
-	LGraphHandle GetTexture(QString name);
-	LGraphHandle GetTexture(LPCWSTR name) { return GetTexture(W2QSTR(name)); }
+	LGraphHandle GetTexture(LPCWSTR name);
 	LSoundHandle GetSoundEffect(LPCWSTR name);
 	const LGraphHandles& GetSubGraphGroup(LPCWSTR name);
 
 protected:
-	void LoadAssetsList(LPCWSTR lpPath, LNamedAssetMap& map);
+// 	void LoadAssetsList(LPCWSTR lpPath, LNamedAssetMap& map);
 	void LoadDivGraphics(LSubGraphData& data);
 
 public:
-	static QByteArray LoadRawData(LPCWSTR lpPath);
-	static LCsvTablePtr LoadCSV(LPCWSTR lpPath);
+	static LByteArray LoadRawData(LPCWSTR lpPath);
+	static LCsvTableSPtr LoadCSV(LPCWSTR lpPath);
 
 private:
 	LAssets(const LAssets&) = delete;

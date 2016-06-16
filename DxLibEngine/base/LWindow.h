@@ -24,7 +24,7 @@ public: // get set
 	bool	getRunWhenDeactivate();
 
 public: // set only
-	void setWindowText(const QString& sWindowText);
+	void setWindowText(LPCWSTR sWindowText);
 	void setActiveStateChangeCallBack(OnActiveStateChange pCallBack, void* pUserData);
 	void setHookWinProc(WNDPROC WinProc) { UserWinProc = WinProc; }
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "LUIMenu.h"
-#include "Input.h"
+#include "base/Input.h"
 
 LUIMenu::LUIMenu()
 	: m_activeIdx(0)

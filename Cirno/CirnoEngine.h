@@ -17,8 +17,7 @@ public:
 public:
 
 protected:
-	virtual void BeforeDxInit() override;
-	virtual void PreLoad() override;
+	virtual bool Init() override;
 	virtual void OnAsyncLoading() override;
 	virtual void Update() override;
 	virtual void Draw() override;

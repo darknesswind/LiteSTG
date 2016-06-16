@@ -1,6 +1,3 @@
-[submodule "Qt"]
-	path = Qt
-	url = https://github.com/darknesswind/QtStaticLib.git
 [submodule "DxLib"]
 	path = DxLib
 	url = https://github.com/darknesswind/DxLib.git

@@ -25,7 +25,7 @@ public:
 		switch (m_activeIdx)
 		{
 		case Menu_Start:
-			CirnoEngine::engine()->ChangeState(GameState::Test);
+			CirnoEngine::engine()->changeState(GameState::Test);
 			break;
 		case Menu_Quit:
 			CirnoEngine::engine()->setEndFlag(true);

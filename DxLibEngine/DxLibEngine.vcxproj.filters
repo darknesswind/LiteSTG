@@ -31,6 +31,9 @@
     <Filter Include="3rdparty">
       <UniqueIdentifier>{1fbec98f-8f41-484e-86f8-cfee484dffb1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="anime">
+      <UniqueIdentifier>{65b0e1de-f761-45af-8957-1c37680c390e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="typedef.h">
@@ -40,9 +43,6 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="tools\LPoint.h">
-      <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="tools\Input.h">
       <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
@@ -141,9 +141,6 @@
     <ClInclude Include="tools\LSize.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="ui\LUIAnime.h">
-      <Filter>ui</Filter>
-    </ClInclude>
     <ClInclude Include="ui\LUIMenu.h">
       <Filter>ui</Filter>
     </ClInclude>
@@ -153,15 +150,24 @@
     <ClInclude Include="3rdparty\FastFunc.hpp">
       <Filter>3rdparty</Filter>
     </ClInclude>
+    <ClInclude Include="ui\LUITransfer.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="anime\LAnime.h">
+      <Filter>anime</Filter>
+    </ClInclude>
+    <ClInclude Include="tools\LString.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Input.h">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\LEngine.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="tools\LPoint.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
-    <ClCompile Include="tools\Input.cpp">
       <Filter>tools</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
@@ -235,6 +241,15 @@
     </ClCompile>
     <ClCompile Include="ui\LUIMenu.cpp">
       <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="anime\LAnime.cpp">
+      <Filter>anime</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\LString.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="base\Input.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,29 +1,30 @@
 ﻿#ifndef __ANGLE_H__
 #define __ANGLE_H__
-#include "LMath.h"
+#include "base/LMath.h"
 class Radian;
 class Degree
 {
+	typedef float dtype;
 public:
-	explicit Degree(float degree = 0) : m_deg(degree) { }
+	explicit Degree(dtype degree = 0) : m_deg(degree) { }
 
-	static Degree fromDegree(float degree) { return Degree(degree); }
-	static Degree fromRadian(float radian) { return Degree(Rad2Deg(radian)); }
+	static Degree fromDegree(dtype degree) { return Degree(degree); }
+	static Degree fromRadian(dtype radian) { return Degree(Rad2Deg(radian)); }
 	Degree toDegree() const { return *this; }
 	inline Radian toRadian() const;
 
 public:
-	float	degree() const { return m_deg; }
-	float	radian() const { return Deg2Rad(m_deg); }
-	void	setDegree(float degree) { m_deg = degree; }
-	void	setRadian(float radian) { m_deg = Rad2Deg(radian); }
+	dtype	degree() const { return m_deg; }
+	dtype	radian() const { return Deg2Rad(m_deg); }
+	void	setDegree(dtype degree) { m_deg = degree; }
+	void	setRadian(dtype radian) { m_deg = Rad2Deg(radian); }
 
-	void	sincos(float& sine, float& cosine) const
+	void	sincos(dtype& sine, dtype& cosine) const
 	{
 		SinCosDeg(m_deg, sine, cosine);
 	}
-	float	sin() const { return SinDeg(m_deg); }
-	float	cos() const { return CosDeg(m_deg); }
+	dtype	sin() const { return (dtype)SinDeg(m_deg); }
+	dtype	cos() const { return (dtype)CosDeg(m_deg); }
 
 public:
 	void operator+=(const Degree& rhs) { m_deg += rhs.m_deg; }
@@ -32,10 +33,10 @@ public:
 	Degree operator-(const Degree& rhs) const { return Degree(m_deg - rhs.m_deg); }
 	Degree operator-() const { return Degree(-m_deg); }
 
-	void operator+=(float rhs) { m_deg += rhs; }
-	void operator-=(float rhs) { m_deg -= rhs; }
-	Degree operator+(float rhs) const { return Degree(m_deg + rhs); }
-	Degree operator-(float rhs) const { return Degree(m_deg - rhs); }
+	void operator+=(dtype rhs) { m_deg += rhs; }
+	void operator-=(dtype rhs) { m_deg -= rhs; }
+	Degree operator+(dtype rhs) const { return Degree(m_deg + rhs); }
+	Degree operator-(dtype rhs) const { return Degree(m_deg - rhs); }
 
 public:
 	template <typename T> void operator*=(const T& rhs) { m_deg *= rhs; }
@@ -44,31 +45,32 @@ public:
 	template <typename T> Degree operator/(const T& rhs) const { return Degree(m_deg / rhs); }
 
 private:
-	float m_deg;
+	dtype m_deg;
 };
 
 class Radian
 {
+	typedef float dtype;
 public:
-	explicit Radian(float radian = 0) : m_rad(radian) { }
+	explicit Radian(dtype radian = 0) : m_rad(radian) { }
 
-	static Radian fromDegree(float degree) { return Radian(Deg2Rad(degree)); }
-	static Radian fromRadian(float radian) { return Radian(radian); }
+	static Radian fromDegree(dtype degree) { return Radian(Deg2Rad(degree)); }
+	static Radian fromRadian(dtype radian) { return Radian(radian); }
 	Degree toDegree() const { return Degree(degree()); }
 	Radian toRadian() const { return *this; }
 
 public:
-	float	degree() const { return Rad2Deg(m_rad); }
-	float	radian() const { return m_rad; }
-	void	setDegree(float degree) { m_rad = Deg2Rad(degree); }
-	void	setRadian(float radian) { m_rad = radian; }
+	dtype	degree() const { return Rad2Deg(m_rad); }
+	dtype	radian() const { return m_rad; }
+	void	setDegree(dtype degree) { m_rad = Deg2Rad(degree); }
+	void	setRadian(dtype radian) { m_rad = radian; }
 
-	void	sincos(float& sine, float& cosine) const
+	void	sincos(dtype& sine, dtype& cosine) const
 	{
 		SinCos(m_rad, sine, cosine);
 	}
-	float	sin() const { return Sin(m_rad); }
-	float	cos() const { return Cos(m_rad); }
+	dtype	sin() const { return (dtype)Sin(m_rad); }
+	dtype	cos() const { return (dtype)Cos(m_rad); }
 
 public:
 	void operator+=(const Radian& rhs) { m_rad += rhs.m_rad; }
@@ -77,10 +79,10 @@ public:
 	Radian operator-(const Radian& rhs) const { return Radian(m_rad - rhs.m_rad); }
 	Radian operator-() const { return Radian(-m_rad); }
 
-	void operator+=(float rhs) { m_rad += rhs; }
-	void operator-=(float rhs) { m_rad -= rhs; }
-	Radian operator+(float rhs) const { return Radian(m_rad + rhs); }
-	Radian operator-(float rhs) const { return Radian(m_rad - rhs); }
+	void operator+=(dtype rhs) { m_rad += rhs; }
+	void operator-=(dtype rhs) { m_rad -= rhs; }
+	Radian operator+(dtype rhs) const { return Radian(m_rad + rhs); }
+	Radian operator-(dtype rhs) const { return Radian(m_rad - rhs); }
 
 public:
 	template <typename T> void operator*=(const T& rhs) { m_rad *= rhs; }
@@ -89,7 +91,7 @@ public:
 	template <typename T> Radian operator/(const T& rhs) const { return Radian(m_rad - rhs); }
 
 private:
-	float m_rad;
+	dtype m_rad;
 };
 
 Radian Degree::toRadian() const

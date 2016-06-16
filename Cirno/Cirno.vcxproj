@@ -50,12 +50,14 @@
     <IncludePath>$(SolutionDir)Qt\include;$(IncludePath)</IncludePath>
     <SourcePath>$(SolutionDir)Qt\src;$(SourcePath)</SourcePath>
     <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>E:\STGproject\boost;$(IncludePath)</IncludePath>
     <SourcePath>E:\STGproject\boost;$(IncludePath);$(SourcePath)</SourcePath>
     <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -63,7 +65,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_HITBOX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\include;..\DxLibEngine\base;..\DxLibEngine\tools;..\DxLibEngine\painting;..\DxLibEngine\;..\LStgEngine\gameobj;..\LStgEngine\;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\include;..\DxLibEngine\base;..\DxLibEngine\tools;..\DxLibEngine\painting;..\DxLibEngine\;..\LStgEngine\gameobj;..\LStgEngine\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4482;4100;4820;4127;4668;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -92,7 +94,7 @@
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\include;..\DxLibEngine\base;..\DxLibEngine\tools;..\DxLibEngine\painting;..\DxLibEngine\;..\LStgEngine\gameobj;..\LStgEngine\;..\Qt\include\;..\Qt\include\QtCore</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\include;..\DxLibEngine\base;..\DxLibEngine\tools;..\DxLibEngine\painting;..\DxLibEngine\;..\LStgEngine\gameobj;..\LStgEngine\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>

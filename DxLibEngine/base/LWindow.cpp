@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "LWindow.h"
-#include "LPoint.h"
+#include "tools/LPoint.h"
 
 LWindow LWindow::Instance;
 
@@ -21,12 +21,12 @@ void LWindow::setIsWindowMode(bool bUseWindowMode)
 
 bool LWindow::getIsWindowMode()
 {
-	return DxLib::GetWindowModeFlag();
+	return (0 != DxLib::GetWindowModeFlag());
 }
 
-void LWindow::setWindowText(const QString& sWindowText)
+void LWindow::setWindowText(LPCWSTR sWindowText)
 {
-	CheckRes(DxLib::SetMainWindowText(Q2WSTR(sWindowText)));
+	CheckRes(DxLib::SetMainWindowText(sWindowText));
 }
 
 void LWindow::setActiveStateChangeCallBack(OnActiveStateChange pCallBack, void* pUserData)
@@ -41,7 +41,7 @@ void LWindow::setRunWhenDeactivate(bool bAlwaysRun)
 
 bool LWindow::getRunWhenDeactivate()
 {
-	return DxLib::GetAlwaysRunFlag();
+	return (0 != DxLib::GetAlwaysRunFlag());
 }
 
 LRESULT CALLBACK InnerinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

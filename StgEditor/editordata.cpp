@@ -6,6 +6,7 @@
 #include <QJsonObject>
 #include <algorithm>
 #include <QMessageBox>
+#include "protobuf.h"
 
 EditorData::EditorData()
 {
@@ -230,6 +231,7 @@ void EditorData::save()
 	saveTextures();
 	saveSubGraphies();
 	saveBulletStyles();
+	savePathSet();
 }
 
 void EditorData::loadSettings()
@@ -252,54 +254,35 @@ void EditorData::saveSettings()
 	setting.endGroup();
 }
 
-namespace
-{
-	template<typename T1, typename T2>
-	QJsonObject ToJsonObj(const QMap<T1, T2>& map)
-	{
-		QJsonObject obj;
-		return obj;
-	}
-}
-
 void EditorData::loadTextures()
 {
-	QFile in(m_basePath + "\\textures.json");
-	if (!in.open(QFile::ReadOnly))
-		return;
-
-	QJsonParseError err;
-	QJsonDocument doc = doc.fromJson(in.readAll(), &err);
-	in.close();
-
-	QJsonObject obj = doc.object();
-	for (auto iter = obj.begin(); iter != obj.end(); ++iter)
+	TextureBuf buff;
+	QString path = m_basePath + "\\textures.pb";
+	if (buff.load((LPCWSTR)path.utf16()))
 	{
-		m_textures[iter.key()] = iter.value().toString();
-// 		m_textures[iter.value().toString()] = iter.key();
+		auto& map = buff.textures()->map();
+		for (auto iter = map.begin(); iter != map.end(); ++iter)
+		{
+			m_textures.insert(QString::fromUtf8(iter->first.c_str()), QString::fromUtf8(iter->second.c_str()));
+		}
 	}
 }
 
 void EditorData::saveTextures()
 {
-	QJsonObject obj;
+	TextureBuf buff;
 	for (auto iter = m_textures.begin(); iter != m_textures.end(); ++iter)
 	{
-		obj.insert(iter.key(), iter.value());
-// 		obj.insert(iter.value(), iter.key());
+		buff.insert((LPCWSTR)iter.key().utf16(), (LPCWSTR)iter.value().utf16());
 	}
-	QJsonDocument doc(obj);
 
-	QFile out(m_basePath + "\\textures.json");
-	if (out.open(QFile::WriteOnly))
-	{
-		out.write(doc.toJson());
-		out.close();
-	}
+	QString path = m_basePath + "\\textures.pb";
+	buff.save((LPCWSTR)path.utf16());
 }
 
 void EditorData::loadSubGraphies()
 {
+/*
 	QFile in(m_basePath + "\\subgraphics.json");
 	if (!in.open(QFile::ReadOnly))
 		return;
@@ -322,37 +305,72 @@ void EditorData::loadSubGraphies()
 		for (int i = 0; i < SubGraphData::ParamCount; ++i)
 			dat.param.raw[i] = params[i].toInt();
 	}
+*/
+	SubGraphicsBuf buff;
+	QString path = m_basePath + "/subgraphics.pb";
+	if (buff.load((LPCWSTR)path.utf16()))
+	{
+		auto& map = buff.subgraphics()->map();
+		for (auto iter = map.begin(); iter != map.end(); ++iter)
+		{
+			QString name = QString::fromUtf8(iter->first.c_str());
+			auto infos = iter->second.info();
+			for (auto itInfo = infos.begin(); itInfo != infos.end(); ++itInfo)
+			{
+				auto& info = *itInfo;
+				m_subGraphes.emplace_back(SubGraphData());
+				SubGraphData& dat = m_subGraphes.back();
+				dat.name = name;
+				dat.texture = QString::fromUtf8(info.texture().c_str());
+				dat.param.srcX = info.xsrc();
+				dat.param.srcY = info.ysrc();
+				dat.param.allNum = info.allnum();
+				dat.param.numX = info.xnum();
+				dat.param.numY = info.ynum();
+				dat.param.sizeX = info.width();
+				dat.param.sizeY = info.height();
+			}
+		}
+	}
 }
 
 void EditorData::saveSubGraphies()
 {
-	QJsonArray array;
+// 	QJsonArray array;
+// 	for (auto iter = m_subGraphes.begin(); iter != m_subGraphes.end(); ++iter)
+// 	{
+// 		QJsonObject obj;
+// 
+// 		obj.insert("name", iter->name);
+// 		obj.insert("texture", iter->texture);
+// 		
+// 		QJsonArray params;
+// 		for (int i = 0; i < SubGraphData::ParamCount; ++i)
+// 			params.push_back(iter->param.raw[i]);
+// 		obj.insert("params", params);
+// 
+// 		array.push_back(obj);
+// 	}
+// 	QJsonDocument doc(array);
+// 
+// 	QFile out(m_basePath + "\\subgraphics.json");
+// 	if (out.open(QFile::WriteOnly))
+// 	{
+// 		out.write(doc.toJson());
+// 		out.close();
+// 	}
+	SubGraphicsBuf buff;
 	for (auto iter = m_subGraphes.begin(); iter != m_subGraphes.end(); ++iter)
 	{
-		QJsonObject obj;
-
-		obj.insert("name", iter->name);
-		obj.insert("texture", iter->texture);
-		
-		QJsonArray params;
-		for (int i = 0; i < SubGraphData::ParamCount; ++i)
-			params.push_back(iter->param.raw[i]);
-		obj.insert("params", params);
-
-		array.push_back(obj);
+		buff.insert((LPCWSTR)iter->name.utf16(), (LPCWSTR)iter->texture.utf16(), (SubGraphRaw*)iter->param.raw);
 	}
-	QJsonDocument doc(array);
-
-	QFile out(m_basePath + "\\subgraphics.json");
-	if (out.open(QFile::WriteOnly))
-	{
-		out.write(doc.toJson());
-		out.close();
-	}
+	QString path(m_basePath + "/subgraphics.pb");
+	buff.save((LPCWSTR)path.utf16());
 }
 
 void EditorData::loadBulletStyles()
 {
+/*
 	QFile in(m_basePath + "\\bulletstyles.json");
 	if (!in.open(QFile::ReadOnly))
 		return;
@@ -379,10 +397,35 @@ void EditorData::loadBulletStyles()
 		dat.radianX = params[2].toDouble();
 		dat.radianY = params[3].toDouble();
 	}
+*/
+	QString path(m_basePath + "/bulletstyles.pb");
+	BulletSyltesBuf buff;
+	if (buff.load((LPCWSTR)path.utf16()))
+	{
+		auto& map = buff.bulletStyles()->map();
+		for (auto iter = map.begin(); iter != map.end(); ++iter)
+		{
+			m_bulletStyles.emplace_back(BulletStyle());
+			BulletStyle& dat = m_bulletStyles.back();
+			auto& style = iter->second;
+
+			dat.name = QString::fromUtf8(iter->first.c_str());
+			dat.type = (BulletStyle::BulletType)style.type();
+			dat.subGraph = QString::fromUtf8(style.graphgroup().c_str());
+			
+			auto& collide = style.collide();
+			dat.collide = (BulletStyle::CollideType)collide.type();
+			dat.centerX = collide.centerx();
+			dat.centerY = collide.centery();
+			dat.radianX = collide.radianx();
+			dat.radianY = collide.radiany();
+		}
+	}
 }
 
 void EditorData::saveBulletStyles()
 {
+/*
 	QJsonArray array;
 	for (auto iter = m_bulletStyles.begin(); iter != m_bulletStyles.end(); ++iter)
 	{
@@ -411,4 +454,48 @@ void EditorData::saveBulletStyles()
 		out.write(doc.toJson());
 		out.close();
 	}
+*/
+
+	BulletSyltesBuf buff;
+	auto& map = *buff.bulletStyles()->mutable_map();
+	for (auto iter = m_bulletStyles.begin(); iter != m_bulletStyles.end(); ++iter)
+	{
+		auto& bullet = map[iter->name.toUtf8().toStdString()];
+		bullet.set_type((BulletSyltesBuf::Type)iter->type);
+		bullet.set_graphgroup(iter->subGraph.toUtf8().toStdString());
+
+		auto& collide = *bullet.mutable_collide();
+		collide.set_type((proto::Collide_CollideType)iter->collide);
+		collide.set_centerx(iter->centerX);
+		collide.set_centery(iter->centerY);
+		collide.set_radianx(iter->radianX);
+		collide.set_radianx(iter->radianY);
+	}
+
+	QString path(m_basePath + "/bulletstyles.pb");
+	buff.save((LPCWSTR)path.utf16());
+}
+
+void EditorData::savePathSet()
+{
+	PathSetBuf buff;
+	proto::Path* pPath = buff.pathset()->add_path();
+	pPath->set_name("test");
+	pPath->add_node()->mutable_emptynode()->set_time(100);
+	{
+		proto::LineNode* node = pPath->add_node()->mutable_linenode();
+		node->set_time(200);
+		node->set_xdetla(100);
+		node->set_ydetla(100);
+	}
+	{
+		proto::SineNode* node = pPath->add_node()->mutable_sinenode();
+		node->set_time(400);
+		node->set_ydetla(100);
+		node->set_xscale(10);
+		node->set_yscale(100);
+	}
+
+	QString path(m_basePath + "/pathset.pb");
+	buff.save((LPCWSTR)path.utf16());
 }

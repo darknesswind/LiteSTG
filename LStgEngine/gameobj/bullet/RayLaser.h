@@ -24,7 +24,6 @@ public:
 
 	void setWidthExtRange(float width)	{ m_width = width; }
 	void setLengthExtRange(float length) { m_length = length; }
-	void setTurnFlag(BOOL bTurn) { turnFlag = bTurn; }
 
 private:
 	static const int g_nPlayTime = 20; // 展开/衰减时间
@@ -33,7 +32,6 @@ private:
 	float m_length;
 	int m_nExpandCount, m_nCollapseCount;
 	RayState m_state;
-	int turnFlag;
 };
 
 #endif

@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "LPainter.h"
-#include "LPoint.h"
-#include "LSize.h"
-#include "Vector2.hpp"
+#include "tools/LPoint.h"
+#include "tools/LSize.h"
+#include "tools/Vector2.hpp"
 
 LPainter::LPainter()
 {

@@ -2,7 +2,7 @@
 #define __CURVELASER_H__
 #pragma once
 #include "bullet.h"
-#include <QQueue>
+#include <deque>
 
 struct LaserGrid
 {
@@ -22,7 +22,7 @@ struct LaserGrid
 class CurveLaser
 	: public Bullet
 {
-	typedef QQueue<LaserGrid> LaserGrids;
+	typedef std::deque<LaserGrid> LaserGrids;
 public:
 	CurveLaser(IGameObject* pParent)
 		: Bullet(pParent)
