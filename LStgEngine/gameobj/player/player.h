@@ -9,11 +9,14 @@ enum class PlayerType
 	Controlled,
 };
 
+class LPlayerModel;
 class Player : public LCollideObject
 {
 public:
 	explicit Player(int x = 220, int y = 400);
 	virtual ~Player(void);
+
+	void setModel(LPlayerModel* pModel);
 
 public:	// IGameobj
 	virtual void Update() override;
@@ -24,5 +27,6 @@ public:	// Player
 
 protected:
 	destory_ptr<IWalker> m_spWalker;
+	LPlayerModel* m_pModel = nullptr;
 };
 #endif

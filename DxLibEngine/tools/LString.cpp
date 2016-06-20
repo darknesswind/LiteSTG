@@ -90,7 +90,7 @@ void LStrBuilder::resetPattern(LPCWSTR pPattern)
 	analyzePattern();
 }
 
-LString LStrBuilder::apply()
+LString LStrBuilder::apply() const
 {
 	if (m_chpxes.empty() || m_args.empty())
 		return m_pattern;
@@ -101,7 +101,7 @@ LString LStrBuilder::apply()
 	LPCWSTR pPos = pBegin;
 	for (auto iter = m_chpxes.begin(); iter != m_chpxes.end(); ++iter)
 	{
-		ChpxInfo& info = *iter;
+		const ChpxInfo& info = *iter;
 
 		size_t prevLen = pBegin + info.begin - pPos;
 		result.append(pPos, prevLen);

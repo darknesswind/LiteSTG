@@ -54,37 +54,35 @@ void LControlledWalker::nextStep(PhysicData& data)
 	{
 	case MoveUp:
 	case MoveUpLRC:
-		data.position.ry() -= speed;
+		data.speed = Vector2(0, -speed);
 		break;
 	case MoveDown:
 	case MoveDownLRC:
-		data.position.ry() += speed;
+		data.speed = Vector2(0, speed);
 		break;
 	case MoveLeft:
 	case MoveLeftUDC:
-		data.position.rx() -= speed;
+		data.speed = Vector2(-speed, 0);
 		break;
 	case MoveRight:
 	case MoveRightUDC:
-		data.position.rx() += speed;
+		data.speed = Vector2(speed, 0);
 		break;
 	case MoveLeftUp:
-		data.position.rx() -= diagSpeed;
-		data.position.ry() -= diagSpeed;
+		data.speed = Vector2(-diagSpeed, -diagSpeed);
 		break;
 	case MoveRightUp:
-		data.position.rx() += diagSpeed;
-		data.position.ry() -= diagSpeed;
+		data.speed = Vector2(diagSpeed, -diagSpeed);
 		break;
 	case MoveLeftDown:
-		data.position.rx() -= diagSpeed;
-		data.position.ry() += diagSpeed;
+		data.speed = Vector2(-diagSpeed, diagSpeed);
 		break;
 	case MoveRightDown:
-		data.position.rx() += diagSpeed;
-		data.position.ry() += diagSpeed;
+		data.speed = Vector2(diagSpeed, diagSpeed);
 		break;
 	default:
+		data.speed.reset();
 		break;
 	}
+	data.position += data.speed;
 }

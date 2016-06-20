@@ -29,7 +29,7 @@ private:
 	bool m_bCanShot;
 
 	LGraphHandles m_playerImg;
-	LGraphHandle m_hHitBox;
+	LGraphHandle m_hitBoxImg;
 	LInput* m_pInput;
 };
 #endif

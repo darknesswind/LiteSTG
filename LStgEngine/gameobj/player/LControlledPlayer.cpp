@@ -21,7 +21,7 @@ LControlledPlayer::LControlledPlayer(int x, int y)
 	m_renderArg.uDepth = DepthCharacter;
 	m_hitboxClr = LRgb::Lime;
 	m_playerImg = LStgEngine::assets()->GetSubGraphGroup(__T("灵梦"));
-	m_hHitBox = LStgEngine::assets()->GetSubGraphGroup(__T("判定点"))[0];
+	m_hitBoxImg = LStgEngine::assets()->GetSubGraphGroup(__T("判定点"))[0];
 }
 
 
@@ -91,8 +91,8 @@ void LControlledPlayer::Draw( LPainter& painter )
 	if (m_pInput->isLogicKeyDown(StgKey::Slow))
 	{
 		painter.setDrawMode(DxDrawMode::Bilinear);
-		painter.drawRotaGraphF(m_phyData.position, 1, -m_phyData.radian, m_hHitBox, true);
-		painter.drawRotaGraphF(m_phyData.position, 1, m_phyData.radian, m_hHitBox, true);
+		painter.drawRotaGraphF(m_phyData.position, 1, -m_phyData.radian, m_hitBoxImg, true);
+		painter.drawRotaGraphF(m_phyData.position, 1, m_phyData.radian, m_hitBoxImg, true);
 		painter.setDrawMode(DxDrawMode::Nearest);
 	}
 	DrawHitBox(painter);

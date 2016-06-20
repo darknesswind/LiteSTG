@@ -1,18 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="源文件">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="头文件">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="资源文件">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="base">
       <UniqueIdentifier>{9d6a3bfb-1e57-4f69-a2a5-a6a8e2f726e3}</UniqueIdentifier>
     </Filter>
@@ -36,17 +24,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="typedef.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="base\LEngine.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="tools\LPoint.h">
       <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="base\LScreen.h">
       <Filter>base</Filter>
@@ -105,9 +87,6 @@
     <ClInclude Include="tools\Angle.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="enumations.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="move\LPathWalker.h">
       <Filter>move</Filter>
     </ClInclude>
@@ -162,6 +141,9 @@
     <ClInclude Include="base\Input.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="typedef.h" />
+    <ClInclude Include="enumations.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\LEngine.cpp">
@@ -169,9 +151,6 @@
     </ClCompile>
     <ClCompile Include="tools\LPoint.cpp">
       <Filter>tools</Filter>
-    </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="base\LScreen.cpp">
       <Filter>base</Filter>
@@ -251,5 +230,6 @@
     <ClCompile Include="base\Input.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
 </Project>

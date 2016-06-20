@@ -143,7 +143,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="gameobj\player\LPlayerModle.h" />
+    <ClInclude Include="gameobj\player\LPlayerModel.h" />
     <ClInclude Include="LStgEngine.h" />
     <ClInclude Include="gameobj\bullet\Bullet.h" />
     <ClInclude Include="gameobj\bullet\CurveLaser.h" />
@@ -162,17 +162,17 @@
     <ClInclude Include="gameobj\shooter\LShooter.h" />
     <ClInclude Include="gameobj\shooter\LShooters.h" />
     <ClInclude Include="gameobj\stage\LStage.h" />
-    <ClInclude Include="Graph.h" />
     <ClInclude Include="interdef.h" />
     <ClInclude Include="Manager\ComManage.h" />
     <ClInclude Include="Manager\MemoryManager.h" />
     <ClInclude Include="Manager\SpriteManager.h" />
     <ClInclude Include="script\LTcc.h" />
+    <ClInclude Include="state\LStgMoveState.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="gameobj\player\LPlayerModle.cpp" />
+    <ClCompile Include="gameobj\player\LPlayerModel.cpp" />
     <ClCompile Include="LStgEngine.cpp" />
     <ClCompile Include="gameobj\bullet\Bullet.cpp" />
     <ClCompile Include="gameobj\bullet\CurveLaser.cpp" />
@@ -191,11 +191,11 @@
     <ClCompile Include="gameobj\shooter\LShooter.cpp" />
     <ClCompile Include="gameobj\shooter\LShooters.cpp" />
     <ClCompile Include="gameobj\stage\LStage.cpp" />
-    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="Manager\ComManage.cpp" />
     <ClCompile Include="Manager\MemoryManager.cpp" />
     <ClCompile Include="Manager\SpriteManager.cpp" />
     <ClCompile Include="script\LTcc.cpp" />
+    <ClCompile Include="state\LStgMoveState.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

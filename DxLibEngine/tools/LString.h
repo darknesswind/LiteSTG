@@ -33,7 +33,7 @@ public:
 	~LStrBuilder();
 
 	void resetPattern(LPCWSTR pPattern);
-	LString apply();
+	LString apply() const;
 
 	LStrBuilder& arg(LPCWSTR val);
 	LStrBuilder& arg(int val);

@@ -40,6 +40,9 @@
     <Filter Include="data">
       <UniqueIdentifier>{b74c16bb-c09f-4faf-b1c6-a34cbf0f3fc2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="state">
+      <UniqueIdentifier>{71951a21-7c74-49ca-b3fb-e2a3a3956d94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -111,9 +114,6 @@
     <ClInclude Include="Manager\SpriteManager.h">
       <Filter>manager</Filter>
     </ClInclude>
-    <ClInclude Include="Graph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="interdef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -123,7 +123,10 @@
     <ClInclude Include="LStgEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gameobj\player\LPlayerModle.h">
+    <ClInclude Include="state\LStgMoveState.h">
+      <Filter>state</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\player\LPlayerModel.h">
       <Filter>gameobj\player</Filter>
     </ClInclude>
   </ItemGroup>
@@ -191,16 +194,16 @@
     <ClCompile Include="Manager\SpriteManager.cpp">
       <Filter>manager</Filter>
     </ClCompile>
-    <ClCompile Include="Graph.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="script\LTcc.cpp">
       <Filter>script</Filter>
     </ClCompile>
     <ClCompile Include="LStgEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gameobj\player\LPlayerModle.cpp">
+    <ClCompile Include="state\LStgMoveState.cpp">
+      <Filter>state</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\player\LPlayerModel.cpp">
       <Filter>gameobj\player</Filter>
     </ClCompile>
   </ItemGroup>

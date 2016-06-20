@@ -109,7 +109,7 @@ public:
 	const DxLib::IMAGEDATA2* imgData() const { return (DxLib::IMAGEDATA2*)LHandle::innerData(); }
 	void getSize(LSize& size);
 	void getSize(int* px, int* py) { CheckRes(DxLib::GetGraphSize(m_handle, px, py)); }
-	LGraphHandles split(int xSrc, int ySrc, int allNum, int xNum, int yNum, int width, int height);
+	LGraphHandles&& split(int xSrc, int ySrc, int allNum, int xNum, int yNum, int width, int height);
 	LGraphHandle subGraph(int xSrc, int ySrc, int width, int height);
 
 public:
