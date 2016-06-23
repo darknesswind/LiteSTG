@@ -139,8 +139,8 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">bin\protoc.exe --cpp_out=$(ProjectDir)GeneratedFiles\ %(Identity)</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">protoc %(Identity) ...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\</Outputs>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

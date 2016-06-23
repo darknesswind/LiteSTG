@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "LRayShooter.h"
-#include "painting/LPainter.h"
-#include "player/player.h"
+#include "render/LPainter.h"
+#include "player/LPlayer.h"
 #include "bullet/LBullets.h"
 #include "Bullet/RayLaser.h"
 #include "bullet/LBulletStyles.h"
@@ -39,7 +39,7 @@ void LRayShooter::Update()
 	}
 }
 
-void LRayShooter::Draw( LPainter& painter )
+void LRayShooter::draw( LPainter& painter )
 {
 	switch (m_currState)
 	{
@@ -112,7 +112,7 @@ void LRayShooter::ExecWarning()
 {
 	if (m_bFollowPlayer)
 	{
-		Radian rad = position().radianBetween(LStgEngine::engine()->GetActivePlayer()->position());
+		Radian rad = position().radianBetween(LStgEngine::engine()->getActivePlayer()->position());
 		m_warningLine.setPolar(600, rad);
 	}
 

@@ -10,17 +10,17 @@ enum class PlayerType
 };
 
 class LPlayerModel;
-class Player : public LCollideObject
+class LPlayer : public LCollideObject
 {
 public:
-	explicit Player(int x = 220, int y = 400);
-	virtual ~Player(void);
+	explicit LPlayer(int x = 220, int y = 400);
+	virtual ~LPlayer(void);
 
 	void setModel(LPlayerModel* pModel);
 
 public:	// IGameobj
 	virtual void Update() override;
-	virtual void Draw(LPainter& painter) override;
+	virtual void draw(LPainter& painter) override;
 
 public:	// Player
 	virtual PlayerType GetType() const { return PlayerType::Void; }

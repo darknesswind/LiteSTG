@@ -54,7 +54,7 @@ CurveLaser* LBullets::AddCurveLaser(IGameObject* pParent)
 	QuickImplGameObjAdd(CurveLaser);
 }
 
-void LBullets::UpdateChildren()
+void LBullets::updateChildren()
 {
 	parallel_for_each(parallel_begin(m_thisList), parallel_end(m_thisList), [](Bullet* pItem)
 	{

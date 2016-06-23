@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "LControlledPlayer.h"
 #include "Input.h"
-#include "LPainter.h"
 #include "move/LWalker.h"
 #include "LAssets.h"
 
@@ -85,9 +84,9 @@ void LControlledPlayer::Update()
 	m_counter++;
 }
 
-void LControlledPlayer::Draw( LPainter& painter )
+void LControlledPlayer::draw( LPainter& painter )
 {
-	painter.drawRotaGraphF(m_phyData.position, 1, Radian0, GetSortKey(), true);
+	painter.drawRotaGraphF(m_phyData.position, 1, Radian0, m_playerImg[m_imgCount], true);
 	if (m_pInput->isLogicKeyDown(StgKey::Slow))
 	{
 		painter.setDrawMode(DxDrawMode::Bilinear);
@@ -96,9 +95,4 @@ void LControlledPlayer::Draw( LPainter& painter )
 		painter.setDrawMode(DxDrawMode::Nearest);
 	}
 	DrawHitBox(painter);
-}
-
-uint LControlledPlayer::GetSortKey() const
-{
-	return m_playerImg[m_imgCount];
 }

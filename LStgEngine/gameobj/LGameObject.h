@@ -1,6 +1,6 @@
 #ifndef __LGAMEOBJECT_H__
 #define __LGAMEOBJECT_H__
-#include "LRgb.h"
+#include "render/LPainter.h"
 
 class LGameObject : public IGameObject
 {
@@ -11,7 +11,6 @@ public:
 public: // IGameObject
 	virtual bool	IsValid() const	final							{ return m_bValid; }
 	virtual void	SetValid(bool bValid) final						{ m_bValid = bValid; }
-	virtual uint GetSortKey() const override;
 	virtual const RenderArgument& GetRenderArgument() const final	{ return m_renderArg; }
 	virtual IGameObject* GetParent() final							{ return m_pParent; }
 	virtual const Vector2& GetPosition() final						{ return m_phyData.position; }

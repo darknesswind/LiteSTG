@@ -3,10 +3,8 @@
 #pragma once
 #include "LPainter.h"
 #include "base/LHandle.h"
-#include <unordered_map>
 
-// #define __RenderQueueTest__
-
+class LRenderLayer;
 class LRender
 {
 public:
@@ -15,18 +13,22 @@ public:
 
 public:
 	void DoRender();
-	void PushItem(IDrawableObj* pItem);
+	// void PushItem(IDrawableObj* pItem);
 	LPainter& GetPainter() { return m_painter; }
+
+	LRenderLayer* addLayer(uint key, std::unique_ptr<LRenderLayer> layer);
 
 private:
 	LRender(const LRender& other) = delete;
 	void operator=(const LRender& other) = delete;
 
 private:
-	typedef std::vector<IDrawableObj*> RenderItems;
-	typedef std::map<RenderArgument, RenderItems> RenderQueue;
+	std::map<uint, std::unique_ptr<LRenderLayer>> m_layers;
 
-	RenderQueue m_renderQueue;
+// 	typedef std::vector<IDrawableObj*> RenderItems;
+// 	typedef std::map<RenderArgument, RenderItems> RenderQueue;
+// 
+// 	RenderQueue m_renderQueue;
 	LPainter m_painter;
 };
 

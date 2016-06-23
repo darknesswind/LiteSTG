@@ -120,10 +120,13 @@
     <ClInclude Include="move\LPathWalker.h" />
     <ClInclude Include="move\LPhysicWalker.h" />
     <ClInclude Include="move\LWalker.h" />
-    <ClInclude Include="painting\DebugPainter.h" />
-    <ClInclude Include="painting\LPainter.h" />
-    <ClInclude Include="painting\LRender.h" />
-    <ClInclude Include="painting\LRgb.h" />
+    <ClInclude Include="render\DebugPainter.h" />
+    <ClInclude Include="render\LDebugLayer.h" />
+    <ClInclude Include="render\LPainter.h" />
+    <ClInclude Include="render\LRender.h" />
+    <ClInclude Include="render\LRenderLayer.h" />
+    <ClInclude Include="render\LRgb.h" />
+    <ClInclude Include="render\LUILayer.h" />
     <ClInclude Include="tools\Angle.h" />
     <ClInclude Include="tools\CsvReader.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -163,9 +166,12 @@
     <ClCompile Include="move\LPathWalker.cpp" />
     <ClCompile Include="move\LPhysicWalker.cpp" />
     <ClCompile Include="move\LWalker.cpp" />
-    <ClCompile Include="painting\DebugPainter.cpp" />
-    <ClCompile Include="painting\LPainter.cpp" />
-    <ClCompile Include="painting\LRender.cpp" />
+    <ClCompile Include="render\DebugPainter.cpp" />
+    <ClCompile Include="render\LDebugLayer.cpp" />
+    <ClCompile Include="render\LPainter.cpp" />
+    <ClCompile Include="render\LRender.cpp" />
+    <ClCompile Include="render\LRenderLayer.cpp" />
+    <ClCompile Include="render\LUILayer.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

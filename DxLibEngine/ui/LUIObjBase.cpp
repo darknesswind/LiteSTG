@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "LUIObjBase.h"
-#include "painting/LRender.h"
+#include "render/LRender.h"
 
 LUIObjBase::LUIObjBase(LUIObjBase* parent /*= nullptr*/)
 	: m_pParent(parent)
@@ -26,10 +26,10 @@ void LUIObjBase::Update()
 		pChild->Update();
 }
 
-void LUIObjBase::Draw(LPainter& painter)
+void LUIObjBase::draw(LPainter& painter)
 {
 	for each (LUIObjBase* pChild in m_children)
-		pChild->Draw(painter);
+		pChild->draw(painter);
 }
 
 LUIObjBase* LUIObjBase::pushChild(LUIObjBase* pChild, bool bAutoDel /*= false*/)
@@ -96,16 +96,4 @@ void LUIObjBase::clearChildren()
 			delete pChild;
 	}
 	m_children.clear();
-}
-
-void LUIObjBase::CommitRender(LRender* pRender)
-{
-	pRender->PushItem(this);
-	for each (LUIObjBase* pChild in m_children)
-		pChild->CommitRender(pRender);
-}
-
-void LUIRoot::CommitRender()
-{
-	LUIObjBase::CommitRender(LEngine::render());
 }

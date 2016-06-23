@@ -14,7 +14,7 @@ class LBullets : public SpriteManager<Bullet>
 {
 public:
 	LBullets();
-	void UpdateChildren() override;
+	void updateChildren() override;
 	LBulletStyles* styles() { return m_spStyles.get(); }
 
 public:

@@ -8,7 +8,7 @@ public:
 	~LoadingUI();
 
 public:
-	virtual void Draw(LPainter& painter) override;
+	virtual void draw(LPainter& painter) override;
 
 private:
 	LGraphHandle m_snow;

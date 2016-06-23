@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "LoadingUI.h"
 #include "LAssets.h"
-#include "LPainter.h"
 #include "ui/LUIImage.h"
 
 LoadingUI::LoadingUI(LUIObjBase* parent /*= nullptr*/)
@@ -30,7 +29,7 @@ LoadingUI::~LoadingUI()
 {
 }
 
-void LoadingUI::Draw(LPainter& painter)
+void LoadingUI::draw(LPainter& painter)
 {
-	LUIObjBase::Draw(painter);
+	LUIObjBase::draw(painter);
 }

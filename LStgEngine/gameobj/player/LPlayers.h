@@ -2,18 +2,18 @@
 #define _LPLAYERS_H_
 #pragma once
 #include "Manager/SpriteManager.h"
-#include "player.h"
+#include "LPlayer.h"
 
-class Player;
-class LPlayers : public SpriteManager<Player>
+class LPlayer;
+class LPlayers : public SpriteManager<LPlayer>
 {
 public:
 	LPlayers();
 
-	Player* Add(PlayerType type);
-	Player* GetActiveItem() { return m_pActiveItem; }
+	LPlayer* Add(PlayerType type);
+	LPlayer* GetActiveItem() { return m_pActiveItem; }
 
 protected:
-	Player* m_pActiveItem;
+	LPlayer* m_pActiveItem;
 };
 #endif

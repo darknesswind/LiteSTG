@@ -1,18 +1,12 @@
 #include "stdafx.h"
 #include "LGameObject.h"
 #include "LHandle.h"
-#include "LPainter.h"
 
 LGameObject::LGameObject(IGameObject* pParent /*= nullptr*/)
 	: m_bValid(true)
 	, m_pParent(pParent)
 {
 
-}
-
-uint LGameObject::GetSortKey() const
-{
-	return LGraphHandle::hNoneGraph;
 }
 
 //////////////////////////////////////////////////////////////////////////

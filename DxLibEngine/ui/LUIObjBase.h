@@ -1,5 +1,6 @@
 #pragma once
 #include "tools/LRect.h"
+#include "render/LPainter.h"
 
 class LRender;
 class LUIObjBase : public IUIObject
@@ -9,10 +10,9 @@ public:
 	virtual ~LUIObjBase();
 
 public:
-	virtual uint GetSortKey() const override { return LHandle::hInvalid; }
 	virtual const RenderArgument& GetRenderArgument() const override final { return m_renderArg; };
 	virtual void Update() override;
-	virtual void Draw(LPainter&) override;
+	virtual void draw(LPainter&) override;
 
 public:
 	LUIObjBase* parent()				{ return m_pParent; }
@@ -30,9 +30,6 @@ public:
 	void setPos(int x, int y) { m_rect.setPos(x, y); }
 
 protected:
-	void CommitRender(LRender* pRender);
-
-protected:
 	LUIObjBase* m_pParent;
 	bool m_bAutoDelete;
 	std::vector<LUIObjBase*> m_children;
@@ -48,7 +45,7 @@ public:
 	~LEmptyUI() override = default;
 
 	virtual void Update() override { }
-	virtual void Draw(LPainter&) override { }
+	virtual void draw(LPainter&) override { }
 };
 
 class LUIRoot : public LUIObjBase
@@ -57,7 +54,6 @@ public:
 	using LUIObjBase::LUIObjBase;
 	~LUIRoot() override = default;
 
-	void CommitRender();
 private:
 
 };

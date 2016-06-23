@@ -18,7 +18,7 @@ public:
 
 public: // IGameObject
 	virtual void Update();
-	virtual void Draw(LPainter&){}
+	virtual void draw(LPainter&){}
 
 public:
 	void loadStage();

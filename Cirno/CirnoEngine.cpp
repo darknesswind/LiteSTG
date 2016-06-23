@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "CirnoEngine.h"
 
-#include "Manager/ComManage.h"
-
 #include "ui/stage/baseFrame.h"
 #include "ui/loading/LoadingUI.h"
 #include "ui/menu/GameMenu.h"
@@ -43,12 +41,8 @@ void CirnoEngine::Update()
 	debugInfo.Update();
 
 	OnExecState(m_curState);
-}
 
-void CirnoEngine::Draw()
-{
-	Base::Draw();
-	debugInfo.Draw(LStgEngine::render()->GetPainter());
+// 	debugInfo.Draw(LStgEngine::render()->GetPainter());
 }
 
 void CirnoEngine::OnEnterState(uint state)

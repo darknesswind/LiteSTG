@@ -113,7 +113,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine\painting;..\DxLibEngine;../DxLib;../include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);./gameobj/;..\DxLibEngine\tools;..\DxLibEngine\base;..\DxLibEngine;../DxLib;../include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -140,9 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="gameobj\player\LPlayer.h" />
     <ClInclude Include="gameobj\player\LPlayerModel.h" />
     <ClInclude Include="LStgEngine.h" />
     <ClInclude Include="gameobj\bullet\Bullet.h" />
@@ -156,22 +154,25 @@
     <ClInclude Include="gameobj\LGameObject.h" />
     <ClInclude Include="gameobj\player\LControlledPlayer.h" />
     <ClInclude Include="gameobj\player\LPlayers.h" />
-    <ClInclude Include="gameobj\player\player.h" />
     <ClInclude Include="gameobj\shooter\LRayShooter.h" />
     <ClInclude Include="gameobj\shooter\LSegShooter.h" />
     <ClInclude Include="gameobj\shooter\LShooter.h" />
     <ClInclude Include="gameobj\shooter\LShooters.h" />
     <ClInclude Include="gameobj\stage\LStage.h" />
     <ClInclude Include="interdef.h" />
-    <ClInclude Include="Manager\ComManage.h" />
     <ClInclude Include="Manager\MemoryManager.h" />
     <ClInclude Include="Manager\SpriteManager.h" />
+    <ClInclude Include="render\LBulletLayer.h" />
+    <ClInclude Include="render\LEnemyLayer.h" />
+    <ClInclude Include="render\LHitboxLayer.h" />
+    <ClInclude Include="render\LPlayerLayer.h" />
     <ClInclude Include="script\LTcc.h" />
     <ClInclude Include="state\LStgMoveState.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="gameobj\player\LPlayer.cpp" />
     <ClCompile Include="gameobj\player\LPlayerModel.cpp" />
     <ClCompile Include="LStgEngine.cpp" />
     <ClCompile Include="gameobj\bullet\Bullet.cpp" />
@@ -185,15 +186,17 @@
     <ClCompile Include="gameobj\LGameObject.cpp" />
     <ClCompile Include="gameobj\player\LControlledPlayer.cpp" />
     <ClCompile Include="gameobj\player\LPlayers.cpp" />
-    <ClCompile Include="gameobj\player\player.cpp" />
     <ClCompile Include="gameobj\shooter\LRayShooter.cpp" />
     <ClCompile Include="gameobj\shooter\LSegShooter.cpp" />
     <ClCompile Include="gameobj\shooter\LShooter.cpp" />
     <ClCompile Include="gameobj\shooter\LShooters.cpp" />
     <ClCompile Include="gameobj\stage\LStage.cpp" />
-    <ClCompile Include="Manager\ComManage.cpp" />
     <ClCompile Include="Manager\MemoryManager.cpp" />
     <ClCompile Include="Manager\SpriteManager.cpp" />
+    <ClCompile Include="render\LBulletLayer.cpp" />
+    <ClCompile Include="render\LEnemyLayer.cpp" />
+    <ClCompile Include="render\LHitboxLayer.cpp" />
+    <ClCompile Include="render\LPlayerLayer.cpp" />
     <ClCompile Include="script\LTcc.cpp" />
     <ClCompile Include="state\LStgMoveState.cpp" />
     <ClCompile Include="stdafx.cpp">

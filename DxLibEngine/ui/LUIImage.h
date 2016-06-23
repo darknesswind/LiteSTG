@@ -10,9 +10,8 @@ public:
 	~LUIImage() override = default;
 
 public:
-	virtual uint GetSortKey() const override;
 	virtual void Update() override;
-	virtual void Draw(LPainter&) override;
+	virtual void draw(LPainter&) override;
 
 public:
 	void setFlash(uint interval);

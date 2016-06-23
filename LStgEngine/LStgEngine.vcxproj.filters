@@ -43,9 +43,9 @@
     <Filter Include="state">
       <UniqueIdentifier>{71951a21-7c74-49ca-b3fb-e2a3a3956d94}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
+    <Filter Include="render">
+      <UniqueIdentifier>{4137a0d2-d284-498a-bd1f-f02e1b0234b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -78,9 +78,6 @@
     <ClInclude Include="gameobj\player\LPlayers.h">
       <Filter>gameobj\player</Filter>
     </ClInclude>
-    <ClInclude Include="gameobj\player\player.h">
-      <Filter>gameobj\player</Filter>
-    </ClInclude>
     <ClInclude Include="gameobj\enemy\LEnemy.h">
       <Filter>gameobj\enemy</Filter>
     </ClInclude>
@@ -105,9 +102,6 @@
     <ClInclude Include="gameobj\bullet\SegmentLaser.h">
       <Filter>gameobj\bullet</Filter>
     </ClInclude>
-    <ClInclude Include="Manager\ComManage.h">
-      <Filter>manager</Filter>
-    </ClInclude>
     <ClInclude Include="Manager\MemoryManager.h">
       <Filter>manager</Filter>
     </ClInclude>
@@ -128,6 +122,21 @@
     </ClInclude>
     <ClInclude Include="gameobj\player\LPlayerModel.h">
       <Filter>gameobj\player</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LBulletLayer.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LEnemyLayer.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LPlayerLayer.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="gameobj\player\LPlayer.h">
+      <Filter>gameobj\player</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LHitboxLayer.h">
+      <Filter>render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +167,6 @@
     <ClCompile Include="gameobj\player\LPlayers.cpp">
       <Filter>gameobj\player</Filter>
     </ClCompile>
-    <ClCompile Include="gameobj\player\player.cpp">
-      <Filter>gameobj\player</Filter>
-    </ClCompile>
     <ClCompile Include="gameobj\enemy\LEnemy.cpp">
       <Filter>gameobj\enemy</Filter>
     </ClCompile>
@@ -185,9 +191,6 @@
     <ClCompile Include="gameobj\bullet\SegmentLaser.cpp">
       <Filter>gameobj\bullet</Filter>
     </ClCompile>
-    <ClCompile Include="Manager\ComManage.cpp">
-      <Filter>manager</Filter>
-    </ClCompile>
     <ClCompile Include="Manager\MemoryManager.cpp">
       <Filter>manager</Filter>
     </ClCompile>
@@ -205,6 +208,21 @@
     </ClCompile>
     <ClCompile Include="gameobj\player\LPlayerModel.cpp">
       <Filter>gameobj\player</Filter>
+    </ClCompile>
+    <ClCompile Include="render\LBulletLayer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\LEnemyLayer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\LPlayerLayer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="gameobj\player\LPlayer.cpp">
+      <Filter>gameobj\player</Filter>
+    </ClCompile>
+    <ClCompile Include="render\LHitboxLayer.cpp">
+      <Filter>render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

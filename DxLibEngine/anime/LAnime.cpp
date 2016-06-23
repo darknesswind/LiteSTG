@@ -35,7 +35,13 @@ LFixedAnime::LFixedAnime()
 bool LFixedAnime::changeState(uint state)
 {
 	if (state < m_states.size())
+	{
 		m_iterator = m_states[state].createIterator();
+		return true;
+	}
 	else
+	{
 		LLogger::Warning(L"Invalid state number!");
+		return false;
+	}
 }

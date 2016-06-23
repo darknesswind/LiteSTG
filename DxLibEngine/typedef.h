@@ -114,12 +114,11 @@ __interface IDestructible
 
 __interface IDrawable
 {
-	virtual void Draw(LPainter& painter) = 0;
+	virtual void draw(LPainter& painter) = 0;
 };
 
 __interface IDrawableObj : public IDrawable
 {
-	virtual uint GetSortKey() const = 0;
 	virtual const RenderArgument& GetRenderArgument() const = 0;
 };
 

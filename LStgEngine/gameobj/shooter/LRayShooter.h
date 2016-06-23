@@ -17,7 +17,7 @@ public:
 
 public:
 	virtual void Update();
-	virtual void Draw(LPainter& painter);
+	virtual void draw(LPainter& painter);
 
 public:
 	LRayShooter& setDirection(Degree deg)

@@ -16,15 +16,16 @@ public:
 		for each (LUITransferBase* pItem in m_animas)
 			delete pItem;
 	}
-	void Update()
+	void update()
 	{
 		for each (LUITransferBase* pItem in m_animas)
 			pItem->Update();
 	}
-	void AddChild(LUITransferBase* pChild)
+	void addChild(LUITransferBase* pChild)
 	{
 		m_animas.push_back(pChild);
 	}
+	size_t size() const { return m_animas.size(); }
 private:
 	std::vector<LUITransferBase*> m_animas;
 };

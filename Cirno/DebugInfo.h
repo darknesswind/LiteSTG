@@ -3,16 +3,16 @@
 #pragma once
 
 // 显示Debug信息的类
-class DebugInfo : public IComponent
+class DebugInfo
 {
 public:
 	DebugInfo(void)
 	{
 	}
-	virtual ~DebugInfo(void) {}
+	~DebugInfo(void) {}
 
-	virtual void Update();
-	virtual void Draw(LPainter& painter);
+	void Update();
+	void Draw(LPainter& painter);
 
 private:
 };

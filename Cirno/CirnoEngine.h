@@ -20,7 +20,6 @@ protected:
 	virtual bool Init() override;
 	virtual void OnAsyncLoading() override;
 	virtual void Update() override;
-	virtual void Draw() override;
 
 	void OnEnterState(uint state) override;
 	void OnExecState(uint state) override;

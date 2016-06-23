@@ -1,14 +1,17 @@
 #include "stdafx.h"
 #include "LWindow.h"
 #include "LScreen.h"
-#include "LPainter.h"
 #include "Input.h"
+#include "render/LBulletLayer.h"
+#include "render/LEnemyLayer.h"
+#include "render/LPlayerLayer.h"
+#include "render/LHitboxLayer.h"
+#include "render/LUILayer.h"
 
 #include "bullet/LBullets.h"
 #include "bullet/LBulletStyles.h"
 #include "player/LPlayers.h"
 #include "enemy/LEnemys.h"
-#include "Manager/ComManage.h"
 #include "ui/LUIObjBase.h"
 
 LStgEngine::LStgEngine(void)
@@ -32,7 +35,6 @@ bool LStgEngine::Init()
 	m_spBullets = std::make_unique<LBullets>();
 	m_spPlayers = std::make_unique<LPlayers>();
 	m_spEnemys = std::make_unique<LEnemys>();
-	m_spComManage = std::make_unique<ComManager>();
 
 	return bSucceed;
 }
@@ -50,32 +52,27 @@ void LStgEngine::OnAsyncLoading()
 
 	m_pathSet.load(L".\\resource\\PathSet.pb");
 	m_spBullets->styles()->LoadBulletStyles(L"resource\\bulletstyles.pb");
+
+	m_spRender->addLayer(tEnemyLayer, std::make_unique<LEnemyLayer>());
+	m_spRender->addLayer(tPlayerLayer, std::make_unique<LPlayerLayer>());
+	m_spRender->addLayer(tBulletLayer, std::make_unique<LBulletLayer>());
+	m_spRender->addLayer(tHitboxLayer, std::make_unique<LHitboxLayer>());
+	m_spRender->addLayer(tUILayer, std::make_unique<LUILayer>());
 }
 
 void LStgEngine::Update()
 {
-	m_spEnemys->Update();
-	m_spPlayers->Update();
-	m_spBullets->Update();
-	m_spComManage->Update();
+	m_spEnemys->update();
+	m_spPlayers->update();
+	m_spBullets->update();
 	m_spRootUI->Update();
-}
-
-void LStgEngine::Draw()
-{
-	m_spEnemys->CommitRender();
-	m_spBullets->CommitRender();
-	m_spPlayers->CommitRender();
-	m_spRootUI->CommitRender();
-	m_spComManage->Draw();
 }
 
 void LStgEngine::BeforeEnd()
 {
-	m_spEnemys->Clear();
-	m_spPlayers->Clear();
-	m_spBullets->Clear();
-	m_spComManage->clear();
+	m_spEnemys->clear();
+	m_spPlayers->clear();
+	m_spBullets->clear();
 
 	Base::BeforeEnd();
 }
@@ -85,7 +82,7 @@ LBulletStyles* LStgEngine::bulletStyles()
 	return engine()->bullets()->styles();
 }
 
-Player* LStgEngine::GetActivePlayer()
+LPlayer* LStgEngine::getActivePlayer()
 {
 	return m_spPlayers->GetActiveItem();
 }

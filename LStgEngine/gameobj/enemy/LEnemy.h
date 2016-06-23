@@ -12,9 +12,8 @@ public:
 	virtual ~LEnemy(void) override;
 
 public:	// IGameObject
-	virtual void	Update() override;
-	virtual void Draw(LPainter& painter) override;
-	virtual uint GetSortKey() const override;
+	virtual void Update() override;
+	virtual void draw(LPainter& painter) override;
 
 public:
 	LShooters* GetShooters() { return m_spShooters.get(); }

@@ -22,6 +22,7 @@ public:
 
 public:
 	static LString number(int val, int base = 10) { return LString().setNum(val, base); }
+	static LString number(float val, int prec = 6) { return LString().setNum(val, prec); }
 	static LString fromUtf8(const std::string& bytes);
 };
 

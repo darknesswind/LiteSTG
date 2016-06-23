@@ -2,7 +2,7 @@
 #include "LEngine.h"
 #include "LScreen.h"
 #include "Input.h"
-#include "painting/LRender.h"
+#include "render/LRender.h"
 #include "LAssets.h"
 #include "ui/LUIObjBase.h"
 #include <thread>
@@ -77,8 +77,6 @@ int LEngine::exec()
 
 		if (NeedUpdate())
 			Update();
-
-		Draw();
 
 		m_spRender->DoRender();
 		Screen.screenFlip();

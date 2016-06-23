@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "CurveLaser.h"
-#include "LPainter.h"
+#include "render/LPainter.h"
 #include "Input.h"
 
 void CurveLaser::Update()
@@ -42,7 +42,7 @@ void CurveLaser::Update()
 		m_grids.pop_back();
 }
 
-void CurveLaser::Draw( LPainter& painter )
+void CurveLaser::draw( LPainter& painter )
 {
 	if (m_grids.size() <= 1)
 		return;

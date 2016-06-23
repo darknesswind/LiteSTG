@@ -31,7 +31,7 @@ public:
 	}
 	virtual ~CurveLaser(){}
 	virtual void Update();
-	virtual void Draw(LPainter& painter);
+	virtual void draw(LPainter& painter);
 	virtual BulletType GetType() const { return BulletType::CurveLaser; }
 
 private:

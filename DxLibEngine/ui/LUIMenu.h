@@ -15,7 +15,7 @@ public:
 
 public:
 	void Update() override;
-	void Draw(LPainter& painter) override;
+	void draw(LPainter& painter) override;
 
 	virtual void OnOk() {}
 	virtual void OnCancel() {}

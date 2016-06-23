@@ -7,9 +7,6 @@
     <Filter Include="tools">
       <UniqueIdentifier>{3ce007f2-6a3c-4e1c-87d4-3b48798b762b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="painting">
-      <UniqueIdentifier>{52ea1974-956a-44c2-8e98-a1e8420d8b20}</UniqueIdentifier>
-    </Filter>
     <Filter Include="move">
       <UniqueIdentifier>{b6936c78-1d93-4243-ada5-285a60946426}</UniqueIdentifier>
     </Filter>
@@ -21,6 +18,9 @@
     </Filter>
     <Filter Include="anime">
       <UniqueIdentifier>{65b0e1de-f761-45af-8957-1c37680c390e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="render">
+      <UniqueIdentifier>{52ea1974-956a-44c2-8e98-a1e8420d8b20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -38,12 +38,6 @@
     </ClInclude>
     <ClInclude Include="tools\EnumHandle.hpp">
       <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="painting\LPainter.h">
-      <Filter>painting</Filter>
-    </ClInclude>
-    <ClInclude Include="painting\LRgb.h">
-      <Filter>painting</Filter>
     </ClInclude>
     <ClInclude Include="tools\Vector2.hpp">
       <Filter>tools</Filter>
@@ -68,12 +62,6 @@
     </ClInclude>
     <ClInclude Include="base\DxHandleManager.h">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="painting\DebugPainter.h">
-      <Filter>painting</Filter>
-    </ClInclude>
-    <ClInclude Include="painting\LRender.h">
-      <Filter>painting</Filter>
     </ClInclude>
     <ClInclude Include="base\LHandle.h">
       <Filter>base</Filter>
@@ -144,6 +132,27 @@
     <ClInclude Include="typedef.h" />
     <ClInclude Include="enumations.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="render\DebugPainter.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LPainter.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LRender.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LRgb.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LRenderLayer.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LUILayer.h">
+      <Filter>render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\LDebugLayer.h">
+      <Filter>render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="base\LEngine.cpp">
@@ -157,9 +166,6 @@
     </ClCompile>
     <ClCompile Include="base\LWindow.cpp">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="painting\LPainter.cpp">
-      <Filter>painting</Filter>
     </ClCompile>
     <ClCompile Include="base\LMath.cpp">
       <Filter>base</Filter>
@@ -175,12 +181,6 @@
     </ClCompile>
     <ClCompile Include="base\DxHandleManager.cpp">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="painting\DebugPainter.cpp">
-      <Filter>painting</Filter>
-    </ClCompile>
-    <ClCompile Include="painting\LRender.cpp">
-      <Filter>painting</Filter>
     </ClCompile>
     <ClCompile Include="base\LHandle.cpp">
       <Filter>base</Filter>
@@ -231,5 +231,23 @@
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="render\DebugPainter.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\LPainter.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\LRender.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\LRenderLayer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\LUILayer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\LDebugLayer.cpp">
+      <Filter>render</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

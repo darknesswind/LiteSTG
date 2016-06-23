@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "LEnemy.h"
 #include "shooter/LShooters.h"
-#include "LPainter.h"
 #include "shooter/LShooters.h"
 #include "move/LPathWalker.h"
 #include "LAssets.h"
@@ -34,19 +33,14 @@ void LEnemy::Update()
 	if (m_phyData.speed.y() > 0)
 		m_imgCount += 8;
 
-	m_spShooters->Update();
+	m_spShooters->update();
 }
 
-void LEnemy::Draw( LPainter& painter )
+void LEnemy::draw( LPainter& painter )
 {
 	painter.drawRotaGraphF(m_phyData.position, 1, Radian0, m_pGraphGroup->at(m_imgCount), true, m_bFace);
 #ifdef _DEBUG
 	LString sPos = LStrBuilder(L"%1, %2").arg(m_phyData.position.x()).arg(m_phyData.position.y()).apply();
 	painter.drawString(m_phyData.position, sPos.c_str(), LRgb::White);
 #endif
-}
-
-uint LEnemy::GetSortKey() const
-{
-	return m_pGraphGroup->at(m_imgCount);
 }

@@ -1,11 +1,9 @@
 ﻿#ifndef __DEBUG_PAINTER_H__
 #define __DEBUG_PAINTER_H__
 #pragma once
-#include <vector>
-#include <array>
 #include "tools/Vector2.hpp"
-#include "LRgb.h"
 #include "tools/LPoint.h"
+#include "LRgb.h"
 
 #define  DebugPat DebugPainter::instance()
 class DebugPainter

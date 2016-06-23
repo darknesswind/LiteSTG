@@ -81,7 +81,7 @@ void LUIMenu::Update()
 	}
 }
 
-void LUIMenu::Draw(LPainter& painter)
+void LUIMenu::draw(LPainter& painter)
 {
 	int x = pos().x();
 	int y = pos().y();

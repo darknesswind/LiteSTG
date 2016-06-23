@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "SegmentLaser.h"
-#include "LPainter.h"
+#include "render/LPainter.h"
 
 void SegmentLaser::Update()
 {
@@ -22,7 +22,7 @@ void SegmentLaser::Update()
 	}
 }
 
-void SegmentLaser::Draw( LPainter& painter )
+void SegmentLaser::draw( LPainter& painter )
 {
 	painter.drawExtRotaGraph(m_phyData.position, 0.5f, m_curScale, m_phyData.radian + Radian90, m_visual.hGraph, true);
 	DrawHitBox(painter);

@@ -1,10 +1,10 @@
 #include "stdafx.h"
-#include "Player.h"
+#include "LPlayer.h"
 #include "move/LWalker.h"
 #include "LHandle.h"
 #include "LPlayerModel.h"
 
-Player::Player(int x, int y)
+LPlayer::LPlayer(int x, int y)
 	: LCollideObject()
 {
 	m_phyData.position.reset(x, y);
@@ -13,20 +13,20 @@ Player::Player(int x, int y)
 	m_pModel = &LEmptyPlayerMocel::s_instance;
 }
 
-Player::~Player(void)
+LPlayer::~LPlayer(void)
 {
 }
 
-void Player::setModel(LPlayerModel* pModel)
+void LPlayer::setModel(LPlayerModel* pModel)
 {
 	if (pModel)
 		m_pModel = pModel;
 }
 
-void Player::Update()
+void LPlayer::Update()
 {
 }
 
-void Player::Draw( LPainter& painter )
+void LPlayer::draw( LPainter& painter )
 {
 }

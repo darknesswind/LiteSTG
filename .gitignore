@@ -6,6 +6,14 @@
 /TinyCC
 /LuaJIT
 Log.txt
+include/google
+cmake
+GeneratedFiles
+Cirno/resource
+protobuf/lib
+StgEditor/*.ini
+*.VC.db
+*.VC.opendb
 
 # User-specific files
 *.suo

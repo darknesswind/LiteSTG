@@ -43,7 +43,6 @@ protected:
 	virtual bool LoopCheck();
 	virtual bool NeedUpdate();
 	virtual void Update() = 0;
-	virtual void Draw() = 0;
 	virtual void BeforeEnd();
 
 	virtual void OnEnterState(uint state) = 0;

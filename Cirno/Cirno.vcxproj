@@ -75,7 +75,6 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)DxLib/bin;$(OutDir);../Qt/lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Qt5Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
@@ -94,7 +93,7 @@
       <FunctionLevelLinking>false</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);..\include;..\DxLibEngine\base;..\DxLibEngine\tools;..\DxLibEngine\painting;..\DxLibEngine\;..\LStgEngine\gameobj;..\LStgEngine\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);..\include;..\DxLibEngine\base;..\DxLibEngine\tools;..\DxLibEngine\;..\LStgEngine\gameobj;..\LStgEngine\</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -106,7 +105,6 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)DxLib/bin;$(OutDir);../Qt/lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Qt5Core.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <Profile>true</Profile>
     </Link>

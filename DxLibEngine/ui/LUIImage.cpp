@@ -8,20 +8,25 @@ LUIImage::LUIImage(LGraphHandle hGraph)
 	m_hGraph.getSize(&m_rect.rwidth(), &m_rect.rheight());
 }
 
-uint LUIImage::GetSortKey() const
-{
-	return m_hGraph;
-}
-
 void LUIImage::Update()
 {
 	LUIObjBase::Update();
-	m_anime.Update();
+	m_anime.update();
 }
 
-void LUIImage::Draw(LPainter& painter)
+void LUIImage::draw(LPainter& painter)
 {
-	painter.drawGraph(m_rect.pos(), m_hGraph, true);
+	if (m_anime.size() > 0)
+	{
+		painter.save();
+		painter.setPaintArgument(m_renderArg.paintArg);
+		painter.drawGraph(m_rect.pos(), m_hGraph, true);
+		painter.restore();
+	}
+	else
+	{
+		painter.drawGraph(m_rect.pos(), m_hGraph, true);
+	}
 }
 
 void LUIImage::setFlash(uint interval)
@@ -29,7 +34,7 @@ void LUIImage::setFlash(uint interval)
 	if (interval)
 	{
 		m_renderArg.paintArg.blendMode = DxBlendMode::Alpha;
-		m_anime.AddChild(new LUICosineTransfer<int>(&m_renderArg.paintArg.blendParam, interval, 0xFF));
+		m_anime.addChild(new LUICosineTransfer<int>(&m_renderArg.paintArg.blendParam, interval, 0xFF));
 	}
 	else
 	{

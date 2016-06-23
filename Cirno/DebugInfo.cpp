@@ -1,10 +1,10 @@
 ﻿#include "stdafx.h"
 #include "DebugInfo.h"
 #include "shooter/LShooter.h"
-#include "player/player.h"
+#include "player/LPlayer.h"
 #include "CirnoEngine.h"
 #include "bullet/LBullets.h"
-#include "LPainter.h"
+#include "render/LPainter.h"
 #include "Input.h"
 #include "Vector3.hpp"
 
@@ -14,7 +14,7 @@
 
 void DebugInfo::Draw( LPainter& painter )
 {
-	Player* pPlayer = LStgEngine::engine()->GetActivePlayer();
+	LPlayer* pPlayer = LStgEngine::engine()->getActivePlayer();
 	if (pPlayer)
 	{
 		painter.drawString(
@@ -24,7 +24,7 @@ void DebugInfo::Draw( LPainter& painter )
 	}
 	painter.drawString(
 		TH_X, TH_Y + TH_DY,
-		LStrBuilder(L"Bullet: %1").arg(LStgEngine::bullets()->GetCount()).apply().c_str(),
+		LStrBuilder(L"Bullet: %1").arg(LStgEngine::bullets()->size()).apply().c_str(),
 		LRgb::White);
 	painter.drawString(
 		0, 0,

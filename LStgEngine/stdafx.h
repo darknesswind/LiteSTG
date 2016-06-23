@@ -24,7 +24,7 @@
 #include "base/LHandle.h"
 #include "tools/LLogger.h"
 #include "tools/LString.h"
-#include "painting/LPainter.h"
+#include "render/LPainter.h"
 
 // LStgEngine
 #include "interdef.h"

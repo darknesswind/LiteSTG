@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "baseFrame.h"
-#include "LPainter.h"
+#include "render/LPainter.h"
 #include "LAssets.h"
 #include "ui/LUIImage.h"
 

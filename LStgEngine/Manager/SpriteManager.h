@@ -2,7 +2,7 @@
 #define _SPRITEMANAGE_H_
 #pragma once
 #include "LEngine.h"
-#include "LRender.h"
+#include "render/LRender.h"
 
 #define QuickImplGameObjAdd(Type)	\
 {									\
@@ -21,12 +21,12 @@ public:
 	SpriteManager(void) = default;
 	virtual ~SpriteManager(void)
 	{
-		Clear();
+		clear();
 	}
 
-	virtual void Update()
+	virtual void update()
 	{
-		UpdateChildren();
+		updateChildren();
 		m_thisList.remove_if([](T *pItem)
 		{
 			return !(pItem->IsValid());
@@ -39,7 +39,7 @@ public:
 		m_removeList.clear();
 	}
 
-	virtual void UpdateChildren()
+	virtual void updateChildren()
 	{
 		for each (T *pItem in m_thisList)
 		{
@@ -47,7 +47,7 @@ public:
 		}
 	}
 
-	void CommitRender()
+	void commitRender()
 	{
 		LRender* pRender = LEngine::render();
 		for each(T* pItem in m_thisList)
@@ -56,15 +56,20 @@ public:
 		}
 	}
 
-	void Remove(T* pItem)
+	void remove(T* pItem)
 	{
 		m_removeList.push_back(pItem);
 		pItem->SetValid(false);
 	}
-	int GetCount()
+
+	int size() 
 	{
 		return m_thisList.size();
 	}
+
+	auto begin() { return m_thisList.begin(); }
+	auto end() { return m_thisList.end(); }
+
 	void deleteChildOf(int parent)
 	{
 		m_thisList.remove_if([parent](T* pItem)
@@ -73,7 +78,7 @@ public:
 		});
 	}
 
-	void Clear()
+	void clear()
 	{
 		for each(T* pItem in m_thisList)
 		{

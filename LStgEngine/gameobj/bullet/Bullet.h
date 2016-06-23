@@ -19,8 +19,7 @@ public:
 
 public: // IGameObjBase
 	virtual void	Update() override;
-	virtual void	Draw(LPainter& painter) override;
-	virtual uint GetSortKey() const override;
+	virtual void	draw(LPainter& painter) override;
 
 public: // Bullet
 	virtual BulletType GetType() const { return BulletType::Generic; }

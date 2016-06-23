@@ -21,7 +21,7 @@ public:
 
 public:
 	virtual void Update();
-	virtual void Draw(LPainter&){}
+	virtual void draw(LPainter&){}
 
 public:
 	LShooter& setFireWays(int _ways)	// ÉèÖÃÉä»÷Â·Êı

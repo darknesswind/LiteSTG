@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "LRender.h"
-#include "DxGraphics.h"
+#include "LRenderLayer.h"
 
 LRender::LRender(void)
 {
@@ -9,11 +9,18 @@ LRender::LRender(void)
 
 LRender::~LRender()
 {
-
+	m_layers.clear();
 }
 
 void LRender::DoRender()
 {
+	for (auto iter = m_layers.begin(); iter != m_layers.end(); ++iter)
+	{
+		m_painter.save();
+		iter->second->draw(m_painter);
+		m_painter.restore();
+	}
+/*
 	for (RenderQueue::iterator iterChannel = m_renderQueue.begin();
 		iterChannel != m_renderQueue.end(); ++iterChannel)
 	{
@@ -32,10 +39,13 @@ void LRender::DoRender()
 
 	DebugPat.Draw();
 	m_renderQueue.clear();
+*/
 }
 
-void LRender::PushItem(IDrawableObj* pItem)
+LRenderLayer* LRender::addLayer(uint key, std::unique_ptr<LRenderLayer> layer)
 {
-	const RenderArgument& arg = pItem->GetRenderArgument();
-	m_renderQueue[arg].push_back(pItem);
+	LAssert(m_layers.find(key) == m_layers.end());
+	LRenderLayer* pLayer = layer.get();
+	m_layers[key].swap(layer);
+	return pLayer;
 }

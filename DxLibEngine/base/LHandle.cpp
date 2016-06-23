@@ -37,7 +37,7 @@ void LGraphHandle::getSize(LSize& size)
 	CheckRes(DxLib::GetGraphSize(m_handle, &size.rwidth(), &size.rheight()));
 }
 
-LGraphHandles&& LGraphHandle::split(int xSrc, int ySrc, int allNum, int xNum, int yNum, int width, int height)
+LGraphHandles LGraphHandle::split(int xSrc, int ySrc, int allNum, int xNum, int yNum, int width, int height)
 {
 	LGraphHandles result;
 
@@ -54,7 +54,7 @@ LGraphHandles&& LGraphHandle::split(int xSrc, int ySrc, int allNum, int xNum, in
 
 		result.push_back(hDivGraph);
 	}
-	return std::move(result);
+	return result;
 }
 
 LGraphHandle LGraphHandle::subGraph(int xSrc, int ySrc, int width, int height)

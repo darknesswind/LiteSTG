@@ -36,7 +36,7 @@ public:
 	uint size() const { return m_graphs.size(); }
 	LGraphHandle getGraph(uint idx) const { return m_graphs[idx]; }
 
-	Iterator&& createIterator() { return std::move(Iterator(this)); }
+	Iterator createIterator() { return Iterator(this); }
 
 protected:
 	uint m_loopPos	= 0;

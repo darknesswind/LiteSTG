@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "LPlayers.h"
-#include "player.h"
+#include "LPlayer.h"
 #include "LControlledPlayer.h"
 
 LPlayers::LPlayers()
@@ -9,16 +9,16 @@ LPlayers::LPlayers()
 
 }
 
-Player* LPlayers::Add(PlayerType type)
+LPlayer* LPlayers::Add(PlayerType type)
 {
-	Player* pPlayer = nullptr;
+	LPlayer* pPlayer = nullptr;
 	switch (type)
 	{
 	case PlayerType::Controlled:
 		pPlayer = new LControlledPlayer;
 		break;
 	default:
-		pPlayer = new Player;
+		pPlayer = new LPlayer;
 		break;
 	}
 

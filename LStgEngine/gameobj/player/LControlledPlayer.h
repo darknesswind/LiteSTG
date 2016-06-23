@@ -1,9 +1,9 @@
 #ifndef __LCONTROLLEDPLAYER_H__
 #define __LCONTROLLEDPLAYER_H__
 #pragma once
-#include "player.h"
+#include "LPlayer.h"
 
-class LControlledPlayer : public Player
+class LControlledPlayer : public LPlayer
 {
 public:
 	explicit LControlledPlayer(int x = 220, int y = 400);
@@ -11,8 +11,7 @@ public:
 	
 public:	// IGameobj
 	virtual void	Update() override;
-	virtual void	Draw(LPainter& painter) override;
-	virtual uint GetSortKey() const override;
+	virtual void	draw(LPainter& painter) override;
 
 public:	// Player
 	virtual PlayerType GetType() const override { return PlayerType::Controlled; }

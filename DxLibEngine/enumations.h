@@ -68,6 +68,21 @@ enum RenderDepthBase
 	DepthDebug		= 0xF0000000,
 };
 
+enum RenderLayerType : unsigned int
+{
+	tUILayer	= 0xFE000000,
+	tDebugLayer	= 0xFF000000,
+};
+
+enum StgLayerType : unsigned int
+{
+	tBackgroundLayer	= 0xE4000000,
+	tEnemyLayer			= 0xE5000000,
+	tPlayerLayer		= 0xE6000000,
+	tBulletLayer		= 0xE7000000,
+	tHitboxLayer		= 0xE8000000,
+};
+
 namespace BaseKey
 {
 	enum BaseKey

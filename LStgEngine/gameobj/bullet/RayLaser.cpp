@@ -1,7 +1,6 @@
 ﻿#include "stdafx.h"
 #include "RayLaser.h"
-#include "Graph.h"
-#include "LPainter.h"
+#include "render/LPainter.h"
 #include "LHandle.h"
 
 RayLaser::RayLaser(IGameObject* pParent)
@@ -46,7 +45,7 @@ void RayLaser::Update()
 	}
 }
 
-void RayLaser::Draw( LPainter& painter )
+void RayLaser::draw( LPainter& painter )
 {
 	int bulletWidth = 0;
 	m_visual.hGraph.getSize(&bulletWidth, nullptr);

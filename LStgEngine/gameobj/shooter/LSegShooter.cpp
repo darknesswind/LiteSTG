@@ -4,7 +4,7 @@
 #include "bullet/LBullets.h"
 #include "Bullet/SegmentLaser.h"
 
-#include "player/player.h"
+#include "player/LPlayer.h"
 #include "bullet/LBulletStyles.h"
 
 LSegShooter::LSegShooter(IGameObject* pParent)
@@ -20,7 +20,7 @@ void LSegShooter::Update()
 	{		
 		m_counter = 0;
 		if (m_bFollowPlayer)
-			m_fireDegree = position().degreeBetween(LStgEngine::engine()->GetActivePlayer()->position());
+			m_fireDegree = position().degreeBetween(LStgEngine::engine()->getActivePlayer()->position());
 		m_fireDegree += m_angleSpeed;
 		m_angleSpeed += m_angleAccel;
 

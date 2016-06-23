@@ -13,7 +13,7 @@ public:
 	}
 	virtual ~SegmentLaser() override {}
 	virtual void Update() override;
-	virtual void Draw(LPainter& painter) override;
+	virtual void draw(LPainter& painter) override;
 	virtual BulletType GetType() const override { return BulletType::SegmentLaser; }
 
 	SegmentLaser& setLength(float length);

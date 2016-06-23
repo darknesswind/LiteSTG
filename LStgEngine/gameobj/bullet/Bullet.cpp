@@ -1,7 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Bullet.h"
-#include "player/player.h"
-#include "LPainter.h"
+#include "player/LPlayer.h"
 #include "move/LPhysicWalker.h"
 #include "Manager/MemoryManager.h"
 #include "LBulletStyles.h"
@@ -30,7 +29,7 @@ void Bullet::Update()
 	m_spWalker->nextStep(m_phyData);
 
 #ifdef _DEBUG
-	if (CollideWith(*LStgEngine::engine()->GetActivePlayer()))
+	if (CollideWith(*LStgEngine::engine()->getActivePlayer()))
 	{
 		// 		PlaySoundMem(Resource::SE(NS_Resource::SE_Miss), DX_PLAYTYPE_BACK);
 		// 		Sleep(100);
@@ -38,7 +37,7 @@ void Bullet::Update()
 #endif // _DEBUG
 }
 
-void Bullet::Draw( LPainter& painter )
+void Bullet::draw( LPainter& painter )
 {
 	painter.drawRotaGraphF(m_phyData.position, 1, m_phyData.radian + Radian90, m_visual.hGraph, true);
 }
@@ -101,9 +100,4 @@ void Bullet::setPosition(const Vector2& pos)
 {
 	m_phyData.position = pos;
 	updateRadian();
-}
-
-uint Bullet::GetSortKey() const
-{
-	return m_visual.hGraph;
 }
