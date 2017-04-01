@@ -2,11 +2,24 @@
 #include "LString.h"
 #include <codecvt>
 
-LString& LString::assign(const char* pcstr)
+std::locale LString::s_defaultLocale;
+
+LString& LString::assign(CStrPtr pcstr, size_t size, const std::locale& locale)
 {
 	clear();
-	while ('\0' != *pcstr)
-		push_back(*pcstr);
+
+	std::vector<wchar_t> buf(size);
+	std::mbstate_t state = { 0 };
+	const char* from_next = nullptr;
+	wchar_t* to_next = nullptr;
+
+	const converter_type& converter = std::use_facet<converter_type>(locale);
+	const converter_type::result result = converter.in(
+		state, pcstr, pcstr + size, from_next,
+		buf.data(), buf.data() + buf.size(), to_next);
+
+	assert(result == converter_type::ok || result == converter_type::noconv);
+	Base::assign(buf.data(), buf.size());
 	return (*this);
 }
 
@@ -16,6 +29,16 @@ LString& LString::setNum(int val, int base /*= 10*/)
 	WCHAR buff[buffsize] = { 0 };
 	errno_t err = _itow_s(val, buff, base);
 	LAssert(0 == err);
+	Base::assign(buff);
+	return (*this);
+}
+
+LString& LString::setNum(unsigned int val, int base /*= 10*/)
+{
+	const size_t buffsize = 33;
+	wchar_t buff[buffsize] = { 0 };
+	errno_t err = _ultow_s(val, buff, base);
+	assert(0 == err);
 	Base::assign(buff);
 	return (*this);
 }
@@ -71,7 +94,12 @@ LString LString::fromUtf8(const std::string& bytes)
 }
 
 //////////////////////////////////////////////////////////////////////////
-LStrBuilder::LStrBuilder(LPCWSTR pPattern)
+LStrBuilder::LStrBuilder(CWStrPtr pPattern)
+{
+	resetPattern(pPattern);
+}
+
+LStrBuilder::LStrBuilder(CStrPtr pPattern)
 {
 	resetPattern(pPattern);
 }
@@ -81,9 +109,20 @@ LStrBuilder::~LStrBuilder()
 
 }
 
-void LStrBuilder::resetPattern(LPCWSTR pPattern)
+void LStrBuilder::resetPattern(CWStrPtr pPattern)
 {
 	m_pattern = pPattern;
+	reset();
+}
+
+void LStrBuilder::resetPattern(CStrPtr pPattern)
+{
+	m_pattern = pPattern;
+	reset();
+}
+
+void LStrBuilder::reset()
+{
 	m_argCount = 0;
 	m_chpxes.clear();
 	m_args.clear();
@@ -92,6 +131,9 @@ void LStrBuilder::resetPattern(LPCWSTR pPattern)
 
 LString LStrBuilder::apply() const
 {
+	if (m_chpxes.empty() || m_args.empty())
+		return m_pattern;
+
 	if (m_chpxes.empty() || m_args.empty())
 		return m_pattern;
 
@@ -186,6 +228,17 @@ LStrBuilder& LStrBuilder::arg(LPCWSTR val)
 LStrBuilder& LStrBuilder::arg(int val)
 {
 	m_args.push_back(LString().setNum(val));
+	return (*this);
+}
+
+LStrBuilder& LStrBuilder::arg(int val, size_t fieldWidth, int base, WCHAR fillChar)
+{
+	LString str = LString::number(val, base);
+	if (str.size() < fieldWidth)
+	{
+		m_args.emplace_back(LString(fieldWidth, fillChar));
+		memcpy(&m_args.back()[fieldWidth - str.size()], str.c_str(), str.size());
+	}
 	return (*this);
 }
 
