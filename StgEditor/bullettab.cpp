@@ -1,15 +1,63 @@
 #include "bullettab.h"
 #include <QToolTip>
 
-enum
+enum ColIndex
 {
 	idxName,
 	idxType,
 	idxCollide,
 };
 
+class BulletItem : public QTableWidgetItem
+	, INameChangedNotify
+{
+public:
+	BulletItem(EditorData* pData, uint id, ColIndex idx)
+		: m_pData(pData), m_id(id), m_col(idx)
+	{
+		QTableWidgetItem::setData(Qt::DisplayRole, data(Qt::DisplayRole).toString());
+		m_pData->bulletStyles().nameChangedNotify().registerNotify(this);
+	}
+	virtual ~BulletItem() override
+	{
+		m_pData->bulletStyles().nameChangedNotify().unregisterNotify(this);
+	}
+	virtual QVariant data(int role) const override
+	{
+		if (role != Qt::DisplayRole)
+			return QTableWidgetItem::data(role);
+
+		return m_pData->bulletStyles().nameOfId(m_id);
+	}
+	virtual void setData(int role, const QVariant &value) override
+	{
+		if (role != Qt::DisplayRole && m_col == idxName)
+		{
+			m_pData->bulletStyles().rename(m_id, value.toString());
+			return;
+		}
+		return QTableWidgetItem::setData(role, value);
+	}
+	virtual void onNameChanged(uint id, IContainer*) override
+	{
+		if (id == m_id)
+		{
+			QString texture = m_pData->bulletStyles().nameOfId(id);
+			QTableWidgetItem::setData(Qt::DisplayRole, texture);
+		}
+	}
+
+	uint id() const { return m_id; }
+
+private:
+	EditorData* m_pData;
+	uint m_id;
+	ColIndex m_col;
+};
+
 BulletTab::BulletTab(QWidget *parent)
 	: TabBase(parent)
+	, m_cache("")
 	, m_pEditorData(nullptr)
 {
 	ui.setupUi(this);
@@ -38,10 +86,10 @@ void BulletTab::enterTab()
 
 bool BulletTab::commitCacheTo(int row)
 {
-	bool bSucceed = m_pEditorData->commitBulletStyle(row, m_cache);
+	bool bSucceed = m_pEditorData->bulletStyles().updateData(idByRow(row), m_cache);
 	if (!bSucceed)
 	{
-		m_cache = m_pEditorData->bulletStyles()[row];
+		m_cache = m_pEditorData->bulletStyles()[idByRow(row)];
 		refreshCtrlData();
 	}
 	return bSucceed;
@@ -52,6 +100,12 @@ int BulletTab::currentIdx()
 	return ui.tableWidget->currentRow();
 }
 
+uint BulletTab::idByRow(int row)
+{
+	BulletItem* pItem = static_cast<BulletItem*>(ui.tableWidget->item(row, idxName));
+	return pItem->id();
+}
+
 void BulletTab::init()
 {
 	m_pEditorData = EditorData::instance();
@@ -59,11 +113,12 @@ void BulletTab::init()
 	initContext();
 
 	connect(ui.tableWidget, &QTableWidget::currentItemChanged, this, &BulletTab::onSelectionChanged);
+	connect(ui.tableWidget, &QTableWidget::doubleClicked, this, &BulletTab::queryEdit);
+
 	connect(ui.btnAdd, &QPushButton::clicked, this, &BulletTab::onAdd);
 	connect(ui.btnCopy, &QPushButton::clicked, this, &BulletTab::onCopy);
 	connect(ui.btnRemove, &QPushButton::clicked, this, &BulletTab::onRemove);
 
-	connect(ui.edName, &QLineEdit::textChanged, this, &BulletTab::onNameChanged);
 	connect(ui.cbType, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged, this, &BulletTab::onTypeChanged);
 
 	connect(ui.cbCollide, (void (QComboBox::*)(int))&QComboBox::currentIndexChanged, this, &BulletTab::onCollideChanged);
@@ -78,12 +133,14 @@ void BulletTab::init()
 void BulletTab::initContext()
 {
 	BulletStyles& infos = m_pEditorData->bulletStyles();
-	for (size_t i = 0; i < infos.size(); ++i)
+	for (const BulletStyle& info : infos)
 	{
-		addRow(infos[i]);
+		addRow(info);
 	}
 	refreshCache();
 	refreshCtrlData();
+
+	ui.cbSubGraph->registerNotify(&m_pEditorData->bulletStyles());
 }
 
 void BulletTab::updateSubGraphName()
@@ -104,10 +161,7 @@ void BulletTab::updateSubGraphName()
 void BulletTab::updatePreview()
 {
 	ui.preview->clear();
-	if (m_cache.subGraph.isEmpty())
-		return;
-
-	const SubGraphData* pDat = m_pEditorData->subgraphies().tryGet(m_cache.subGraph);
+	const SubGraphData* pDat = m_pEditorData->subgraphies().tryGet(m_cache.iSubGraph);
 	if (!pDat)
 		return;
 
@@ -155,22 +209,24 @@ void BulletTab::updatePreview()
 void BulletTab::refreshCtrlData()
 {
 	QObject* objs[] = {
-		ui.edName, ui.cbType, ui.cbCollide, ui.sbCenterX,
+		ui.cbType, ui.cbCollide, ui.sbCenterX,
 		ui.sbCenterY, ui.sbRadianX, ui.sbRadianY, ui.cbSubGraph
 	};
-	for each(auto pObj in objs)
+	for (QObject* pObj : objs)
 		pObj->blockSignals(true);
 
-	ui.edName->setText(m_cache.name);
 	ui.cbType->setCurrentIndex(m_cache.type);
 	ui.cbCollide->setCurrentIndex(m_cache.collide);
 	ui.sbCenterX->setValue(m_cache.centerX);
 	ui.sbCenterY->setValue(m_cache.centerY);
 	ui.sbRadianX->setValue(m_cache.radianX);
 	ui.sbRadianY->setValue(m_cache.radianY);
-	ui.cbSubGraph->setCurrentText(m_cache.subGraph);
 
-	for each(auto pObj in objs)
+	QString subGraph = m_pEditorData->subgraphies().nameOfId(m_cache.iSubGraph);
+	ui.cbSubGraph->setCurrentIndex(ui.cbSubGraph->findText(subGraph));
+	ui.cbSubGraph->setEditText(subGraph);
+
+	for (QObject* pObj : objs)
 		pObj->blockSignals(false);
 
 	ui.preview->resetZoom();
@@ -180,19 +236,19 @@ void BulletTab::refreshCtrlData()
 
 void BulletTab::refreshCache()
 {
-	BulletStyle* pData = getSelectedData();
+	const BulletStyle* pData = getSelectedData();
 	if (!pData) return;
 
 	m_cache = *pData;
 }
 
-BulletStyle* BulletTab::getSelectedData()
+const BulletStyle* BulletTab::getSelectedData()
 {
-	int row = currentIdx();
-	if (row < 0)
+	BulletItem* pItem = static_cast<BulletItem*>(getSelectedItem(idxName));
+	if (!pItem)
 		return nullptr;
 	else
-		return &m_pEditorData->bulletStyles()[row];
+		return m_pEditorData->bulletStyles().tryGet(pItem->id());
 }
 
 QTableWidgetItem* BulletTab::getSelectedItem(int col)
@@ -204,11 +260,11 @@ QTableWidgetItem* BulletTab::getSelectedItem(int col)
 	return ui.tableWidget->item(row, col);
 }
 
-void BulletTab::addRow(BulletStyle& data)
+void BulletTab::addRow(const BulletStyle& data)
 {
 	int row = ui.tableWidget->rowCount();
 	ui.tableWidget->insertRow(row);
-	ui.tableWidget->setItem(row, idxName, new QTableWidgetItem(data.name));
+	ui.tableWidget->setItem(row, idxName, new BulletItem(m_pEditorData, data.id(), idxName));
 	ui.tableWidget->setItem(row, idxType, new QTableWidgetItem(EditorData::enum2String(data.type)));
 	ui.tableWidget->setItem(row, idxCollide, new QTableWidgetItem(EditorData::enum2String(data.collide)));
 	ui.tableWidget->selectRow(row);
@@ -237,10 +293,8 @@ void BulletTab::onAdd()
 	if (!commitCache())
 		return;
 
-	m_pEditorData->bulletStyles().emplace_back(BulletStyle());
-	BulletStyle& dat = m_pEditorData->bulletStyles().back();
-	dat.name = QString::number(rand(), 16);
-	addRow(dat);
+	m_pEditorData->bulletStyles().append(BulletStyle(QString::number(rand(), 16)));
+	addRow(m_pEditorData->bulletStyles().back());
 }
 
 void BulletTab::onCopy()
@@ -248,12 +302,11 @@ void BulletTab::onCopy()
 	if (!commitCache())
 		return;
 
-	BulletStyle* pSel = getSelectedData();
+	const BulletStyle* pSel = getSelectedData();
 	if (!pSel) return;
 
-	m_pEditorData->bulletStyles().push_back(*pSel);
-	BulletStyle& dat = m_pEditorData->bulletStyles().back();
-	dat.name += QString::number(rand(), 16);
+	m_pEditorData->bulletStyles().append(*pSel);
+	const BulletStyle& dat = m_pEditorData->bulletStyles().back();
 	addRow(dat);
 }
 
@@ -263,25 +316,8 @@ void BulletTab::onRemove()
 	if (row < 0)
 		return;
 
+	m_pEditorData->bulletStyles().erase(idByRow(row));
 	ui.tableWidget->removeRow(row);
-	m_pEditorData->removeBulletStyle(row);
-}
-
-void BulletTab::onNameChanged(const QString& newName)
-{
-	QTableWidgetItem* pItem = getSelectedItem(idxName);
-	if (!pItem)
-		return;
-
-	if (!m_pEditorData->canChangeBulletStyleName(currentIdx(), newName))
-	{
-		QToolTip::showText(ui.edName->mapToGlobal(QPoint(0, 0)), QString("\"%1\" already exist").arg(newName), ui.edName);
-	}
-	else
-	{
-		m_cache.name = newName;
-		pItem->setText(newName);
-	}
 }
 
 void BulletTab::onTypeChanged(int type)
@@ -341,6 +377,13 @@ void BulletTab::onCollideRYChanged(double val)
 
 void BulletTab::onSubGraphChanged(const QString& txt)
 {
-	m_cache.subGraph = txt;
+	int row = ui.cbSubGraph->findText(txt);
+	m_cache.iSubGraph = ui.cbSubGraph->itemData(row).toUInt();
 	updatePreview();
+}
+
+void BulletTab::queryEdit(const QModelIndex& idx)
+{
+	if (idx.column() == idxName)
+		ui.tableWidget->edit(idx);
 }

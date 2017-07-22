@@ -28,16 +28,17 @@ protected:
 	void refreshCache();
 	bool commitCacheTo(int row);
 	int currentIdx();
+	uint idByRow(int row);
 
-	BulletStyle* getSelectedData();
+	const BulletStyle* getSelectedData();
 	QTableWidgetItem* getSelectedItem(int col);
-	void addRow(BulletStyle& data);
+	void addRow(const BulletStyle& data);
 
+protected slots:
 	void onSelectionChanged(QTableWidgetItem* cur, QTableWidgetItem* prev);
 	void onAdd();
 	void onCopy();
 	void onRemove();
-	void onNameChanged(const QString& newName);
 	void onTypeChanged(int type);
 	void onCollideChanged(int type);
 	void onCollideXChanged(double val);
@@ -45,6 +46,7 @@ protected:
 	void onCollideRXChanged(double val);
 	void onCollideRYChanged(double val);
 	void onSubGraphChanged(const QString& subGraph);
+	void queryEdit(const QModelIndex& idx);
 
 private:
 	Ui::BulletTab ui;

@@ -71,51 +71,6 @@ void EditorData::removeTexture(const QString& name)
 	m_textures.erase(name);
 }
 
-void EditorData::removeSubGraph(uint id)
-{
-	QString name = m_subGraphes[id].name();
-	m_subGraphes.erase(name);
-	for (auto iter = m_bulletStyles.begin(); iter != m_bulletStyles.end(); ++iter)
-	{
-		if (iter->subGraph == name)
-			iter->subGraph.clear();
-	}
-}
-
-void EditorData::removeBulletStyle(int idx)
-{
-	QString name = m_bulletStyles[idx].name;
-	m_bulletStyles.erase(m_bulletStyles.begin() + idx);
-}
-
-bool EditorData::commitBulletStyle(int idx, const BulletStyle& style)
-{
-	if (!canChangeBulletStyleName(idx, style.name))
-	{
-		QMessageBox::warning(nullptr, "conflit name", QString("\"%1\" already exist").arg(style.name));
-		return false;
-	}
-
-	BulletStyle& dat = m_bulletStyles[idx];
-	if (dat.name != style.name)
-	{
-		// update references;
-	}
-
-	dat = style;
-	return true;
-}
-
-bool EditorData::canChangeBulletStyleName(int idx, const QString& newName)
-{
-	for (uint i = 0; i < m_bulletStyles.size(); ++i)
-	{
-		if (i != idx && m_bulletStyles[i].name == newName)
-			return false;
-	}
-	return true;
-}
-
 QString EditorData::enum2String(BulletStyle::BulletType type)
 {
 #define GetEnumString(name) case BulletStyle::t##name: return #name
@@ -152,6 +107,7 @@ void EditorData::load()
 	loadBulletStyles();
 
 	m_textures.eraseNotify().registerNotify(&m_subGraphes);
+	m_subGraphes.eraseNotify().registerNotify(&m_bulletStyles);
 }
 
 void EditorData::save()
@@ -264,13 +220,13 @@ void EditorData::loadBulletStyles()
 		auto& map = buff.bulletStyles()->map();
 		for (auto iter = map.begin(); iter != map.end(); ++iter)
 		{
-			m_bulletStyles.emplace_back(BulletStyle());
-			BulletStyle& dat = m_bulletStyles.back();
+			BulletStyle dat(QString::fromUtf8(iter->first.c_str()));
+
 			auto& style = iter->second;
 
-			dat.name = QString::fromUtf8(iter->first.c_str());
 			dat.type = (BulletStyle::BulletType)style.type();
-			dat.subGraph = QString::fromUtf8(style.graphgroup().c_str());
+			QString subGraphName = QString::fromUtf8(style.graphgroup().c_str());
+			dat.iSubGraph = m_subGraphes.idOfName(subGraphName);
 			
 			auto& collide = style.collide();
 			dat.collide = (BulletStyle::CollideType)collide.type();
@@ -278,6 +234,8 @@ void EditorData::loadBulletStyles()
 			dat.centerY = collide.centery();
 			dat.radianX = collide.radianx();
 			dat.radianY = collide.radiany();
+
+			m_bulletStyles.append(dat);
 		}
 	}
 }
@@ -286,18 +244,20 @@ void EditorData::saveBulletStyles()
 {
 	BulletSyltesBuf buff;
 	auto& map = *buff.bulletStyles()->mutable_map();
-	for (auto iter = m_bulletStyles.begin(); iter != m_bulletStyles.end(); ++iter)
+	for (const BulletStyle& style : m_bulletStyles)
 	{
-		auto& bullet = map[iter->name.toUtf8().toStdString()];
-		bullet.set_type((BulletSyltesBuf::Type)iter->type);
-		bullet.set_graphgroup(iter->subGraph.toUtf8().toStdString());
+		auto& bullet = map[style.name().toUtf8().toStdString()];
+		bullet.set_type((BulletSyltesBuf::Type)style.type);
+
+		QString subGraphName = m_subGraphes.nameOfId(style.iSubGraph);
+		bullet.set_graphgroup(subGraphName.toUtf8().toStdString());
 
 		auto& collide = *bullet.mutable_collide();
-		collide.set_type((proto::Collide_CollideType)iter->collide);
-		collide.set_centerx(iter->centerX);
-		collide.set_centery(iter->centerY);
-		collide.set_radianx(iter->radianX);
-		collide.set_radianx(iter->radianY);
+		collide.set_type((proto::Collide_CollideType)style.collide);
+		collide.set_centerx(style.centerX);
+		collide.set_centery(style.centerY);
+		collide.set_radianx(style.radianX);
+		collide.set_radianx(style.radianY);
 	}
 
 	QString path(m_basePath + "/bulletstyles.pb");

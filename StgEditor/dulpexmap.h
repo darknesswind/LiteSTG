@@ -1,11 +1,11 @@
 #pragma once
+#include <QString>
+#include <QMap>
+#include <vector>
 #include <unordered_set>
 #include <cassert>
 
-struct IContainer
-{
-	virtual QString getName(uint id) = 0;
-};
+struct IContainer;
 struct IEraseNotify
 {
 	virtual void onErase(uint id, IContainer* pContainer) = 0;
@@ -44,6 +44,14 @@ private:
 typedef NotifyHelper<IEraseNotify> EraseNotifyHelper;
 typedef NotifyHelper<INameChangedNotify> NameChangedNotifyHelper;
 typedef NotifyHelper<IItemAddedNotify> ItemAddedNotifyHelper;
+struct IContainer
+{
+	virtual QString getName(uint id) = 0;
+
+	virtual EraseNotifyHelper& eraseNotify() = 0;
+	virtual NameChangedNotifyHelper& nameChangedNotify() = 0;
+	virtual ItemAddedNotifyHelper& itemAddedNotify() = 0;
+};
 
 template <typename Entry>
 class DulpexMap : public IContainer, public IEraseNotify
@@ -110,9 +118,9 @@ public:
 	const Entry& back() const { return m_entryMap.rbegin()->second; }
 
 	//////////////////////////////////////////////////////////////////////////
-	auto& eraseNotify() { return m_eraseNotify; }
-	auto& nameChangedNotify() { return m_nameChangedNotify; }
-	auto& itemAddedNotify() { return m_itemAddedNotify; }
+	EraseNotifyHelper& eraseNotify() override final { return m_eraseNotify; }
+	NameChangedNotifyHelper& nameChangedNotify() override final { return m_nameChangedNotify; }
+	ItemAddedNotifyHelper& itemAddedNotify() override final { return m_itemAddedNotify; }
 
 private:
 	uint allocID() { return ++m_maxId; } // ´Ó 1 ¿ªÊ¼
@@ -207,7 +215,7 @@ bool DulpexMap<Entry>::erase(uint id)
 	if (iter == m_entryMap.end())
 		return false;
 
-	m_nameMap.erase(m_nameMap.find(iter.value().name()));
+	m_nameMap.erase(m_nameMap.find(iter->second.name()));
 	m_entryMap.erase(iter);
 
 	m_eraseNotify.notify(id);
@@ -262,10 +270,27 @@ bool DulpexMap<Entry>::rename(uint id, const QString& name)
 template <typename Entry>
 bool DulpexMap<Entry>::resolveName(QString& name)
 {
-	if (!m_nameMap.contains(name))
+	if (!m_nameMap.contains(name) || name.isEmpty())
 		return true;
 
+	auto iter = name.rbegin();
+	for (; iter != name.rend(); ++iter)
+	{
+		QChar ch = *iter;
+		if (ch < '0' || ch > '9')
+			break;
+	}
 	uint i = 0;
+	if (iter != name.rend() && name.rend() - iter > 1)
+	{
+		QChar ch = *iter;
+		if (ch == '_')
+		{
+			i = name.rightRef(iter - name.rbegin()).toUInt() + 1;
+			name = name.left(name.rend() - iter - 1);
+		}
+	}
+	name.push_back('_');
 	const uint max = 100000;
 	while (i < max && m_nameMap.contains(name + QString::number(i)))
 		++i;

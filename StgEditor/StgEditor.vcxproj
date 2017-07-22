@@ -489,6 +489,7 @@ endlocal
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dataobj.h" />
     <ClInclude Include="DulpexCombo.h" />
     <ClInclude Include="dulpexmap.h" />
   </ItemGroup>

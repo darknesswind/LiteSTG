@@ -191,5 +191,8 @@
     <ClInclude Include="DulpexCombo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dataobj.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

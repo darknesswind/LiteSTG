@@ -182,8 +182,8 @@ void SubGraphTab::onRemove()
 	if (row < 0)
 		return;
 
+	m_pEditorData->subgraphies().erase(idByRow(row));
 	ui.tableWidget->removeRow(row);
-	m_pEditorData->removeSubGraph(idByRow(row));
 }
 
 void SubGraphTab::onTextureChanged(const QString& texture)
@@ -334,7 +334,8 @@ void SubGraphTab::updateTextureName()
 	{
 		ui.cbTexture->addItem(texture.name(), texture.id());
 	}
-	ui.cbTexture->registerNameChanged(map.nameChangedNotify());
+	
+	ui.cbTexture->registerNotify(&map);
 
 	auto pSel = getSelectedData();
 	if (pSel)
