@@ -18,7 +18,6 @@ public:
 		: Base(QString::fromUtf8(name.c_str()))
 		, path(QString::fromUtf8(_path.c_str()))
 	{	}
-	
 public:
 	QString path;
 };
@@ -27,25 +26,31 @@ typedef DulpexMap<Texture> TextureMap;
 struct SubGraphData : public DulpexMapItem<SubGraphData>
 {
 	typedef DulpexMapItem<SubGraphData> Base;
-	enum { ParamCount = 7 };
 public:
+	enum { ParamCount = 7 };
 	SubGraphData(const QString& name)
 		: Base(name)
 	{	}
-
-	uint iTexture{ 0 };
+	bool updateData(const SubGraphData& other)
+	{
+		iTexture = other.iTexture;
+		memcpy(raw, other.raw, sizeof(raw));
+		return true;
+	}
+public:
+	uint iTexture;
 	union
 	{
 		struct
 		{
-			int srcX, srcY;
-			int allNum;
-			int numX, numY;
-			int sizeX, sizeY;
+			uint srcX, srcY;
+			uint allNum;
+			uint numX, numY;
+			uint sizeX, sizeY;
 		};
 		int raw[ParamCount];
-	} param{ 0 };
-	static_assert(sizeof(decltype(param)) == ParamCount * sizeof(int), "ParamCount may be error");
+	};
+	static_assert(sizeof(decltype(raw)) == sizeof(uint) * ParamCount, "ParamCount may be error");
 };
 template <>
 void DulpexMap<SubGraphData>::onErase(uint id, IContainer*)
@@ -108,16 +113,12 @@ public:
 	QPixmap getTextureByPath(QString source);
 	QPixmap getTextureByName(QString name);
 	QPixmap getTexture(const SubGraphData* pDat);
-	const SubGraphData* getSubGraphByName(QString name);
 
 public:
 	void removeTexture(const QString& name);
 	void removeSubGraph(uint id);
 	void removeBulletStyle(int idx);
-	QString changeTextureName(const QString& oldName, const QString& newName);
-	bool commitSubGraph(uint id, const SubGraphData& newName);
 	bool commitBulletStyle(int idx, const BulletStyle& style);
-	bool canChangeSubGraphName(int idx, const QString& newName);
 	bool canChangeBulletStyleName(int idx, const QString& newName);
 
 protected:

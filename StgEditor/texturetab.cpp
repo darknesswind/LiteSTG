@@ -42,13 +42,10 @@ public:
 	}
 	virtual void setData(int role, const QVariant &value) override
 	{
-		if (role != Qt::DisplayRole)
+		if (role != Qt::DisplayRole && m_col == idxName)
 		{
-			if (m_col == idxName)
-			{
-				m_pData->textureMap().rename(m_id, value.toString());
-				return;
-			}
+			m_pData->textureMap().rename(m_id, value.toString());
+			return;
 		}
 		return QTableWidgetItem::setData(role, value);
 	}

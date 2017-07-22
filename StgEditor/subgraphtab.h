@@ -20,15 +20,16 @@ public:
 	bool commitCache();
 	void enterTab();
 
-protected:
+protected slots:
 	void onAdd();
 	void onCopy();
 	void onRemove();
-	void onNameChanged(const QString& name);
 	void onTextureChanged(const QString& texture);
 	void onInfoChanged();
 	void onSelectionChanged(QTableWidgetItem* cur, QTableWidgetItem* prev);
+	void queryEdit(const QModelIndex& idx);
 
+protected:
 	void init();
 	void initContext();
 	void updateTextureName();

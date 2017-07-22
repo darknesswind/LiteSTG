@@ -13,11 +13,11 @@ class SubGraphItem : public QTableWidgetItem
 	, INameChangedNotify
 {
 public:
-	SubGraphItem(EditorData* pData, const SubGraphData* pInfo, ColIndex idx)
-		: m_pData(pData), m_pInfo(pInfo), m_idx(idx)
+	SubGraphItem(EditorData* pData, const SubGraphData* pInfo, ColIndex col)
+		: m_pData(pData), m_pInfo(pInfo), m_col(col)
 	{
 		QTableWidgetItem::setData(Qt::DisplayRole, data(Qt::DisplayRole).toString());
-		switch (m_idx)
+		switch (m_col)
 		{
 		case idxName:
 			m_pData->subgraphies().nameChangedNotify().registerNotify(this);
@@ -29,7 +29,7 @@ public:
 	}
 	virtual ~SubGraphItem() override
 	{
-		switch (m_idx)
+		switch (m_col)
 		{
 		case idxName:
 			m_pData->subgraphies().nameChangedNotify().unregisterNotify(this);
@@ -44,7 +44,7 @@ public:
 		if (role != Qt::DisplayRole)
 			return QTableWidgetItem::data(role);
 
-		switch (m_idx)
+		switch (m_col)
 		{
 		case idxName:
 			return m_pInfo->name();
@@ -56,11 +56,16 @@ public:
 	}
 	virtual void setData(int role, const QVariant &value) override
 	{
+		if (role != Qt::DisplayRole && m_col == idxName)
+		{
+			m_pData->subgraphies().rename(id(), value.toString());
+			return;
+		}
 		return QTableWidgetItem::setData(role, value);
 	}
 	virtual void onNameChanged(uint id, IContainer*) override
 	{
-		switch (m_idx)
+		switch (m_col)
 		{
 		case idxName:
 			if (id == m_pInfo->id())
@@ -85,7 +90,7 @@ public:
 private:
 	EditorData* m_pData;
 	const SubGraphData* m_pInfo;
-	ColIndex m_idx;
+	ColIndex m_col;
 };
 
 SubGraphTab::SubGraphTab(QWidget *parent)
@@ -117,7 +122,6 @@ void SubGraphTab::init()
 	updateTextureName();
 	initContext();
 
-	connect(ui.edName, &QLineEdit::textChanged, this, &SubGraphTab::onNameChanged);
 	connect(ui.cbTexture, &QComboBox::currentTextChanged, this, &SubGraphTab::onTextureChanged);
 	for (size_t i = 0; i < m_spinBoxs.size(); ++i)
 	{
@@ -127,6 +131,7 @@ void SubGraphTab::init()
 	connect(ui.btnCopy, &QPushButton::clicked, this, &SubGraphTab::onCopy);
 	connect(ui.btnRemove, &QPushButton::clicked, this, &SubGraphTab::onRemove);
 	connect(ui.tableWidget, &QTableWidget::currentItemChanged, this, &SubGraphTab::onSelectionChanged);
+	connect(ui.tableWidget, &QTableWidget::doubleClicked, this, &SubGraphTab::queryEdit);
 }
 
 void SubGraphTab::initContext()
@@ -181,32 +186,14 @@ void SubGraphTab::onRemove()
 	m_pEditorData->removeSubGraph(idByRow(row));
 }
 
-void SubGraphTab::onNameChanged(const QString& name)
+void SubGraphTab::onTextureChanged(const QString& texture)
 {
-	QTableWidgetItem* pItem = getSelectedItem(idxName);
+	QTableWidgetItem* pItem = getSelectedItem(idxTexture);
 	if (!pItem)
 		return;
 
-	if (!m_pEditorData->canChangeSubGraphName(currentIdx(), name))
-	{
-		QToolTip::showText(ui.edName->mapToGlobal(QPoint(0, 0)), QString("\"%1\" already exist").arg(name), ui.edName);
-	}
-	else
-	{
-// 		m_cache.m_name = name;
-		pItem->setText(name);
-	}
-}
-
-void SubGraphTab::onTextureChanged(const QString& texture)
-{
-// 	QTableWidgetItem* pItem = getSelectedItem(idxTexture);
-// 	if (!pItem)
-// 		return;
-// 
-// 	m_cache.texture = texture;
-// 	pItem->setText(texture);
-
+	m_cache.iTexture = ui.cbTexture->currentData().toUInt();
+	pItem->setText(texture);
 	updatePreview();
 }
 
@@ -214,7 +201,7 @@ void SubGraphTab::onInfoChanged()
 {
 	for (size_t i = 0; i < m_spinBoxs.size(); ++i)
 	{
-		m_cache.param.raw[i] = m_spinBoxs[i]->value();
+		m_cache.raw[i] = m_spinBoxs[i]->value();
 	}
 	updatePreview();
 }
@@ -237,11 +224,15 @@ void SubGraphTab::onSelectionChanged(QTableWidgetItem* cur, QTableWidgetItem* pr
 	}
 }
 
+void SubGraphTab::queryEdit(const QModelIndex& idx)
+{
+	if (idx.column() == idxName)
+		ui.tableWidget->edit(idx);
+}
+
 void SubGraphTab::updatePreview()
 {
 	ui.preview->clear();
-// 	if (m_cache.texture.isEmpty())
-// 		return;
 
 	QString texture = m_pEditorData->textureMap().nameOfId(m_cache.iTexture);
 	QPixmap img = m_pEditorData->getTextureByName(texture);
@@ -249,20 +240,20 @@ void SubGraphTab::updatePreview()
 		return;
 
 	QPainterPath path;
-	QRectF rect(m_cache.param.srcX, m_cache.param.srcY, m_cache.param.sizeX, m_cache.param.sizeY);
-	int all = 0;
-	for (int i = 0; i < m_cache.param.numY; ++i)
+	QRectF rect(m_cache.srcX, m_cache.srcY, m_cache.sizeX, m_cache.sizeY);
+	uint all = 0;
+	for (uint i = 0; i < m_cache.numY; ++i)
 	{
-		rect.moveLeft(m_cache.param.srcX);
-		for (int j = 0; j < m_cache.param.numX; ++j)
+		rect.moveLeft(m_cache.srcX);
+		for (uint j = 0; j < m_cache.numX; ++j)
 		{
 			path.addRect(rect);
-			rect.moveLeft(rect.left() + m_cache.param.sizeX);
-			if (++all >= m_cache.param.allNum)
+			rect.moveLeft(rect.left() + m_cache.sizeX);
+			if (++all >= m_cache.allNum)
 				break;
 		}
-		rect.moveTop(rect.top() + m_cache.param.sizeY);
-		if (all >= m_cache.param.allNum)
+		rect.moveTop(rect.top() + m_cache.sizeY);
+		if (all >= m_cache.allNum)
 			break;
 	}
 	{
@@ -281,7 +272,7 @@ void SubGraphTab::updatePreview()
 bool SubGraphTab::commitCacheTo(int row)
 {
 	uint id = idByRow(row);
-	bool bSucceed = m_pEditorData->commitSubGraph(id, m_cache);
+	bool bSucceed = m_pEditorData->subgraphies().updateData(id, m_cache);
 	if (!bSucceed)
 	{
 		m_cache = m_pEditorData->subgraphies()[id];
@@ -298,24 +289,23 @@ int SubGraphTab::currentIdx()
 void SubGraphTab::refreshCtrlData()
 {
 	QObject* objs[] = {
-		ui.edName, ui.cbTexture, m_spinBoxs[0], m_spinBoxs[1],
+		ui.cbTexture, m_spinBoxs[0], m_spinBoxs[1],
 		m_spinBoxs[2], m_spinBoxs[3], m_spinBoxs[4], m_spinBoxs[5],
 		m_spinBoxs[6]
 	};
-	for each(auto pObj in objs)
+	for (QObject* pObj : objs)
 		pObj->blockSignals(true);
 
-	ui.edName->setText(m_cache.name());
 	QString texture = m_pEditorData->textureMap().nameOfId(m_cache.iTexture);
 
 	ui.cbTexture->setCurrentIndex(ui.cbTexture->findText(texture));
 	ui.cbTexture->setEditText(texture);
 	for (size_t i = 0; i < m_spinBoxs.size(); ++i)
 	{
-		m_spinBoxs[i]->setValue(m_cache.param.raw[i]);
+		m_spinBoxs[i]->setValue(m_cache.raw[i]);
 	}
 
-	for each(auto pObj in objs)
+	for (QObject* pObj : objs)
 		pObj->blockSignals(false);
 
 	ui.preview->resetZoom();
@@ -345,13 +335,6 @@ void SubGraphTab::updateTextureName()
 		ui.cbTexture->addItem(texture.name(), texture.id());
 	}
 	ui.cbTexture->registerNameChanged(map.nameChangedNotify());
-// 	SubGraphInfos& infos = m_pEditorData->subgraphies();
-// 	for (size_t i = 0; i < infos.size(); ++i)
-// 	{
-// 		auto pItem = ui.tableWidget->item(i, idxTexture);
-// 		if (pItem)
-// 			pItem->setText(infos[i].texture);
-// 	}
 
 	auto pSel = getSelectedData();
 	if (pSel)
@@ -372,7 +355,6 @@ bool SubGraphTab::commitCache()
 
 void SubGraphTab::enterTab()
 {
-// 	updateTextureName();
 }
 
 const SubGraphData* SubGraphTab::getSelectedData()

@@ -112,7 +112,7 @@ void BulletTab::updatePreview()
 		return;
 
 	QPixmap texture = m_pEditorData->getTexture(pDat);
-	texture = texture.copy(pDat->param.srcX, pDat->param.srcY, pDat->param.sizeX, pDat->param.sizeY);
+	texture = texture.copy(pDat->srcX, pDat->srcY, pDat->sizeX, pDat->sizeY);
 	{
 		QRectF coillide(0, 0, 2 * m_cache.radianX, 2 * m_cache.radianY);
 		if (m_cache.collide == BulletStyle::cCircle)

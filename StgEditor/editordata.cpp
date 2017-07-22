@@ -67,8 +67,8 @@ QPixmap EditorData::getTexture(const SubGraphData* pDat)
 
 void EditorData::removeTexture(const QString& name)
 {
-	m_textures.erase(name);
 	m_textureCache.remove(m_textures[name].path);
+	m_textures.erase(name);
 }
 
 void EditorData::removeSubGraph(uint id)
@@ -88,27 +88,6 @@ void EditorData::removeBulletStyle(int idx)
 	m_bulletStyles.erase(m_bulletStyles.begin() + idx);
 }
 
-bool EditorData::commitSubGraph(uint id, const SubGraphData& data)
-{
-	if (!canChangeSubGraphName(id, data.name()))
-	{
-		QMessageBox::warning(nullptr, "conflit name", QString("\"%1\" already exist").arg(data.name()));
-		return false;
-	}
-
-	const SubGraphData& origin = m_subGraphes[id];
-	if (origin.name() != data.name())
-	{
-		for (auto iter = m_bulletStyles.begin(); iter != m_bulletStyles.end(); ++iter)
-		{
-			if (iter->subGraph == origin.name())
-				iter->subGraph = data.name();
-		}
-	}
-// 	origin = data;
-	return true;
-}
-
 bool EditorData::commitBulletStyle(int idx, const BulletStyle& style)
 {
 	if (!canChangeBulletStyleName(idx, style.name))
@@ -124,16 +103,6 @@ bool EditorData::commitBulletStyle(int idx, const BulletStyle& style)
 	}
 
 	dat = style;
-	return true;
-}
-
-bool EditorData::canChangeSubGraphName(int idx, const QString& newName)
-{
-// 	for (uint i = 0; i < m_subGraphes.size(); ++i)
-// 	{
-// 		if (i != idx && m_subGraphes[i].name == newName)
-// 			return false;
-// 	}
 	return true;
 }
 
@@ -259,13 +228,13 @@ void EditorData::loadSubGraphies()
 				SubGraphData dat(name);
 	
 				dat.iTexture = m_textures.idOfName(QString::fromUtf8(info.texture().c_str()));
-				dat.param.srcX = info.xsrc();
-				dat.param.srcY = info.ysrc();
-				dat.param.allNum = info.allnum();
-				dat.param.numX = info.xnum();
-				dat.param.numY = info.ynum();
-				dat.param.sizeX = info.width();
-				dat.param.sizeY = info.height();
+				dat.srcX = info.xsrc();
+				dat.srcY = info.ysrc();
+				dat.allNum = info.allnum();
+				dat.numX = info.xnum();
+				dat.numY = info.ynum();
+				dat.sizeX = info.width();
+				dat.sizeY = info.height();
 				m_subGraphes.append(dat);
 			}
 		}
@@ -279,7 +248,7 @@ void EditorData::saveSubGraphies()
 	{
 		LPCWSTR lpName = (LPCWSTR)iter->name().utf16();
 		LPCWSTR lpTexture = (LPCWSTR)m_textures.nameOfId(iter->iTexture).utf16();
-		buff.insert(lpName, lpTexture, (SubGraphRaw*)iter->param.raw);
+		buff.insert(lpName, lpTexture, (SubGraphRaw*)iter->raw);
 	}
 	QString path(m_basePath + "/subgraphics.pb");
 	buff.saveBinary((LPCWSTR)path.utf16());

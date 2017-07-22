@@ -49,10 +49,10 @@ public:
 //////////////////////////////////////////////////////////////////////////
 struct SubGraphRaw
 {
-	int xSrc, ySrc;
-	int allNum;
-	int xNum, yNum;
-	int width, height;
+	unsigned int xSrc, ySrc;
+	unsigned int allNum;
+	unsigned int xNum, yNum;
+	unsigned int width, height;
 };
 
 class SubGraphicsBuf : public ProtoBufBase

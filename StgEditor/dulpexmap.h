@@ -2,36 +2,33 @@
 #include <unordered_set>
 #include <cassert>
 
-struct IContainer;
 struct IContainer
 {
 	virtual QString getName(uint id) = 0;
 };
-/*
-struct INotifyHelper
+struct IEraseNotify
 {
-	virtual void registerNotify(void* pNotify) = 0;
-	virtual void unregisterNotify(void* pNotify) = 0;
+	virtual void onErase(uint id, IContainer* pContainer) = 0;
 };
-*/
+struct INameChangedNotify
+{
+	virtual void onNameChanged(uint id, IContainer* pContainer) = 0;
+};
+struct IItemAddedNotify
+{
+	virtual void onItemAdded(uint id, IContainer* pContainer) = 0;
+};
 
 template <typename INotify>
-class NotifyHelper //: INotifyHelper
+class NotifyHelper
 {
 public:
 	NotifyHelper(IContainer* pContainer)
 		: m_pContainer(pContainer)
 	{
 	}
-	void registerNotify(INotify* pNotify)
-	{
-		if (pNotify != nullptr)
-			m_notify.insert(pNotify);
-	}
-	void unregisterNotify(INotify* pNotify)
-	{
-		m_notify.erase(pNotify);
-	}
+	void registerNotify(INotify* pNotify) { if (pNotify) m_notify.insert(pNotify); }
+	void unregisterNotify(INotify* pNotify) { m_notify.erase(pNotify); }
 	void notify(uint id)
 	{
 		for (INotify* pNotify : m_notify)
@@ -39,43 +36,14 @@ public:
 	}
 private:
 	void notify(INotify* notify, uint id) { assert(false); }
-	void registerNotify(void* pNotify)// override final
-	{
-		registerNotify((INotify*)pNotify);
-	}
-	void unregisterNotify(void* pNotify)// override final
-	{
-		unregisterNotify((INotify*)pNotify);
-	}
 
 private:
 	IContainer* m_pContainer;
 	std::unordered_set<INotify*> m_notify;
 };
-
-struct IEraseNotify
-{
-	virtual void onErase(uint id, IContainer* pContainer) = 0;
-};
 typedef NotifyHelper<IEraseNotify> EraseNotifyHelper;
-template <> void EraseNotifyHelper::notify(IEraseNotify* notify, uint id)
-{ notify->onErase(id, m_pContainer); }
-
-struct INameChangedNotify
-{
-	virtual void onNameChanged(uint id, IContainer* pContainer) = 0;
-};
 typedef NotifyHelper<INameChangedNotify> NameChangedNotifyHelper;
-void NameChangedNotifyHelper::notify(INameChangedNotify* notify, uint id)
-{ notify->onNameChanged(id, m_pContainer); }
-
-struct IItemAddedNotify
-{
-	virtual void onItemAdded(uint id, IContainer* pContainer) = 0;
-};
 typedef NotifyHelper<IItemAddedNotify> ItemAddedNotifyHelper;
-void ItemAddedNotifyHelper::notify(IItemAddedNotify* notify, uint id)
-{ notify->onItemAdded(id, m_pContainer); }
 
 template <typename Entry>
 class DulpexMap : public IContainer, public IEraseNotify
@@ -87,50 +55,16 @@ public:
 	static const uint InvaildIndex = 0;
 
 	DulpexMap() {}
-	bool append(const Entry& entry)
-	{
-		QString name = entry.name();
-		if (!resolveName(name))
-			return false;
-
-		uint id = allocID();
-		m_entryMap.insert(std::make_pair(id, entry));
-
-		m_entryMap.at(id).m_id = id;
-		m_entryMap.at(id).m_name = name;
-		m_nameMap[name] = id;
-
-		m_itemAddedNotify.notify(id);
-		return true;
-	}
-	bool erase(const QString& name)
-	{
-		auto iter = m_nameMap.find(name);
-		if (iter == m_nameMap.end())
-			return false;
-
-		uint id = iter.value();
-		m_entryMap.erase(m_entryMap.find(id));
-		m_nameMap.erase(iter);
-
-		m_eraseNotify.notify(id);
-		return true;
-	}
-	bool erase(uint id)
-	{
-		auto iter = m_entryMap.find(id);
-		if (iter == m_entryMap.end())
-			return false;
-
-		m_nameMap.erase(m_nameMap.find(iter.value().name()));
-		m_entryMap.erase(iter);
-
-		m_eraseNotify.notify(id);
-		return true;
-	}
+	bool append(const Entry& entry);
+	bool erase(const QString& name);
+	bool erase(uint id);
 
 	bool contains(uint id) const { return m_entryMap.find(id) != m_entryMap.end(); }
 	bool contains(const QString& name) const { return m_nameMap.contains(name); }
+	bool rename(const QString& oldName, const QString& newName);
+	bool rename(uint id, const QString& name);
+	bool updateData(uint id, const Entry& other);
+
 	uint idOfName(const QString& name) const
 	{
 		auto iter = m_nameMap.find(name);
@@ -140,47 +74,6 @@ public:
 	{
 		auto iter = m_entryMap.find(id);
 		return (iter != m_entryMap.end()) ? iter->second.name() : QString();
-	}
-	bool rename(const QString& oldName, const QString& newName)
-	{
-		if (newName.isEmpty() || oldName == newName)
-			return false;
-
-		auto iter = m_nameMap.find(oldName);
-		if (iter == m_nameMap.end())
-			return false;
-
-		QString name = newName;
-		if (!resolveName(name))
-			return false;
-
-		uint id = iter.value();
-		m_entryMap.at(id).m_name = name;
-		m_nameMap.erase(iter);
-		m_nameMap[name] = id;
-
-		m_nameChangedNotify.notify(id);
-		return true;
-	}
-	bool rename(uint id, const QString& name)
-	{
-		if (!contains(id) || name.isEmpty())
-			return false;
-
-		QString oldName = m_entryMap.at(id).name();
-		if (name == oldName)
-			return false;
-
-		QString newName = name;
-		if (!resolveName(newName))
-			return false;
-
-		m_entryMap.at(id).m_name = newName;
-		m_nameMap.erase(m_nameMap.find(oldName));
-		m_nameMap[name] = id;
-
-		m_nameChangedNotify.notify(id);
-		return true;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -223,23 +116,8 @@ public:
 
 private:
 	uint allocID() { return ++m_maxId; } // ´Ó 1 ¿ªÊ¼
-	bool resolveName(QString& name)
-	{
-		if (!m_nameMap.contains(name))
-			return true;
+	bool resolveName(QString& name);
 
-		uint i = 0;
-		const uint max = 100000;
-		while (i < max && m_nameMap.contains(name + QString::number(i)))
-			++i;
-
-		if (i < max)
-		{
-			name += QString::number(i);
-			return true;
-		}
-		return false;
-	}
 private: // IContainer
 	QString getName(uint id) override final { return nameOfId(id); }
 
@@ -264,6 +142,7 @@ public:
 
 	uint id() const { return m_id; }
 	const QString& name() const { return m_name; }
+//	bool updateData(const Entry& other) { assert(false); return false; }
 
 private:
 	friend class ContainerMap;
@@ -271,3 +150,140 @@ private:
 	uint m_id{ 0 };
 	QString m_name;
 };
+
+template <>
+void EraseNotifyHelper::notify(IEraseNotify* notify, uint id)
+{
+	notify->onErase(id, m_pContainer);
+}
+template <>
+void NameChangedNotifyHelper::notify(INameChangedNotify* notify, uint id)
+{
+	notify->onNameChanged(id, m_pContainer);
+}
+template <>
+void ItemAddedNotifyHelper::notify(IItemAddedNotify* notify, uint id)
+{
+	notify->onItemAdded(id, m_pContainer);
+}
+
+template <typename Entry>
+bool DulpexMap<Entry>::append(const Entry& entry)
+{
+	QString name = entry.name();
+	if (!resolveName(name))
+		return false;
+
+	uint id = allocID();
+	m_entryMap.insert(std::make_pair(id, entry));
+
+	m_entryMap.at(id).m_id = id;
+	m_entryMap.at(id).m_name = name;
+	m_nameMap[name] = id;
+
+	m_itemAddedNotify.notify(id);
+	return true;
+}
+
+template <typename Entry>
+bool DulpexMap<Entry>::erase(const QString& name)
+{
+	auto iter = m_nameMap.find(name);
+	if (iter == m_nameMap.end())
+		return false;
+
+	uint id = iter.value();
+	m_entryMap.erase(m_entryMap.find(id));
+	m_nameMap.erase(iter);
+
+	m_eraseNotify.notify(id);
+	return true;
+}
+
+template <typename Entry>
+bool DulpexMap<Entry>::erase(uint id)
+{
+	auto iter = m_entryMap.find(id);
+	if (iter == m_entryMap.end())
+		return false;
+
+	m_nameMap.erase(m_nameMap.find(iter.value().name()));
+	m_entryMap.erase(iter);
+
+	m_eraseNotify.notify(id);
+	return true;
+}
+
+template <typename Entry>
+bool DulpexMap<Entry>::rename(const QString& oldName, const QString& newName)
+{
+	if (newName.isEmpty() || oldName == newName)
+		return false;
+
+	auto iter = m_nameMap.find(oldName);
+	if (iter == m_nameMap.end())
+		return false;
+
+	QString name = newName;
+	if (!resolveName(name))
+		return false;
+
+	uint id = iter.value();
+	m_entryMap.at(id).m_name = name;
+	m_nameMap.erase(iter);
+	m_nameMap[name] = id;
+
+	m_nameChangedNotify.notify(id);
+	return true;
+}
+
+template <typename Entry>
+bool DulpexMap<Entry>::rename(uint id, const QString& name)
+{
+	if (!contains(id) || name.isEmpty())
+		return false;
+
+	QString oldName = m_entryMap.at(id).name();
+	if (name == oldName)
+		return false;
+
+	QString newName = name;
+	if (!resolveName(newName))
+		return false;
+
+	m_entryMap.at(id).m_name = newName;
+	m_nameMap.erase(m_nameMap.find(oldName));
+	m_nameMap[name] = id;
+
+	m_nameChangedNotify.notify(id);
+	return true;
+}
+
+template <typename Entry>
+bool DulpexMap<Entry>::resolveName(QString& name)
+{
+	if (!m_nameMap.contains(name))
+		return true;
+
+	uint i = 0;
+	const uint max = 100000;
+	while (i < max && m_nameMap.contains(name + QString::number(i)))
+		++i;
+
+	if (i < max)
+	{
+		name += QString::number(i);
+		return true;
+	}
+	return false;
+}
+
+template <typename Entry>
+bool DulpexMap<Entry>::updateData(uint id, const Entry& other)
+{
+	auto iter = m_entryMap.find(id);
+	if (iter != m_entryMap.end())
+		return iter->second.updateData(other);
+	else
+		return false;
+}

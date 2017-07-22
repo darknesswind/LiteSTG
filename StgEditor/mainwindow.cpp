@@ -65,7 +65,7 @@ void MainWindow::showOptionDlg()
 	dlg.exec();
 }
 
-void MainWindow::onTabChanged(int idx)
+void MainWindow::onTabChanged(int)
 {
 	TabBase* tab = dynamic_cast<TabBase*>(ui->tabWidget->currentWidget());
 	if (tab)
