@@ -2,14 +2,95 @@
 #include <QSpinBox>
 #include <QGraphicsItem>
 #include <QToolTip>
-enum
+
+enum ColIndex
 {
 	idxName,
 	idxTexture
 };
 
+class SubGraphItem : public QTableWidgetItem
+	, INameChangedNotify
+{
+public:
+	SubGraphItem(EditorData* pData, const SubGraphData* pInfo, ColIndex idx)
+		: m_pData(pData), m_pInfo(pInfo), m_idx(idx)
+	{
+		QTableWidgetItem::setData(Qt::DisplayRole, data(Qt::DisplayRole).toString());
+		switch (m_idx)
+		{
+		case idxName:
+			m_pData->subgraphies().nameChangedNotify().registerNotify(this);
+			break;
+		case idxTexture:
+			m_pData->textureMap().nameChangedNotify().registerNotify(this);
+			break;
+		}
+	}
+	virtual ~SubGraphItem() override
+	{
+		switch (m_idx)
+		{
+		case idxName:
+			m_pData->subgraphies().nameChangedNotify().unregisterNotify(this);
+			break;
+		case idxTexture:
+			m_pData->textureMap().nameChangedNotify().unregisterNotify(this);
+			break;
+		}
+	}
+	virtual QVariant data(int role) const override
+	{
+		if (role != Qt::DisplayRole)
+			return QTableWidgetItem::data(role);
+
+		switch (m_idx)
+		{
+		case idxName:
+			return m_pInfo->name();
+		case idxTexture:
+			return m_pData->textureMap().nameOfId(m_pInfo->iTexture);
+		default:
+			return QTableWidgetItem::data(role);
+		}
+	}
+	virtual void setData(int role, const QVariant &value) override
+	{
+		return QTableWidgetItem::setData(role, value);
+	}
+	virtual void onNameChanged(uint id, IContainer*) override
+	{
+		switch (m_idx)
+		{
+		case idxName:
+			if (id == m_pInfo->id())
+			{
+				QString name = m_pData->subgraphies().nameOfId(id);
+				QTableWidgetItem::setData(Qt::DisplayRole, name);
+			}
+			break;
+		case idxTexture:
+			if (id == m_pInfo->iTexture)
+			{
+				QString texture = m_pData->textureMap().nameOfId(id);
+				QTableWidgetItem::setData(Qt::DisplayRole, texture);
+			}
+			break;
+		}
+	}
+
+	uint id() const { return m_pInfo->id(); }
+	const SubGraphData* graphInfo() const { return m_pInfo; }
+
+private:
+	EditorData* m_pData;
+	const SubGraphData* m_pInfo;
+	ColIndex m_idx;
+};
+
 SubGraphTab::SubGraphTab(QWidget *parent)
 	: TabBase(parent)
+	, m_cache("")
 	, m_pEditorData(nullptr)
 	, m_bSelectUpdating(false)
 {
@@ -51,12 +132,12 @@ void SubGraphTab::init()
 void SubGraphTab::initContext()
 {
 	SubGraphInfos& infos = m_pEditorData->subgraphies();
-	for (size_t i = 0; i < infos.size(); ++i)
+	for (const SubGraphData& dat : infos)
 	{
 		int row = ui.tableWidget->rowCount();
 		ui.tableWidget->insertRow(row);
-		ui.tableWidget->setItem(row, idxName, new QTableWidgetItem(infos[i].name));
-		ui.tableWidget->setItem(row, idxTexture, new QTableWidgetItem(infos[i].texture));
+		ui.tableWidget->setItem(row, idxName, new SubGraphItem(m_pEditorData, &dat, idxName));
+		ui.tableWidget->setItem(row, idxTexture, new SubGraphItem(m_pEditorData, &dat, idxTexture));
 		ui.tableWidget->selectRow(row);
 	}
 	refreshCache();
@@ -65,30 +146,28 @@ void SubGraphTab::initContext()
 
 void SubGraphTab::onAdd()
 {
-	m_pEditorData->subgraphies().emplace_back(SubGraphData());
-	SubGraphData& data = m_pEditorData->subgraphies().back();
-	data.name = QString::number(rand(), 16);
+	m_pEditorData->subgraphies().append(SubGraphData(QString::number(rand(), 16)));
+	const SubGraphData& data = m_pEditorData->subgraphies().back();
 
 	int row = ui.tableWidget->rowCount();
 	ui.tableWidget->insertRow(row);
-	ui.tableWidget->setItem(row, idxName, new QTableWidgetItem(data.name));
-	ui.tableWidget->setItem(row, idxTexture, new QTableWidgetItem(data.texture));
+	ui.tableWidget->setItem(row, idxName, new SubGraphItem(m_pEditorData, &data, idxName));
+	ui.tableWidget->setItem(row, idxTexture, new SubGraphItem(m_pEditorData, &data, idxTexture));
 	ui.tableWidget->selectRow(row);
 }
 
 void SubGraphTab::onCopy()
 {
-	SubGraphData* pSel = getSelectedData();
+	const SubGraphData* pSel = getSelectedData();
 	if (!pSel) return;
 
-	m_pEditorData->subgraphies().push_back(*pSel);
-	SubGraphData& data = m_pEditorData->subgraphies().back();
-	data.name += QString::number(rand(), 16);
+	m_pEditorData->subgraphies().append(*pSel);
+	const SubGraphData& data = m_pEditorData->subgraphies().back();
 
 	int row = ui.tableWidget->rowCount();
 	ui.tableWidget->insertRow(row);
-	ui.tableWidget->setItem(row, idxName, new QTableWidgetItem(data.name));
-	ui.tableWidget->setItem(row, idxTexture, new QTableWidgetItem(data.texture));
+	ui.tableWidget->setItem(row, idxName, new SubGraphItem(m_pEditorData, &data, idxName));
+	ui.tableWidget->setItem(row, idxTexture, new SubGraphItem(m_pEditorData, &data, idxTexture));
 	ui.tableWidget->selectRow(row);
 }
 
@@ -99,7 +178,7 @@ void SubGraphTab::onRemove()
 		return;
 
 	ui.tableWidget->removeRow(row);
-	m_pEditorData->removeSubGraph(row);
+	m_pEditorData->removeSubGraph(idByRow(row));
 }
 
 void SubGraphTab::onNameChanged(const QString& name)
@@ -114,19 +193,19 @@ void SubGraphTab::onNameChanged(const QString& name)
 	}
 	else
 	{
-		m_cache.name = name;
+// 		m_cache.m_name = name;
 		pItem->setText(name);
 	}
 }
 
 void SubGraphTab::onTextureChanged(const QString& texture)
 {
-	QTableWidgetItem* pItem = getSelectedItem(idxTexture);
-	if (!pItem)
-		return;
-
-	m_cache.texture = texture;
-	pItem->setText(texture);
+// 	QTableWidgetItem* pItem = getSelectedItem(idxTexture);
+// 	if (!pItem)
+// 		return;
+// 
+// 	m_cache.texture = texture;
+// 	pItem->setText(texture);
 
 	updatePreview();
 }
@@ -161,11 +240,11 @@ void SubGraphTab::onSelectionChanged(QTableWidgetItem* cur, QTableWidgetItem* pr
 void SubGraphTab::updatePreview()
 {
 	ui.preview->clear();
-	if (m_cache.texture.isEmpty())
-		return;
+// 	if (m_cache.texture.isEmpty())
+// 		return;
 
-	QString texture = ui.cbTexture->itemData(ui.cbTexture->findText(m_cache.texture)).toString();
-	QPixmap img = m_pEditorData->getTexture(texture);
+	QString texture = m_pEditorData->textureMap().nameOfId(m_cache.iTexture);
+	QPixmap img = m_pEditorData->getTextureByName(texture);
 	if (img.isNull())
 		return;
 
@@ -201,10 +280,11 @@ void SubGraphTab::updatePreview()
 
 bool SubGraphTab::commitCacheTo(int row)
 {
-	bool bSucceed = m_pEditorData->commitSubGraph(row, m_cache);
+	uint id = idByRow(row);
+	bool bSucceed = m_pEditorData->commitSubGraph(id, m_cache);
 	if (!bSucceed)
 	{
-		m_cache = m_pEditorData->subgraphies()[row];
+		m_cache = m_pEditorData->subgraphies()[id];
 		refreshCtrlData();
 	}
 	return bSucceed;
@@ -225,9 +305,11 @@ void SubGraphTab::refreshCtrlData()
 	for each(auto pObj in objs)
 		pObj->blockSignals(true);
 
-	ui.edName->setText(m_cache.name);
-	ui.cbTexture->setCurrentIndex(ui.cbTexture->findText(m_cache.texture));
-	ui.cbTexture->setEditText(m_cache.texture);
+	ui.edName->setText(m_cache.name());
+	QString texture = m_pEditorData->textureMap().nameOfId(m_cache.iTexture);
+
+	ui.cbTexture->setCurrentIndex(ui.cbTexture->findText(texture));
+	ui.cbTexture->setEditText(texture);
 	for (size_t i = 0; i < m_spinBoxs.size(); ++i)
 	{
 		m_spinBoxs[i]->setValue(m_cache.param.raw[i]);
@@ -242,33 +324,40 @@ void SubGraphTab::refreshCtrlData()
 
 void SubGraphTab::refreshCache()
 {
-	SubGraphData* pData = getSelectedData();
+	const SubGraphData* pData = getSelectedData();
 	if (!pData) return;
 
 	m_cache = *pData;
+}
+
+uint SubGraphTab::idByRow(int row)
+{
+	SubGraphItem* pItem = static_cast<SubGraphItem*>(ui.tableWidget->item(row, idxName));
+	return pItem->id();
 }
 
 void SubGraphTab::updateTextureName()
 {
 	ui.cbTexture->clear();
 	TextureMap& map = m_pEditorData->textureMap();
-	for (auto iter = map.begin(); iter != map.end(); ++iter)
+	for (const Texture& texture : map)
 	{
-		ui.cbTexture->addItem(iter.value(), iter.key());
+		ui.cbTexture->addItem(texture.name(), texture.id());
 	}
-
-	SubGraphInfos& infos = m_pEditorData->subgraphies();
-	for (size_t i = 0; i < infos.size(); ++i)
-	{
-		auto pItem = ui.tableWidget->item(i, idxTexture);
-		if (pItem)
-			pItem->setText(infos[i].texture);
-	}
+	ui.cbTexture->registerNameChanged(map.nameChangedNotify());
+// 	SubGraphInfos& infos = m_pEditorData->subgraphies();
+// 	for (size_t i = 0; i < infos.size(); ++i)
+// 	{
+// 		auto pItem = ui.tableWidget->item(i, idxTexture);
+// 		if (pItem)
+// 			pItem->setText(infos[i].texture);
+// 	}
 
 	auto pSel = getSelectedData();
 	if (pSel)
 	{
-		ui.cbTexture->setCurrentIndex(ui.cbTexture->findText(pSel->texture));
+		int row = ui.cbTexture->findData(pSel->iTexture);
+		ui.cbTexture->setCurrentIndex(row);
 	}
 }
 
@@ -283,16 +372,16 @@ bool SubGraphTab::commitCache()
 
 void SubGraphTab::enterTab()
 {
-	updateTextureName();
+// 	updateTextureName();
 }
 
-SubGraphData* SubGraphTab::getSelectedData()
+const SubGraphData* SubGraphTab::getSelectedData()
 {
-	int row = currentIdx();
-	if (row < 0)
+	SubGraphItem* pItem = static_cast<SubGraphItem*>(getSelectedItem(idxName));
+	if (!pItem)
 		return nullptr;
 	else
-		return &m_pEditorData->subgraphies()[row];
+		return pItem->graphInfo();
 }
 
 QTableWidgetItem* SubGraphTab::getSelectedItem(int col)

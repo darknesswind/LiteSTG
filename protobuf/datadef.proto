@@ -1,9 +1,13 @@
 ﻿syntax = "proto3";
-option optimize_for = LITE_RUNTIME;
+//option optimize_for = LITE_RUNTIME;
 package proto;
 
 message Textures {
-	map<string, string> map = 1;
+	message Texture {
+		string name = 1;
+		string path = 2;
+	}
+	repeated Texture texture = 1;
 }
 
 message SubGraphics {
@@ -23,6 +27,8 @@ message SubGraphics {
 
 	map<string, SubInfos> map = 1;
 }
+
+////////////////////////////////////////////////////////////////////
 
 message Collide {
 	enum CollideType {
@@ -51,6 +57,24 @@ message BulletStyle {
 message BulletStyles {
 	map<string, BulletStyle> map = 1;
 }
+
+////////////////////////////////////////////////////////////////////
+
+message Character {
+	string name = 1;
+	Collide collide = 2;
+}
+
+message Players {
+	message Player {
+		Character base = 1;
+		Collide graze = 2;
+		float speed = 3;
+	}
+	repeated Player player = 1;
+}
+
+////////////////////////////////////////////////////////////////////
 
 message EmptyNode {
 	uint32 time = 1;

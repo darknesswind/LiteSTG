@@ -21,7 +21,7 @@ SmartTip* SmartTip::inst()
 
 void SmartTip::showTexture(QPoint pos, QString source)
 {
-	m_curPixmap = EditorData::instance()->getTexture(source);
+	m_curPixmap = EditorData::instance()->getTextureByPath(source);
 	move(pos);
 	QRect rect = geometry();
 	rect.setSize(m_curPixmap.size());

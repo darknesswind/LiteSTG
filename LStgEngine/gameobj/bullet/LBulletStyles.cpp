@@ -18,6 +18,7 @@ void LBulletStyles::LoadBulletStyles(LPCWSTR path)
 	BulletSyltesBuf buff;
 	if (buff.load(LAssets::LoadRawData(path)))
 	{
+		buff.saveText(LString(path).append(L".json").c_str());
 		auto& map = buff.bulletStyles()->map();
 		for (auto iter = map.begin(); iter != map.end(); ++iter)
 		{

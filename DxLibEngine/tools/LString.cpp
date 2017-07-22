@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "LString.h"
 #include <codecvt>
+#include <map>
 
 std::locale LString::s_defaultLocale;
 
@@ -18,8 +19,17 @@ LString& LString::assign(CStrPtr pcstr, size_t size, const std::locale& locale)
 		state, pcstr, pcstr + size, from_next,
 		buf.data(), buf.data() + buf.size(), to_next);
 
-	assert(result == converter_type::ok || result == converter_type::noconv);
-	Base::assign(buf.data(), buf.size());
+	if (result == converter_type::ok || result == converter_type::noconv)
+	{
+		Base::assign(buf.data(), buf.size());
+	}
+	else
+	{
+		LStrBuilder builder(LStrBuilder::modeJoin, L"\\x");
+		for (CStrPtr pch = pcstr; pch < pcstr + size; ++pch)
+			builder.arg(*(Byte*)pch, 2, 16, L'0');
+		(*this) = LString(L"\\x") + builder.apply();
+	}
 	return (*this);
 }
 
@@ -104,6 +114,15 @@ LStrBuilder::LStrBuilder(CStrPtr pPattern)
 	resetPattern(pPattern);
 }
 
+LStrBuilder::LStrBuilder(Mode mode, CWStrPtr pArg)
+	: m_mode(mode)
+{
+	if (m_mode == modePattern)
+		resetPattern(pArg);
+	else
+		m_pattern = pArg;
+}
+
 LStrBuilder::~LStrBuilder()
 {
 
@@ -112,35 +131,41 @@ LStrBuilder::~LStrBuilder()
 void LStrBuilder::resetPattern(CWStrPtr pPattern)
 {
 	m_pattern = pPattern;
-	reset();
+	reset(modePattern);
 }
 
 void LStrBuilder::resetPattern(CStrPtr pPattern)
 {
 	m_pattern = pPattern;
-	reset();
+	reset(modePattern);
 }
 
-void LStrBuilder::reset()
+LString LStrBuilder::apply() const
 {
+	if (m_mode == modePattern)
+		return applyPattern();
+	else
+		return applyJoin();
+}
+
+void LStrBuilder::reset(Mode mode)
+{
+	m_mode = mode;
 	m_argCount = 0;
 	m_chpxes.clear();
 	m_args.clear();
 	analyzePattern();
 }
 
-LString LStrBuilder::apply() const
+LString LStrBuilder::applyPattern() const
 {
-	if (m_chpxes.empty() || m_args.empty())
-		return m_pattern;
-
 	if (m_chpxes.empty() || m_args.empty())
 		return m_pattern;
 
 	LString result;
 	size_t pos = 0;
-	LPCWSTR pBegin = m_pattern.c_str();
-	LPCWSTR pPos = pBegin;
+	CWStrPtr pBegin = m_pattern.c_str();
+	CWStrPtr pPos = pBegin;
 	for (auto iter = m_chpxes.begin(); iter != m_chpxes.end(); ++iter)
 	{
 		const ChpxInfo& info = *iter;
@@ -158,13 +183,36 @@ LString LStrBuilder::apply() const
 	return result;
 }
 
+LString LStrBuilder::applyJoin() const
+{
+	if (m_args.empty())
+		return LString();
+
+	size_t cap = m_pattern.size() * (m_args.size() - 1);
+	for (const LString& arg : m_args)
+		cap += arg.size();
+
+	LString result;
+	result.reserve(cap);
+	for (const LString& arg : m_args)
+	{
+		if (!result.empty())
+			result.append(m_pattern);
+		result.append(arg);
+	}
+	return result;
+}
+
 void LStrBuilder::analyzePattern()
 {
-	const WCHAR* pBegin = m_pattern.c_str();
-	const WCHAR* pEnd = pBegin + m_pattern.size();
+	if (m_pattern.empty())
+		return;
 
-	std::map<uint, uint> idMap;
-	for (const WCHAR* pch = pBegin; pch < pEnd; ++pch)
+	const wchar_t* pBegin = m_pattern.c_str();
+	const wchar_t* pEnd = pBegin + m_pattern.size();
+
+	std::map<size_t, size_t> idMap;
+	for (const wchar_t* pch = pBegin; pch < pEnd; ++pch)
 	{
 		if (*pch != L'%')
 			continue;
@@ -173,13 +221,13 @@ void LStrBuilder::analyzePattern()
 		if (pch >= pEnd)
 			break;
 
-		const WCHAR ch = *pch;
+		const wchar_t ch = *pch;
 
 		int num = ch - L'0';
 		if (num <= 0 || num > 9)
 			continue;
 
-		const WCHAR* pArgBegin = pch - 1;
+		const wchar_t* pArgBegin = pch - 1;
 		if (pch + 1 < pEnd)
 		{
 			int num2 = pch[1] - L'0';
@@ -201,7 +249,7 @@ void LStrBuilder::analyzePattern()
 	if (idMap.empty())
 		return;
 
-	uint relID = 0;
+	size_t relID = 0;
 	for (auto iter = idMap.begin(); iter != idMap.end(); ++iter, ++relID)
 		iter->second = relID;
 
@@ -219,7 +267,7 @@ bool LStrBuilder::isFull()
 	return false;
 }
 
-LStrBuilder& LStrBuilder::arg(LPCWSTR val)
+LStrBuilder& LStrBuilder::arg(CWStrPtr val)
 {
 	m_args.push_back(val);
 	return (*this);
@@ -227,11 +275,11 @@ LStrBuilder& LStrBuilder::arg(LPCWSTR val)
 
 LStrBuilder& LStrBuilder::arg(int val)
 {
-	m_args.push_back(LString().setNum(val));
+	m_args.emplace_back(LString::number(val));
 	return (*this);
 }
 
-LStrBuilder& LStrBuilder::arg(int val, size_t fieldWidth, int base, WCHAR fillChar)
+LStrBuilder& LStrBuilder::arg(int val, size_t fieldWidth, int base, wchar_t fillChar)
 {
 	LString str = LString::number(val, base);
 	if (str.size() < fieldWidth)
@@ -239,11 +287,15 @@ LStrBuilder& LStrBuilder::arg(int val, size_t fieldWidth, int base, WCHAR fillCh
 		m_args.emplace_back(LString(fieldWidth, fillChar));
 		memcpy(&m_args.back()[fieldWidth - str.size()], str.c_str(), str.size());
 	}
+	else
+	{
+		m_args.push_back(str);
+	}
 	return (*this);
 }
 
 LStrBuilder& LStrBuilder::arg(float val)
 {
-	m_args.push_back(LString().setNum(val));
+	m_args.emplace_back(LString::number(val));
 	return (*this);
 }

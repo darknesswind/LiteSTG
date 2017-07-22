@@ -76,7 +76,11 @@ int LEngine::exec()
 		Screen.clearDrawScreen();
 
 		if (NeedUpdate())
+		{
 			Update();
+			if (m_nextState != m_curState)
+				innerChangeState(m_nextState);
+		}
 
 		m_spRender->DoRender();
 		Screen.screenFlip();
@@ -120,10 +124,18 @@ LAssetsUPtr LEngine::createAssets()
 	return std::make_unique<LAssets>();
 }
 
-bool LEngine::changeState(uint nextState)
+void LEngine::changeState(uint nextState)
+{
+	m_nextState = nextState;
+}
+
+bool LEngine::innerChangeState(uint nextState)
 {
 	if (!OnExitState(m_curState))
+	{
+		m_nextState = m_curState;
 		return false;
+	}
 
 	m_curState = nextState;
 	OnEnterState(m_curState);

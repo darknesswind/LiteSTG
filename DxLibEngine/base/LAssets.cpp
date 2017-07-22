@@ -31,17 +31,19 @@ void LAssets::LoadTextureList(LPCWSTR lpPath)
 		LLogger::Error(msg.arg(lpPath).apply());
 		return;
 	}
+	
+	buff.saveText(LString(lpPath).append(L".json").c_str());
 
 	LString dir(L"resource/");
 
-	auto& map = buff.textures()->map();
-	for (auto iter = map.begin(); iter != map.end(); ++iter)
+	auto& list = buff.textures()->texture();
+	for (auto iter = list.begin(); iter != list.end(); ++iter)
 	{
-		LString path = LString::fromUtf8(iter->first);
+		LString path = LString::fromUtf8(iter->path());
 		if (path.empty())
 			continue;
 
-		LString name = LString::fromUtf8(iter->second);
+		LString name = LString::fromUtf8(iter->name());
 		if (name.empty())
 		{
 			size_t nBegin = path.find_last_of(L'/');
@@ -93,6 +95,8 @@ void LAssets::LoadSubGraphicsList(LPCWSTR lpPath)
 		LLogger::Error(msg.arg(lpPath).apply());
 		return;
 	}
+
+	buff.saveText(LString(lpPath).append(L".json").c_str());
 
 	auto& map = buff.subgraphics()->map();
 	for (auto iter = map.begin(); iter != map.end(); ++iter)

@@ -39,7 +39,7 @@ QString EditorData::getTextureFullPath(QString source)
 	return m_basePath + QDir::separator() + source;
 }
 
-QPixmap EditorData::getTexture(QString source)
+QPixmap EditorData::getTextureByPath(QString source)
 {
 	QPixmap& img = m_textureCache[source];
 	if (img.isNull())
@@ -51,52 +51,30 @@ QPixmap EditorData::getTexture(QString source)
 
 QPixmap EditorData::getTextureByName(QString name)
 {
-	for (auto iter = m_textures.begin(); iter != m_textures.end(); ++iter)
-	{
-		if (iter.value() == name)
-			return getTexture(iter.key());
-	}
+	if (m_textures.contains(name))
+		return getTextureByPath(m_textures[name].path);
+
 	return QPixmap();
 }
 
-SubGraphData* EditorData::getSubGraphByName(QString name)
+QPixmap EditorData::getTexture(const SubGraphData* pDat)
 {
-	auto iter = std::find_if(m_subGraphes.begin(), m_subGraphes.end(), [&name](const SubGraphData& dat)
-	{
-		return dat.name == name;
-	});
-	if (iter == m_subGraphes.end())
-		return nullptr;
+	if (0 == pDat->iTexture)
+		return QPixmap();
 
-	return &(*iter);
+	return getTextureByPath(m_textures[pDat->iTexture].path);
 }
 
-void EditorData::updateTextureRef(QString srcName, QString dstName)
+void EditorData::removeTexture(const QString& name)
 {
-	for (uint i = 0; i < m_subGraphes.size(); ++i)
-	{
-		if (m_subGraphes[i].texture == srcName)
-			m_subGraphes[i].texture = dstName;
-	}
+	m_textures.erase(name);
+	m_textureCache.remove(m_textures[name].path);
 }
 
-void EditorData::removeTexture(const QString& source)
+void EditorData::removeSubGraph(uint id)
 {
-	QString name = m_textures[source];
-
-	m_textures.remove(source);
-	m_textureCache.remove(source);
-	for (auto iter = m_subGraphes.begin(); iter != m_subGraphes.end(); ++iter)
-	{
-		if (iter->texture == name)
-			iter->texture.clear();
-	}
-}
-
-void EditorData::removeSubGraph(int idx)
-{
-	QString name = m_subGraphes[idx].name;
-	m_subGraphes.erase(m_subGraphes.begin() + idx);
+	QString name = m_subGraphes[id].name();
+	m_subGraphes.erase(name);
 	for (auto iter = m_bulletStyles.begin(); iter != m_bulletStyles.end(); ++iter)
 	{
 		if (iter->subGraph == name)
@@ -110,44 +88,24 @@ void EditorData::removeBulletStyle(int idx)
 	m_bulletStyles.erase(m_bulletStyles.begin() + idx);
 }
 
-QString EditorData::changeTextureName(const QString& source, const QString& newName)
+bool EditorData::commitSubGraph(uint id, const SubGraphData& data)
 {
-	QString srcName = m_textures[source];
-	if (srcName == newName)
-		return newName;
-
-	for (auto iter = m_textures.begin(); iter != m_textures.end(); ++iter)
+	if (!canChangeSubGraphName(id, data.name()))
 	{
-		if (iter.value() == newName && iter.key() != source)
-		{
-			QMessageBox::warning(nullptr, "conflit name", QString("conflit name with \"%1\"").arg(iter.key()));
-			return srcName;
-		}
-	}
-
-	m_textures[source] = newName;
-	updateTextureRef(srcName, newName);
-	return newName;
-}
-
-bool EditorData::commitSubGraph(int idx, const SubGraphData& data)
-{
-	if (!canChangeSubGraphName(idx, data.name))
-	{
-		QMessageBox::warning(nullptr, "conflit name", QString("\"%1\" already exist").arg(data.name));
+		QMessageBox::warning(nullptr, "conflit name", QString("\"%1\" already exist").arg(data.name()));
 		return false;
 	}
 
-	SubGraphData& origin = m_subGraphes[idx];
-	if (origin.name != data.name)
+	const SubGraphData& origin = m_subGraphes[id];
+	if (origin.name() != data.name())
 	{
 		for (auto iter = m_bulletStyles.begin(); iter != m_bulletStyles.end(); ++iter)
 		{
-			if (iter->subGraph == origin.name)
-				iter->subGraph = data.name;
+			if (iter->subGraph == origin.name())
+				iter->subGraph = data.name();
 		}
 	}
-	origin = data;
+// 	origin = data;
 	return true;
 }
 
@@ -223,6 +181,8 @@ void EditorData::load()
 	loadTextures();
 	loadSubGraphies();
 	loadBulletStyles();
+
+	m_textures.eraseNotify().registerNotify(&m_subGraphes);
 }
 
 void EditorData::save()
@@ -257,13 +217,13 @@ void EditorData::saveSettings()
 void EditorData::loadTextures()
 {
 	TextureBuf buff;
-	QString path = m_basePath + "\\textures.pb";
-	if (buff.load((LPCWSTR)path.utf16()))
+	QString path = m_basePath + "\\textures.pb.json";
+	if (buff.loadFromText((LPCWSTR)path.utf16()))
 	{
-		auto& map = buff.textures()->map();
-		for (auto iter = map.begin(); iter != map.end(); ++iter)
+		auto& list = buff.textures()->texture();
+		for (auto iter = list.begin(); iter != list.end(); ++iter)
 		{
-			m_textures.insert(QString::fromUtf8(iter->first.c_str()), QString::fromUtf8(iter->second.c_str()));
+			m_textures.append(Texture(iter->name(), iter->path()));
 		}
 	}
 }
@@ -271,44 +231,22 @@ void EditorData::loadTextures()
 void EditorData::saveTextures()
 {
 	TextureBuf buff;
-	for (auto iter = m_textures.begin(); iter != m_textures.end(); ++iter)
+
+	for (const Texture& texture : m_textures)
 	{
-		buff.insert((LPCWSTR)iter.key().utf16(), (LPCWSTR)iter.value().utf16());
+		buff.insert((LPCWSTR)texture.path.utf16(), (LPCWSTR)texture.name().utf16());
 	}
 
 	QString path = m_basePath + "\\textures.pb";
-	buff.save((LPCWSTR)path.utf16());
+	buff.saveBinary((LPCWSTR)path.utf16());
+	buff.saveText((LPCWSTR)(path + ".json").utf16());
 }
 
 void EditorData::loadSubGraphies()
 {
-/*
-	QFile in(m_basePath + "\\subgraphics.json");
-	if (!in.open(QFile::ReadOnly))
-		return;
-
-	QJsonParseError err;
-	QJsonDocument doc = doc.fromJson(in.readAll(), &err);
-	in.close();
-
-	QJsonArray array = doc.array();
-	for (auto iter = array.begin(); iter != array.end(); ++iter)
-	{
-		m_subGraphes.emplace_back(SubGraphData());
-		SubGraphData& dat = m_subGraphes.back();
-
-		QJsonObject obj = iter->toObject();
-		dat.name = obj["name"].toString();
-		dat.texture = obj["texture"].toString();
-
-		QJsonArray params = obj["params"].toArray();
-		for (int i = 0; i < SubGraphData::ParamCount; ++i)
-			dat.param.raw[i] = params[i].toInt();
-	}
-*/
 	SubGraphicsBuf buff;
-	QString path = m_basePath + "/subgraphics.pb";
-	if (buff.load((LPCWSTR)path.utf16()))
+	QString path = m_basePath + "/subgraphics.pb.json";
+	if (buff.loadFromText((LPCWSTR)path.utf16()))
 	{
 		auto& map = buff.subgraphics()->map();
 		for (auto iter = map.begin(); iter != map.end(); ++iter)
@@ -318,10 +256,9 @@ void EditorData::loadSubGraphies()
 			for (auto itInfo = infos.begin(); itInfo != infos.end(); ++itInfo)
 			{
 				auto& info = *itInfo;
-				m_subGraphes.emplace_back(SubGraphData());
-				SubGraphData& dat = m_subGraphes.back();
-				dat.name = name;
-				dat.texture = QString::fromUtf8(info.texture().c_str());
+				SubGraphData dat(name);
+	
+				dat.iTexture = m_textures.idOfName(QString::fromUtf8(info.texture().c_str()));
 				dat.param.srcX = info.xsrc();
 				dat.param.srcY = info.ysrc();
 				dat.param.allNum = info.allnum();
@@ -329,6 +266,7 @@ void EditorData::loadSubGraphies()
 				dat.param.numY = info.ynum();
 				dat.param.sizeX = info.width();
 				dat.param.sizeY = info.height();
+				m_subGraphes.append(dat);
 			}
 		}
 	}
@@ -336,71 +274,23 @@ void EditorData::loadSubGraphies()
 
 void EditorData::saveSubGraphies()
 {
-// 	QJsonArray array;
-// 	for (auto iter = m_subGraphes.begin(); iter != m_subGraphes.end(); ++iter)
-// 	{
-// 		QJsonObject obj;
-// 
-// 		obj.insert("name", iter->name);
-// 		obj.insert("texture", iter->texture);
-// 		
-// 		QJsonArray params;
-// 		for (int i = 0; i < SubGraphData::ParamCount; ++i)
-// 			params.push_back(iter->param.raw[i]);
-// 		obj.insert("params", params);
-// 
-// 		array.push_back(obj);
-// 	}
-// 	QJsonDocument doc(array);
-// 
-// 	QFile out(m_basePath + "\\subgraphics.json");
-// 	if (out.open(QFile::WriteOnly))
-// 	{
-// 		out.write(doc.toJson());
-// 		out.close();
-// 	}
 	SubGraphicsBuf buff;
 	for (auto iter = m_subGraphes.begin(); iter != m_subGraphes.end(); ++iter)
 	{
-		buff.insert((LPCWSTR)iter->name.utf16(), (LPCWSTR)iter->texture.utf16(), (SubGraphRaw*)iter->param.raw);
+		LPCWSTR lpName = (LPCWSTR)iter->name().utf16();
+		LPCWSTR lpTexture = (LPCWSTR)m_textures.nameOfId(iter->iTexture).utf16();
+		buff.insert(lpName, lpTexture, (SubGraphRaw*)iter->param.raw);
 	}
 	QString path(m_basePath + "/subgraphics.pb");
-	buff.save((LPCWSTR)path.utf16());
+	buff.saveBinary((LPCWSTR)path.utf16());
+	buff.saveText((LPCWSTR)(path + ".json").utf16());
 }
 
 void EditorData::loadBulletStyles()
 {
-/*
-	QFile in(m_basePath + "\\bulletstyles.json");
-	if (!in.open(QFile::ReadOnly))
-		return;
-
-	QJsonParseError err;
-	QJsonDocument doc = doc.fromJson(in.readAll(), &err);
-	in.close();
-
-	QJsonArray array = doc.array();
-	for (auto iter = array.begin(); iter != array.end(); ++iter)
-	{
-		m_bulletStyles.emplace_back(BulletStyle());
-		BulletStyle& dat = m_bulletStyles.back();
-
-		QJsonObject obj = iter->toObject();
-		dat.name = obj["name"].toString();
-		dat.type = (BulletStyle::BulletType)obj["type"].toInt();
-		dat.collide = (BulletStyle::CollideType)obj["collide"].toInt();
-		dat.subGraph = obj["subgraph"].toString();
-
-		QJsonArray params = obj["rect"].toArray();
-		dat.centerX = params[0].toDouble();
-		dat.centerY = params[1].toDouble();
-		dat.radianX = params[2].toDouble();
-		dat.radianY = params[3].toDouble();
-	}
-*/
-	QString path(m_basePath + "/bulletstyles.pb");
+	QString path(m_basePath + "/bulletstyles.pb.json");
 	BulletSyltesBuf buff;
-	if (buff.load((LPCWSTR)path.utf16()))
+	if (buff.loadFromText((LPCWSTR)path.utf16()))
 	{
 		auto& map = buff.bulletStyles()->map();
 		for (auto iter = map.begin(); iter != map.end(); ++iter)
@@ -425,37 +315,6 @@ void EditorData::loadBulletStyles()
 
 void EditorData::saveBulletStyles()
 {
-/*
-	QJsonArray array;
-	for (auto iter = m_bulletStyles.begin(); iter != m_bulletStyles.end(); ++iter)
-	{
-		QJsonObject obj;
-
-		obj.insert("name", iter->name);
-		obj.insert("type", iter->type);
-		obj.insert("collide", iter->collide);
-		obj.insert("subgraph", iter->subGraph);
-
-		QJsonArray rect;
-		rect.push_back(iter->centerX);
-		rect.push_back(iter->centerY);
-		rect.push_back(iter->radianX);
-		rect.push_back(iter->radianY);
-		obj.insert("rect", rect);
-
-
-		array.push_back(obj);
-	}
-	QJsonDocument doc(array);
-
-	QFile out(m_basePath + "\\bulletstyles.json");
-	if (out.open(QFile::WriteOnly))
-	{
-		out.write(doc.toJson());
-		out.close();
-	}
-*/
-
 	BulletSyltesBuf buff;
 	auto& map = *buff.bulletStyles()->mutable_map();
 	for (auto iter = m_bulletStyles.begin(); iter != m_bulletStyles.end(); ++iter)
@@ -473,7 +332,8 @@ void EditorData::saveBulletStyles()
 	}
 
 	QString path(m_basePath + "/bulletstyles.pb");
-	buff.save((LPCWSTR)path.utf16());
+	buff.saveBinary((LPCWSTR)path.utf16());
+	buff.saveText((LPCWSTR)(path + ".json").utf16());
 }
 
 void EditorData::savePathSet()
@@ -497,5 +357,6 @@ void EditorData::savePathSet()
 	}
 
 	QString path(m_basePath + "/pathset.pb");
-	buff.save((LPCWSTR)path.utf16());
+	buff.saveBinary((LPCWSTR)path.utf16());
+	buff.saveText((LPCWSTR)(path + ".json").utf16());
 }

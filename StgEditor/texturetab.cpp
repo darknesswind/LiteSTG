@@ -15,8 +15,58 @@
 
 enum TableItemIdx
 {
-	idxSource = 0,
 	idxName,
+	idxSource,
+};
+
+class TextureItem : public QTableWidgetItem
+	, INameChangedNotify
+{
+public:
+	TextureItem(EditorData* pData, uint id, TableItemIdx idx)
+		: m_pData(pData), m_id(id), m_col(idx)
+	{
+		QTableWidgetItem::setData(Qt::DisplayRole, data(Qt::DisplayRole).toString());
+		m_pData->textureMap().nameChangedNotify().registerNotify(this);
+	}
+	virtual ~TextureItem() override
+	{
+		m_pData->textureMap().nameChangedNotify().unregisterNotify(this);
+	}
+	virtual QVariant data(int role) const override
+	{
+		if (role != Qt::DisplayRole)
+			return QTableWidgetItem::data(role);
+
+		return m_pData->textureMap().nameOfId(m_id);
+	}
+	virtual void setData(int role, const QVariant &value) override
+	{
+		if (role != Qt::DisplayRole)
+		{
+			if (m_col == idxName)
+			{
+				m_pData->textureMap().rename(m_id, value.toString());
+				return;
+			}
+		}
+		return QTableWidgetItem::setData(role, value);
+	}
+	virtual void onNameChanged(uint id, IContainer*) override
+	{
+		if (id == m_id)
+		{
+			QString texture = m_pData->textureMap().nameOfId(id);
+			QTableWidgetItem::setData(Qt::DisplayRole, texture);
+		}
+	}
+
+	uint id() const { return m_id; }
+
+private:
+	EditorData* m_pData;
+	uint m_id;
+	TableItemIdx m_col;
 };
 
 TextureTab::TextureTab(QWidget *parent) :
@@ -32,13 +82,14 @@ TextureTab::TextureTab(QWidget *parent) :
 	connect(ui->btnPreMulti, &QPushButton::clicked, this, &TextureTab::onPreMulti);
 
 	connect(ui->tableWidget, &QTableWidget::doubleClicked, this, &TextureTab::queryEdit);
-	connect(ui->tableWidget, &QTableWidget::itemChanged, this, &TextureTab::onItemChanged);
 	connect(&m_timer, &QTimer::timeout, this, &TextureTab::checkTip);
 	ui->tableWidget->setMouseTracking(true);
 	ui->tableWidget->installEventFilter(this);
 
 	ui->tableWidget->horizontalHeader()->setSectionResizeMode(idxSource, QHeaderView::ResizeToContents);
-	ui->tableWidget->horizontalHeader()->setSectionResizeMode(idxName, QHeaderView::Stretch);
+	ui->tableWidget->horizontalHeaderItem(idxSource)->setText(tr("Source"));
+	ui->tableWidget->horizontalHeader()->setSectionResizeMode(idxName, QHeaderView::ResizeToContents);
+	ui->tableWidget->horizontalHeaderItem(idxName)->setText(tr("Name"));
 }
 
 TextureTab::~TextureTab()
@@ -50,12 +101,12 @@ void TextureTab::init()
 {
 	m_pEditorData = EditorData::instance();
 	TextureMap& textureMap = m_pEditorData->textureMap();
-	for (auto iter = textureMap.begin(); iter != textureMap.end(); ++iter)
+	for (const Texture& texture : textureMap)
 	{
 		int row = ui->tableWidget->rowCount();
 		ui->tableWidget->insertRow(row);
-		ui->tableWidget->setItem(row, idxSource, new QTableWidgetItem(iter.key()));
-		ui->tableWidget->setItem(row, idxName, new QTableWidgetItem(iter.value()));
+		ui->tableWidget->setItem(row, idxName, new TextureItem(m_pEditorData, texture.id(), idxName));
+		ui->tableWidget->setItem(row, idxSource, new QTableWidgetItem(texture.path));
 	}
 }
 
@@ -82,12 +133,12 @@ void TextureTab::onAdd()
 			continue;
 
 		QFileInfo info(fileList[i]);
-		textureMap[relPath] = info.baseName();
+		textureMap.append(Texture(info.baseName(), relPath));
 
 		int row = ui->tableWidget->rowCount();
 		ui->tableWidget->insertRow(row);
+		ui->tableWidget->setItem(row, idxName, new TextureItem(m_pEditorData, textureMap.back().id(), idxName));
 		ui->tableWidget->setItem(row, idxSource, new QTableWidgetItem(relPath));
-		ui->tableWidget->setItem(row, idxName, new QTableWidgetItem(info.baseName()));
 	}
 	ui->tableWidget->adjustSize();
 }
@@ -97,10 +148,9 @@ void TextureTab::onRemove()
 	QList<QTableWidgetItem*> items = ui->tableWidget->selectedItems();
 
 	std::set<int> removeRows;
-	for (auto iter = items.begin(); iter != items.end(); ++iter)
+	for (QTableWidgetItem* item : items)
 	{
-		QTableWidgetItem* item = *iter;
-		if (!item || item->column() != idxSource)
+		if (!item || item->column() != idxName)
 			continue;
 
 		if (removeRows.find(item->row()) == removeRows.end())
@@ -125,7 +175,7 @@ void TextureTab::onPreMulti()
 		if (!item || item->column() != idxSource)
 			continue;
 
-		QPixmap texture = EditorData::instance()->getTexture(item->text());
+		QPixmap texture = EditorData::instance()->getTextureByPath(item->text());
 		QImage target = texture.toImage();
 		if (target.format() != QImage::Format_ARGB32)
 		{
@@ -148,19 +198,6 @@ void TextureTab::queryEdit(const QModelIndex& idx)
 		QString path = EditorData::instance()->basePath() + "\\" + idx.data().toString();
 		QDesktopServices::openUrl(QUrl::fromLocalFile(path));
 	}
-}
-
-void TextureTab::onItemChanged(QTableWidgetItem* pNameItem)
-{
-	if (!pNameItem  || pNameItem->column() != idxName)
-		return;
-
-	QTableWidgetItem* srcItem = ui->tableWidget->item(pNameItem->row(), idxSource);
-	if (!srcItem)
-		return;
-
-	QString res = m_pEditorData->changeTextureName(srcItem->text(), pNameItem->text());
-	pNameItem->setText(res);
 }
 
 void TextureTab::hideTip()

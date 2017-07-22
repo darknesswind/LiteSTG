@@ -35,7 +35,7 @@ public:
 public:
 	int exec();
 	void setEndFlag(bool bEnd) { m_bEndFlag = bEnd; }
-	bool changeState(uint nextState);
+	void changeState(uint nextState);
 
 protected:
 	virtual bool Init();
@@ -53,6 +53,7 @@ protected:
 
 private:
 	void StartSyncLoad();
+	bool innerChangeState(uint nextState);
 
 public:
 	static LEngine* engine() { return s_pEngine; }
@@ -69,7 +70,8 @@ protected:
 	bool m_bEndFlag = false;
 	bool m_bLoadReady = true;
 
-	uint m_curState;
+	uint m_curState{ 0 };
+	uint m_nextState{ 0 };
 
 	LUnifiedTimer m_centerTimer;
 	LPathSet m_pathSet;

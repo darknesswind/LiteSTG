@@ -17,7 +17,7 @@
 
 typedef const wchar_t* LPCWSTR;
 typedef std::vector<unsigned char> ByteArray;
-typedef google::protobuf::MessageLite ProtoMsg;
+typedef google::protobuf::Message ProtoMsg;
 
 class ProtoBufBase
 {
@@ -25,10 +25,12 @@ public:
 	ProtoBufBase();
 	virtual ~ProtoBufBase();
 
-	bool save(LPCWSTR lpFilePath);
+	bool saveBinary(LPCWSTR lpFilePath);
+	bool saveText(LPCWSTR lpFilePath);
 
 	bool load(LPCWSTR lpFilePath);
 	bool load(const ByteArray& bytes);
+	bool loadFromText(LPCWSTR lpFilePath);
 
 protected:
 	std::unique_ptr<ProtoMsg> m_spMsg;
@@ -43,6 +45,7 @@ public:
 	inline proto::Textures* textures() { return static_cast<proto::Textures*>(m_spMsg.get()); }
 
 };
+
 //////////////////////////////////////////////////////////////////////////
 struct SubGraphRaw
 {

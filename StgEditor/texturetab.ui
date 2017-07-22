@@ -36,12 +36,12 @@
      </attribute>
      <column>
       <property name="text">
-       <string>Source</string>
+       <string>Name</string>
       </property>
      </column>
      <column>
       <property name="text">
-       <string>Name</string>
+       <string>Source</string>
       </property>
      </column>
     </widget>

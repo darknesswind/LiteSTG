@@ -95,7 +95,7 @@ void BulletTab::updateSubGraphName()
 	SubGraphInfos& subGraphs = m_pEditorData->subgraphies();
 	for (auto iter = subGraphs.begin(); iter != subGraphs.end(); ++iter)
 	{
-		ui.cbSubGraph->addItem(iter->name);
+		ui.cbSubGraph->addItem(iter->name());
 	}
 
 	ui.cbSubGraph->blockSignals(false);
@@ -107,11 +107,11 @@ void BulletTab::updatePreview()
 	if (m_cache.subGraph.isEmpty())
 		return;
 
-	SubGraphData* pDat = m_pEditorData->getSubGraphByName(m_cache.subGraph);
+	const SubGraphData* pDat = m_pEditorData->subgraphies().tryGet(m_cache.subGraph);
 	if (!pDat)
 		return;
 
-	QPixmap texture = m_pEditorData->getTextureByName(pDat->texture);
+	QPixmap texture = m_pEditorData->getTexture(pDat);
 	texture = texture.copy(pDat->param.srcX, pDat->param.srcY, pDat->param.sizeX, pDat->param.sizeY);
 	{
 		QRectF coillide(0, 0, 2 * m_cache.radianX, 2 * m_cache.radianY);

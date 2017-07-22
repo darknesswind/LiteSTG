@@ -22,13 +22,13 @@ LUIObjBase::~LUIObjBase()
 
 void LUIObjBase::Update()
 {
-	for each (LUIObjBase* pChild in m_children)
+	for (LUIObjBase* pChild : m_children)
 		pChild->Update();
 }
 
 void LUIObjBase::draw(LPainter& painter)
 {
-	for each (LUIObjBase* pChild in m_children)
+	for (LUIObjBase* pChild : m_children)
 		pChild->draw(painter);
 }
 

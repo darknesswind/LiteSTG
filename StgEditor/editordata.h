@@ -2,16 +2,38 @@
 #define EDITORDATA_H
 #include <QMap>
 #include <QString>
+#include <unordered_map>
 #include <vector>
 #include <QPixmap>
+#include "dulpexmap.h"
 
-typedef QMap<QString, QString> TextureMap;	// path, name
-struct SubGraphData
+struct Texture : public DulpexMapItem<Texture>
 {
-	enum { ParamCount = 7 };
+	typedef DulpexMapItem<Texture> Base;
+public:
+	Texture(const QString& name, const QString& _path)
+		: Base(name), path(_path)
+	{	}
+	Texture(const std::string& name, const std::string& _path)
+		: Base(QString::fromUtf8(name.c_str()))
+		, path(QString::fromUtf8(_path.c_str()))
+	{	}
+	
+public:
+	QString path;
+};
+typedef DulpexMap<Texture> TextureMap;
 
-	QString name;
-	QString texture;
+struct SubGraphData : public DulpexMapItem<SubGraphData>
+{
+	typedef DulpexMapItem<SubGraphData> Base;
+	enum { ParamCount = 7 };
+public:
+	SubGraphData(const QString& name)
+		: Base(name)
+	{	}
+
+	uint iTexture{ 0 };
 	union
 	{
 		struct
@@ -22,10 +44,19 @@ struct SubGraphData
 			int sizeX, sizeY;
 		};
 		int raw[ParamCount];
-	} param;
+	} param{ 0 };
 	static_assert(sizeof(decltype(param)) == ParamCount * sizeof(int), "ParamCount may be error");
 };
-typedef std::vector<SubGraphData> SubGraphInfos;
+template <>
+void DulpexMap<SubGraphData>::onErase(uint id, IContainer*)
+{
+	for (auto& pair : m_entryMap)
+	{
+		if (pair.second.iTexture == id)
+			pair.second.iTexture = 0;
+	}
+};
+typedef DulpexMap<SubGraphData> SubGraphInfos;
 
 struct BulletStyle
 {
@@ -74,22 +105,22 @@ public:
 	BulletStyles& bulletStyles() { return m_bulletStyles; }
 
 	QString getTextureFullPath(QString source);
-	QPixmap getTexture(QString source);
+	QPixmap getTextureByPath(QString source);
 	QPixmap getTextureByName(QString name);
-	SubGraphData* getSubGraphByName(QString name);
+	QPixmap getTexture(const SubGraphData* pDat);
+	const SubGraphData* getSubGraphByName(QString name);
 
 public:
-	void removeTexture(const QString& source);
-	void removeSubGraph(int idx);
+	void removeTexture(const QString& name);
+	void removeSubGraph(uint id);
 	void removeBulletStyle(int idx);
-	QString changeTextureName(const QString& source, const QString& newName);
-	bool commitSubGraph(int idx, const SubGraphData& newName);
+	QString changeTextureName(const QString& oldName, const QString& newName);
+	bool commitSubGraph(uint id, const SubGraphData& newName);
 	bool commitBulletStyle(int idx, const BulletStyle& style);
 	bool canChangeSubGraphName(int idx, const QString& newName);
 	bool canChangeBulletStyleName(int idx, const QString& newName);
 
 protected:
-	void updateTextureRef(QString srcName, QString dstName);
 
 protected:
 	void loadSettings();
@@ -108,6 +139,8 @@ private:
 	SubGraphInfos m_subGraphes;
 	BulletStyles m_bulletStyles;
 	QMap<QString, QPixmap> m_textureCache;
+
+	std::unordered_map<uint, uint> m_textureConv;
 };
 
 #endif // EDITORDATA_H

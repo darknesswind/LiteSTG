@@ -30,6 +30,9 @@
     <Filter Include="ui\loading">
       <UniqueIdentifier>{7ee5dddd-d5eb-4ffe-a8ed-d02e7b9fd474}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{c88c577f-3628-49e8-b50a-4f4d2e362593}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

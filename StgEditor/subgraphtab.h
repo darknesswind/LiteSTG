@@ -38,7 +38,8 @@ protected:
 	void refreshCtrlData();
 	void refreshCache();
 
-	SubGraphData* getSelectedData();
+	uint idByRow(int row);
+	const SubGraphData* getSelectedData();
 	QTableWidgetItem* getSelectedItem(int col);
 
 private:
