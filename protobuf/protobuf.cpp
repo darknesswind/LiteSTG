@@ -5,12 +5,6 @@
 
 typedef std::wstring_convert<std::codecvt_utf8<wchar_t>> Utf8Convert;
 
-typedef google::protobuf::Map<std::string, std::string> TextureMap;
-typedef TextureMap::value_type TexturePair;
-
-typedef google::protobuf::Map<std::string, proto::SubGraphics_SubInfos> SubGraphMap;
-typedef SubGraphMap::value_type SubGraphPair;
-
 typedef google::protobuf::TextFormat TextFormat;
 
 ProtoBufBase::ProtoBufBase()
@@ -96,7 +90,7 @@ TextureBuf::TextureBuf()
 void TextureBuf::insert(LPCWSTR lpPath, LPCWSTR lpName)
 {
 	Utf8Convert conv;
-	proto::Textures_Texture* pTexture = textures()->add_texture();
+	proto::Textures_Texture* pTexture = msg()->add_texture();
 	pTexture->set_name(conv.to_bytes(lpName));
 	pTexture->set_path(conv.to_bytes(lpPath));
 }
@@ -108,12 +102,21 @@ SubGraphicsBuf::SubGraphicsBuf()
 	m_spMsg = std::make_unique<proto::SubGraphics>();
 }
 
-void SubGraphicsBuf::insert(LPCWSTR pName, LPCWSTR refTexture, const SubGraphRaw* info)
+SubGraphicsBuf::SubInfosRef SubGraphicsBuf::insert(LPCWSTR pName)
 {
 	Utf8Convert cvt;
 
-	auto& infos = subgraphics()->mutable_map()->operator[](cvt.to_bytes(pName));
-	proto::SubGraphics_SubGraphInfo* graphinfo = infos.add_info();
+	proto::SubGraphics_SubInfos* graphinfo = msg()->add_subgraphs();
+
+	graphinfo->set_name(cvt.to_bytes(pName));
+	return graphinfo;
+}
+
+void SubGraphicsBuf::SubInfosRef::insert(LPCWSTR refTexture, const SubGraphRaw* info)
+{
+	Utf8Convert cvt;
+
+	proto::SubGraphics_SubGraphInfo* graphinfo = m_pinfos->add_infos();
 	graphinfo->set_texture(cvt.to_bytes(refTexture));
 	graphinfo->set_xsrc(info->xSrc);
 	graphinfo->set_ysrc(info->ySrc);

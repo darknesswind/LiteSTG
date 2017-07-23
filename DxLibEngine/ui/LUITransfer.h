@@ -13,12 +13,12 @@ public:
 	LUITransferSet() = default;
 	~LUITransferSet()
 	{
-		for each (LUITransferBase* pItem in m_animas)
+		for (LUITransferBase* pItem : m_animas)
 			delete pItem;
 	}
 	void update()
 	{
-		for each (LUITransferBase* pItem in m_animas)
+		for (LUITransferBase* pItem : m_animas)
 			pItem->Update();
 	}
 	void addChild(LUITransferBase* pChild)

@@ -12,22 +12,21 @@ message Textures {
 
 message SubGraphics {
 	message SubGraphInfo {
-		string texture = 1;
-		int32 xSrc = 2;
-		int32 ySrc = 3;
-		int32 allNum = 4;
-		int32 xNum = 5;
-		int32 yNum = 6;
-		int32 width = 7;
-		int32 height = 8;
+		string texture = 2;
+		uint32 xSrc = 3;
+		uint32 ySrc = 4;
+		uint32 allNum = 5;
+		uint32 xNum = 6;
+		uint32 yNum = 7;
+		uint32 width = 8;
+		uint32 height = 9;
 	}
 	message SubInfos {
-		repeated SubGraphInfo info = 1;
+		string name = 1;
+		repeated SubGraphInfo infos = 2;
 	}
-
-	map<string, SubInfos> map = 1;
+	repeated SubInfos subGraphs = 1;
 }
-
 ////////////////////////////////////////////////////////////////////
 
 message Collide {
@@ -42,24 +41,34 @@ message Collide {
 	int32 radianY = 5;
 }
 
-message BulletStyle {
+message BulletStyles {
 	enum BulletType {
 		tGeneral = 0;
 		tRay = 1;
 		tSegment = 2;
 		tCurve = 3;
 	};
-	BulletType type = 1;
-	Collide collide = 2;
-	string graphGroup = 3;
-}
+	message BulletStyle {
+		string name = 1;
+		BulletType type = 2;
+		Collide collide = 3;
+		string graphGroup = 4;
+	}
 
-message BulletStyles {
-	map<string, BulletStyle> map = 1;
+	repeated BulletStyle styles = 1;
+}
+////////////////////////////////////////////////////////////////////
+
+message AnimaCut {
+	message Item {
+		string subGraph = 1;
+		uint32 interval = 2;
+	}
+	string name = 1;
+	repeated Item items = 2;
 }
 
 ////////////////////////////////////////////////////////////////////
-
 message Character {
 	string name = 1;
 	Collide collide = 2;
@@ -67,11 +76,12 @@ message Character {
 
 message Players {
 	message Player {
-		Character base = 1;
-		Collide graze = 2;
-		float speed = 3;
+		string name = 1;
+		Collide collide = 2;
+		Collide graze = 3;
+		float speed = 4;
 	}
-	repeated Player player = 1;
+	repeated Player players = 1;
 }
 
 ////////////////////////////////////////////////////////////////////

@@ -23,8 +23,7 @@ bool LPathSet::load(LPCWSTR lpFile)
 	
 	PathSetBuf buff;
 	buff.load(LAssets::LoadRawData(lpFile));
-	buff.saveText(LString(lpFile).append(L".json").c_str());
-	auto& paths = buff.pathset()->path();
+	auto& paths = buff.msg()->path();
 	for (auto iter = paths.begin(); iter != paths.end(); ++iter)
 	{
 		LPathNodes* pPath = new LPathNodes();

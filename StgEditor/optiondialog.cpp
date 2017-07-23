@@ -10,8 +10,7 @@ OptionDialog::OptionDialog(QWidget *parent) :
 {
 	ui->setupUi(this);
 	m_pEditorData = EditorData::instance();
-
-
+	ui->edBasePath->setText(m_pEditorData->basePath());
 }
 
 OptionDialog::~OptionDialog()

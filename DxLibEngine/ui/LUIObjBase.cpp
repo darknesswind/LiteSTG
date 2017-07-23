@@ -90,7 +90,7 @@ bool LUIObjBase::takeChild(LUIObjBase* pChild)
 
 void LUIObjBase::clearChildren()
 {
-	for each (LUIObjBase* pChild in m_children)
+	for (LUIObjBase* pChild : m_children)
 	{
 		if (pChild->autoDelete())
 			delete pChild;

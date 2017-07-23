@@ -12,7 +12,7 @@ LUIMenu::LUIMenu()
 
 LUIMenu::~LUIMenu()
 {
-	for each (LUIMenuItem* pItem in m_items)
+	for (LUIMenuItem* pItem : m_items)
 		delete pItem;
 }
 

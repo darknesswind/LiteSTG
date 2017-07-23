@@ -18,14 +18,10 @@ void LBulletStyles::LoadBulletStyles(LPCWSTR path)
 	BulletSyltesBuf buff;
 	if (buff.load(LAssets::LoadRawData(path)))
 	{
-		buff.saveText(LString(path).append(L".json").c_str());
-		auto& map = buff.bulletStyles()->map();
-		for (auto iter = map.begin(); iter != map.end(); ++iter)
+		for (auto& bs : buff.msg()->styles())
 		{
 			m_styles.emplace_back(LBulletStyle());
 			LBulletStyle& style = m_styles.back();
-
-			const proto::BulletStyle& bs = iter->second;
 
 			style.type = (BulletType)bs.type();
 			style.elems = LEngine::assets()->GetSubGraphGroup(LString::fromUtf8(bs.graphgroup()).c_str());
@@ -36,7 +32,7 @@ void LBulletStyles::LoadBulletStyles(LPCWSTR path)
 			style.entity.halfWidth = bs.collide().radianx();
 			style.entity.halfHeight = bs.collide().radiany();
 
-			m_nameMap[LString::fromUtf8(iter->first)] = m_styles.size() - 1;
+			m_nameMap[LString::fromUtf8(bs.name())] = m_styles.size() - 1;
 			if (!m_defStyles[(uint)style.type])
 				m_defStyles[(uint)style.type] = m_styles.size() - 1;
 		}

@@ -82,11 +82,6 @@ TextureTab::TextureTab(QWidget *parent) :
 	connect(&m_timer, &QTimer::timeout, this, &TextureTab::checkTip);
 	ui->tableWidget->setMouseTracking(true);
 	ui->tableWidget->installEventFilter(this);
-
-	ui->tableWidget->horizontalHeader()->setSectionResizeMode(idxSource, QHeaderView::ResizeToContents);
-	ui->tableWidget->horizontalHeaderItem(idxSource)->setText(tr("Source"));
-	ui->tableWidget->horizontalHeader()->setSectionResizeMode(idxName, QHeaderView::ResizeToContents);
-	ui->tableWidget->horizontalHeaderItem(idxName)->setText(tr("Name"));
 }
 
 TextureTab::~TextureTab()

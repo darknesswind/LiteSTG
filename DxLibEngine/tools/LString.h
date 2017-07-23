@@ -95,3 +95,15 @@ private:
 	size_t m_argCount{ 0 };
 	Mode m_mode{ modeJoin };
 };
+
+namespace std
+{
+	template<>
+	struct hash<LString>
+	{
+		size_t operator()(const LString& _Keyval) const
+		{
+			return hash<wstring>()(_Keyval);
+		}
+	};
+}

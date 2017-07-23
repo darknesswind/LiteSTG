@@ -32,7 +32,7 @@ public:
 			return !(pItem->IsValid());
 		});
 
-		for each(T *pItem in m_removeList)
+		for (T *pItem : m_removeList)
 		{
 			delete pItem;
 		}		
@@ -41,7 +41,7 @@ public:
 
 	virtual void updateChildren()
 	{
-		for each (T *pItem in m_thisList)
+		for (T *pItem : m_thisList)
 		{
 			pItem->Update();
 		}
@@ -50,7 +50,7 @@ public:
 	void commitRender()
 	{
 		LRender* pRender = LEngine::render();
-		for each(T* pItem in m_thisList)
+		for (T* pItem : m_thisList)
 		{
 			pRender->PushItem(pItem);
 		}
@@ -80,7 +80,7 @@ public:
 
 	void clear()
 	{
-		for each(T* pItem in m_thisList)
+		for (T* pItem : m_thisList)
 		{
 			delete pItem;
 		}

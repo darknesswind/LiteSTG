@@ -39,14 +39,14 @@ class LAssets
 	};
 	struct LSubGraphInfo
 	{
-		std::wstring ref;
-		int xSrc;
-		int ySrc;
-		int allNum;
-		int xNum;
-		int yNum;
-		int width;
-		int height;
+		LString ref;
+		uint xSrc;
+		uint ySrc;
+		uint allNum;
+		uint xNum;
+		uint yNum;
+		uint width;
+		uint height;
 	};
 	struct LSubGraphData
 	{
@@ -54,8 +54,8 @@ class LAssets
 		LGraphHandles handles;
 	};
 #pragma endregion
-	typedef std::unordered_map<LString, LAssetData, std::hash<std::wstring>> LNamedAssetMap;
-	typedef std::unordered_map<LString, LSubGraphData, std::hash<std::wstring>> LSubGraphAssetMap;
+	typedef std::unordered_map<LString, LAssetData> LNamedAssetMap;
+	typedef std::unordered_map<LString, LSubGraphData> LSubGraphAssetMap;
 
 public:
 	LAssets();

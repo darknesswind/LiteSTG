@@ -145,10 +145,9 @@ void EditorData::loadTextures()
 	QString path = m_basePath + "\\textures.pb.json";
 	if (buff.loadFromText((LPCWSTR)path.utf16()))
 	{
-		auto& list = buff.textures()->texture();
-		for (auto iter = list.begin(); iter != list.end(); ++iter)
+		for (auto& texture : buff.msg()->texture())
 		{
-			m_textures.append(Texture(iter->name(), iter->path()));
+			m_textures.append(Texture(texture.name(), texture.path()));
 		}
 	}
 }
@@ -173,14 +172,12 @@ void EditorData::loadSubGraphies()
 	QString path = m_basePath + "/subgraphics.pb.json";
 	if (buff.loadFromText((LPCWSTR)path.utf16()))
 	{
-		auto& map = buff.subgraphics()->map();
-		for (auto iter = map.begin(); iter != map.end(); ++iter)
+		for (auto& subgraph : buff.msg()->subgraphs())
 		{
-			QString name = QString::fromUtf8(iter->first.c_str());
-			auto infos = iter->second.info();
-			for (auto itInfo = infos.begin(); itInfo != infos.end(); ++itInfo)
+			QString name = QString::fromUtf8(subgraph.name().c_str());
+			auto& infos = subgraph.infos();
+			for (auto& info : infos)
 			{
-				auto& info = *itInfo;
 				SubGraphData dat(name);
 	
 				dat.iTexture = m_textures.idOfName(QString::fromUtf8(info.texture().c_str()));
@@ -204,7 +201,9 @@ void EditorData::saveSubGraphies()
 	{
 		LPCWSTR lpName = (LPCWSTR)iter->name().utf16();
 		LPCWSTR lpTexture = (LPCWSTR)m_textures.nameOfId(iter->iTexture).utf16();
-		buff.insert(lpName, lpTexture, (SubGraphRaw*)iter->raw);
+
+		SubGraphicsBuf::SubInfosRef infos = buff.insert(lpName);
+		infos.insert(lpTexture, (SubGraphRaw*)iter->raw);
 	}
 	QString path(m_basePath + "/subgraphics.pb");
 	buff.saveBinary((LPCWSTR)path.utf16());
@@ -217,12 +216,9 @@ void EditorData::loadBulletStyles()
 	BulletSyltesBuf buff;
 	if (buff.loadFromText((LPCWSTR)path.utf16()))
 	{
-		auto& map = buff.bulletStyles()->map();
-		for (auto iter = map.begin(); iter != map.end(); ++iter)
+		for (auto& style : buff.msg()->styles())
 		{
-			BulletStyle dat(QString::fromUtf8(iter->first.c_str()));
-
-			auto& style = iter->second;
+			BulletStyle dat(QString::fromUtf8(style.name().c_str()));
 
 			dat.type = (BulletStyle::BulletType)style.type();
 			QString subGraphName = QString::fromUtf8(style.graphgroup().c_str());
@@ -243,10 +239,10 @@ void EditorData::loadBulletStyles()
 void EditorData::saveBulletStyles()
 {
 	BulletSyltesBuf buff;
-	auto& map = *buff.bulletStyles()->mutable_map();
 	for (const BulletStyle& style : m_bulletStyles)
 	{
-		auto& bullet = map[style.name().toUtf8().toStdString()];
+		auto& bullet = *buff.msg()->add_styles();
+		bullet.set_name(style.name().toUtf8().toStdString());
 		bullet.set_type((BulletSyltesBuf::Type)style.type);
 
 		QString subGraphName = m_subGraphes.nameOfId(style.iSubGraph);
@@ -268,7 +264,7 @@ void EditorData::saveBulletStyles()
 void EditorData::savePathSet()
 {
 	PathSetBuf buff;
-	proto::Path* pPath = buff.pathset()->add_path();
+	proto::Path* pPath = buff.msg()->add_path();
 	pPath->set_name("test");
 	pPath->add_node()->mutable_emptynode()->set_time(100);
 	{

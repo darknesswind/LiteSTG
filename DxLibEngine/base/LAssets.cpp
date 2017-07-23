@@ -32,18 +32,14 @@ void LAssets::LoadTextureList(LPCWSTR lpPath)
 		return;
 	}
 	
-	buff.saveText(LString(lpPath).append(L".json").c_str());
-
 	LString dir(L"resource/");
-
-	auto& list = buff.textures()->texture();
-	for (auto iter = list.begin(); iter != list.end(); ++iter)
+	for (auto& texture : buff.msg()->texture())
 	{
-		LString path = LString::fromUtf8(iter->path());
+		LString path = LString::fromUtf8(texture.path());
 		if (path.empty())
 			continue;
 
-		LString name = LString::fromUtf8(iter->name());
+		LString name = LString::fromUtf8(texture.name());
 		if (name.empty())
 		{
 			size_t nBegin = path.find_last_of(L'/');
@@ -96,16 +92,12 @@ void LAssets::LoadSubGraphicsList(LPCWSTR lpPath)
 		return;
 	}
 
-	buff.saveText(LString(lpPath).append(L".json").c_str());
-
-	auto& map = buff.subgraphics()->map();
-	for (auto iter = map.begin(); iter != map.end(); ++iter)
+	for (auto& subgraph : buff.msg()->subgraphs())
 	{
-		LString name = LString::fromUtf8(iter->first.c_str());
-		auto infos = iter->second.info();
-		for (auto itInfo = infos.begin(); itInfo != infos.end(); ++itInfo)
+		LString name = LString::fromUtf8(subgraph.name());
+		auto& infos = subgraph.infos();
+		for (auto& info : infos)
 		{
-			auto& info = *itInfo;
 			LSubGraphData& datas = m_subGraphics[name];
 			datas.infos.emplace_back(LSubGraphInfo());
 			LSubGraphInfo& dat = datas.infos.back();
@@ -178,7 +170,7 @@ const LGraphHandles& LAssets::GetSubGraphGroup(LPCWSTR pName)
 
 void LAssets::LoadDivGraphics(LSubGraphData& data)
 {
-	for each (const LSubGraphInfo& info in data.infos)
+	for (const LSubGraphInfo& info : data.infos)
 	{
 		LGraphHandle hSrcGraph = GetTexture(info.ref.c_str());
 		data.handles = hSrcGraph.split(
