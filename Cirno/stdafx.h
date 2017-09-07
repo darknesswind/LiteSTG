@@ -12,7 +12,6 @@ typedef const wchar_t* LPCWSTR;
 #include "tools/LString.h"
 
 // LStgEngine
-#include "../LStgEngine/interdef.h"
 
 // this project
 #include "CirnoEngine.h"

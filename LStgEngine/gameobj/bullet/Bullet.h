@@ -2,8 +2,8 @@
 #define _BULLET_H_
 #pragma once
 #include "LGameObject.h"
+#include "LBulletStyles.h"
 
-class LBulletStyle;
 class Bullet : public LCollideObject
 {
 public:

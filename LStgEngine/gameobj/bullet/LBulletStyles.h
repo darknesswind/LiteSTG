@@ -2,12 +2,28 @@
 #define __LBULLETSTYLES_H__
 
 #pragma once
+#include "physic/physic.h"
+
+enum class BulletType
+{
+	Generic,
+	SegmentLaser,
+	RayLaser,
+	CurveLaser,
+	Count
+};
+
+class LBulletStyle;
+struct LBulletVisual
+{
+	LBulletStyle* pStyle = nullptr;
+	LGraphHandle hGraph;
+};
 
 class LBulletStyle
 {
 	friend class LBulletStyles;
 public:
-
 
 	BulletType type = BulletType::Generic;
 	EntityData entity;
@@ -21,7 +37,7 @@ public:
 	~LBulletStyles();
 
 public:
-	void LoadBulletStyles(LPCWSTR path);
+	void LoadAssets(LPCWSTR path);
 	LBulletStyle* getDefaultStyle(BulletType type) { return getStyle(m_defStyles[(uint)type]); }
 	LBulletStyle* getStyle(LPCWSTR name);
 	LBulletStyle* getStyle(uint idx) { return &m_styles[idx]; }

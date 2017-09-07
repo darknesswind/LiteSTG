@@ -41,9 +41,6 @@
     <ClCompile Include="Factory\EnemyFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="Factory\EntityFactory.cpp">
-      <Filter>Factory</Filter>
-    </ClCompile>
     <ClCompile Include="Factory\ShooterFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
@@ -71,9 +68,6 @@
       <Filter>状态机</Filter>
     </ClInclude>
     <ClInclude Include="Factory\EnemyFactory.h">
-      <Filter>Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="Factory\EntityFactory.h">
       <Filter>Factory</Filter>
     </ClInclude>
     <ClInclude Include="Factory\ShooterFactory.h">

@@ -4,16 +4,19 @@
 #include "Manager/SpriteManager.h"
 #include "LPlayer.h"
 
-class LPlayer;
 class LPlayers : public SpriteManager<LPlayer>
 {
 public:
 	LPlayers();
 
-	LPlayer* Add(PlayerType type);
+	void LoadAssets(LPCWSTR path, bool bBinary = true);
+
+	LPlayer* Add(uint characterID, LPlayer::InputType type);
 	LPlayer* GetActiveItem() { return m_pActiveItem; }
 
 protected:
 	LPlayer* m_pActiveItem;
+
+	std::vector<PlayerCharaData> m_datas;
 };
 #endif

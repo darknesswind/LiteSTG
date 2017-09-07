@@ -59,13 +59,13 @@ message BulletStyles {
 }
 ////////////////////////////////////////////////////////////////////
 
-message AnimaCut {
-	message Item {
+message AnimaAction {
+	message Slice {
 		string subGraph = 1;
 		uint32 interval = 2;
 	}
 	string name = 1;
-	repeated Item items = 2;
+	repeated Slice slices = 2;
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -79,7 +79,9 @@ message Players {
 		string name = 1;
 		Collide collide = 2;
 		Collide graze = 3;
-		float speed = 4;
+		float normalSpeed = 4;
+		float slowSpeed = 5;
+		string texture = 6;
 	}
 	repeated Player players = 1;
 }

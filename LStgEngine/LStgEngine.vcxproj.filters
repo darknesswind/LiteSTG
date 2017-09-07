@@ -46,6 +46,9 @@
     <Filter Include="render">
       <UniqueIdentifier>{4137a0d2-d284-498a-bd1f-f02e1b0234b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="physic">
+      <UniqueIdentifier>{102dd635-c511-4fc9-893a-7ec0a45066b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -71,9 +74,6 @@
     </ClInclude>
     <ClInclude Include="gameobj\shooter\LShooters.h">
       <Filter>gameobj\shooter</Filter>
-    </ClInclude>
-    <ClInclude Include="gameobj\player\LControlledPlayer.h">
-      <Filter>gameobj\player</Filter>
     </ClInclude>
     <ClInclude Include="gameobj\player\LPlayers.h">
       <Filter>gameobj\player</Filter>
@@ -108,9 +108,6 @@
     <ClInclude Include="Manager\SpriteManager.h">
       <Filter>manager</Filter>
     </ClInclude>
-    <ClInclude Include="interdef.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="script\LTcc.h">
       <Filter>script</Filter>
     </ClInclude>
@@ -138,6 +135,9 @@
     <ClInclude Include="render\LHitboxLayer.h">
       <Filter>render</Filter>
     </ClInclude>
+    <ClInclude Include="physic\physic.h">
+      <Filter>physic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -160,9 +160,6 @@
     </ClCompile>
     <ClCompile Include="gameobj\shooter\LShooters.cpp">
       <Filter>gameobj\shooter</Filter>
-    </ClCompile>
-    <ClCompile Include="gameobj\player\LControlledPlayer.cpp">
-      <Filter>gameobj\player</Filter>
     </ClCompile>
     <ClCompile Include="gameobj\player\LPlayers.cpp">
       <Filter>gameobj\player</Filter>
@@ -223,6 +220,9 @@
     </ClCompile>
     <ClCompile Include="render\LHitboxLayer.cpp">
       <Filter>render</Filter>
+    </ClCompile>
+    <ClCompile Include="physic\physic.cpp">
+      <Filter>physic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

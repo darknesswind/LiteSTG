@@ -20,6 +20,7 @@ class DebugPainter
 	};
 	struct Quadrangle
 	{
+		Quadrangle() = default;
 		Quadrangle(LPoint ptTopLeft, LPoint ptTopRight
 			, LPoint ptBottomRight, LPoint ptBottomLeft
 			, LRgb clr)
@@ -63,16 +64,16 @@ public:
 	template<typename PosType>
 	void AddLine(PosType p1, PosType p2, LRgb clr)
 	{
-		m_lines.push_back(Line((LPoint)p1, (LPoint)p2, clr));
+		m_lines.emplace_back(Line((LPoint)p1, (LPoint)p2, clr));
 	}
 	void AddCircle(int x, int y, int r, LRgb clr)
 	{
-		m_circles.push_back(Circle(x, y, r, clr));
+		m_circles.emplace_back(Circle(x, y, r, clr));
 	}
 	template<typename PosType>
 	void AddQuadrangle(PosType topLeft, PosType topRight, PosType bottomRight, PosType bottomLeft, LRgb clr)
 	{
-		m_quadrangles.push_back(Quadrangle(topLeft, topRight, bottomRight, bottomLeft, clr));
+		m_quadrangles.emplace_back(Quadrangle(topLeft, topRight, bottomRight, bottomLeft, clr));
 	}
 
 private:

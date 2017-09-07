@@ -81,6 +81,12 @@ bool ProtoBufBase::loadFromText(LPCWSTR lpFilePath)
 	return TextFormat::ParseFromString(str, m_spMsg.get());
 }
 
+bool ProtoBufBase::loadFromText(const ByteArray& bytes)
+{
+	std::string str((char*)bytes.data(), bytes.size());
+	return TextFormat::ParseFromString(str, m_spMsg.get());
+}
+
 //////////////////////////////////////////////////////////////////////////
 TextureBuf::TextureBuf()
 {
@@ -137,4 +143,9 @@ BulletSyltesBuf::BulletSyltesBuf()
 PathSetBuf::PathSetBuf()
 {
 	m_spMsg = std::make_unique<proto::PathSet>();
+}
+
+PlayerDataBuf::PlayerDataBuf()
+{
+	m_spMsg = std::make_unique<proto::Players>();
 }

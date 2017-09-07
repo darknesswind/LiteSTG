@@ -51,6 +51,8 @@ public:
 	~LFixedAnime() = default;
 
 	bool changeState(uint state);
+	void next() { m_iterator.next(); }
+	LGraphHandle graph() { return m_iterator.graph(); }
 
 	uint registerState(const LFixedAnimeCut& cut) { m_states.push_back(cut); return m_states.size() - 1; }
 	uint registerState(LFixedAnimeCut&& cut) { m_states.emplace_back(std::move(cut)); return m_states.size() - 1; }

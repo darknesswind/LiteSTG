@@ -3,30 +3,55 @@
 #pragma once
 #include "LGameObject.h"
 
-enum class PlayerType
+class LPlayerModel;
+struct PlayerCharaData
 {
-	Void,
-	Controlled,
+	LString name;
+	EntityData collide;
+	EntityData graze;
+	float normalSpeed{ 0 };
+	float slowSpeed{ 0 };
+	LString texture;
 };
 
-class LPlayerModel;
 class LPlayer : public LCollideObject
 {
 public:
-	explicit LPlayer(int x = 220, int y = 400);
+	enum InputType
+	{
+		VoidInput,
+		UserInput,
+	};
+
+public:
+	explicit LPlayer(InputType type);
 	virtual ~LPlayer(void);
 
-	void setModel(LPlayerModel* pModel);
+// 	void setModel(LPlayerModel* pModel);
+	void setCharacter(uint id, const PlayerCharaData& chara);
 
 public:	// IGameobj
 	virtual void Update() override;
 	virtual void draw(LPainter& painter) override;
 
 public:	// Player
-	virtual PlayerType GetType() const { return PlayerType::Void; }
+	virtual InputType GetType() const { return m_inputType; }
 
 protected:
+	InputType m_inputType{ VoidInput };
+	PlayerCharaData m_character;
 	destory_ptr<IWalker> m_spWalker;
-	LPlayerModel* m_pModel = nullptr;
+	std::unique_ptr<LPlayerModel> m_spModel;
+
+	int m_counter;
+// 	int m_imgCount;
+// 	int m_actionState;
+// 	int m_nStarImg;
+// 	int m_nEndImg;
+	bool m_bCanShot;
+
+	LGraphHandles m_playerImg;
+	LGraphHandle m_hitBoxImg;
+	LInput* m_pInput;
 };
 #endif

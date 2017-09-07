@@ -4,6 +4,7 @@
 #include "LGameObject.h"
 
 class LWalker;
+class LBulletStyle;
 enum class ShooterType
 {
 	Normal,
@@ -20,9 +21,12 @@ public:
 	virtual ~LShooter(void){}
 
 public:
-	virtual void Update();
-	virtual void draw(LPainter&){}
+	virtual void Update() override;
+	virtual void draw(LPainter&) override {}
+	virtual const Vector2& GetPosition() override { return m_phyData.position; }
 
+	const Vector2&	position() const { return m_phyData.position; }
+	Vector2&		position() { return m_phyData.position; }
 public:
 	LShooter& setFireWays(int _ways)	// ÉèÖÃÉä»÷Â·Êý
 	{
@@ -68,6 +72,7 @@ protected:
 	void baseInit();
 
 protected:
+	PhysicData m_phyData;
 	// bullet data
 	PhysicData m_bulletData;
 	LBulletStyle* m_pBulletStyle;

@@ -152,16 +152,15 @@
     <ClInclude Include="gameobj\enemy\LEnemy.h" />
     <ClInclude Include="gameobj\enemy\LEnemys.h" />
     <ClInclude Include="gameobj\LGameObject.h" />
-    <ClInclude Include="gameobj\player\LControlledPlayer.h" />
     <ClInclude Include="gameobj\player\LPlayers.h" />
     <ClInclude Include="gameobj\shooter\LRayShooter.h" />
     <ClInclude Include="gameobj\shooter\LSegShooter.h" />
     <ClInclude Include="gameobj\shooter\LShooter.h" />
     <ClInclude Include="gameobj\shooter\LShooters.h" />
     <ClInclude Include="gameobj\stage\LStage.h" />
-    <ClInclude Include="interdef.h" />
     <ClInclude Include="Manager\MemoryManager.h" />
     <ClInclude Include="Manager\SpriteManager.h" />
+    <ClInclude Include="physic\physic.h" />
     <ClInclude Include="render\LBulletLayer.h" />
     <ClInclude Include="render\LEnemyLayer.h" />
     <ClInclude Include="render\LHitboxLayer.h" />
@@ -184,7 +183,6 @@
     <ClCompile Include="gameobj\enemy\LEnemy.cpp" />
     <ClCompile Include="gameobj\enemy\LEnemys.cpp" />
     <ClCompile Include="gameobj\LGameObject.cpp" />
-    <ClCompile Include="gameobj\player\LControlledPlayer.cpp" />
     <ClCompile Include="gameobj\player\LPlayers.cpp" />
     <ClCompile Include="gameobj\shooter\LRayShooter.cpp" />
     <ClCompile Include="gameobj\shooter\LSegShooter.cpp" />
@@ -193,6 +191,7 @@
     <ClCompile Include="gameobj\stage\LStage.cpp" />
     <ClCompile Include="Manager\MemoryManager.cpp" />
     <ClCompile Include="Manager\SpriteManager.cpp" />
+    <ClCompile Include="physic\physic.cpp" />
     <ClCompile Include="render\LBulletLayer.cpp" />
     <ClCompile Include="render\LEnemyLayer.cpp" />
     <ClCompile Include="render\LHitboxLayer.cpp" />

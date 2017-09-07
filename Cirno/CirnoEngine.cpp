@@ -63,7 +63,7 @@ void CirnoEngine::OnEnterState(uint state)
 				m_spPane = std::make_unique<BaseFrame>();
 			m_spRootUI->pushChild(m_spPane.get());
 
-			m_spPlayers->Add(PlayerType::Controlled);
+			m_spPlayers->Add(0, LPlayer::UserInput);
 			for (int i = 0; i < 1; ++i)
 			{
 				LEnemy* pEnemy = m_spEnemys->Add();

@@ -68,8 +68,10 @@ public:
 
 public:
 	LGraphHandle GetTexture(LPCWSTR name);
+	LGraphHandle GetTexture(LString name) { return GetTexture(name.c_str()); }
 	LSoundHandle GetSoundEffect(LPCWSTR name);
 	const LGraphHandles& GetSubGraphGroup(LPCWSTR name);
+	const LGraphHandles& GetSubGraphGroup(const LString& name) { return GetSubGraphGroup(name.c_str()); }
 
 protected:
 // 	void LoadAssetsList(LPCWSTR lpPath, LNamedAssetMap& map);

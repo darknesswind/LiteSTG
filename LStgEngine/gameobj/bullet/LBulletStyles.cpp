@@ -13,7 +13,7 @@ LBulletStyles::~LBulletStyles()
 
 }
 
-void LBulletStyles::LoadBulletStyles(LPCWSTR path)
+void LBulletStyles::LoadAssets(LPCWSTR path)
 {
 	BulletSyltesBuf buff;
 	if (buff.load(LAssets::LoadRawData(path)))
@@ -24,13 +24,9 @@ void LBulletStyles::LoadBulletStyles(LPCWSTR path)
 			LBulletStyle& style = m_styles.back();
 
 			style.type = (BulletType)bs.type();
-			style.elems = LEngine::assets()->GetSubGraphGroup(LString::fromUtf8(bs.graphgroup()).c_str());
+			style.elems = LEngine::assets()->GetSubGraphGroup(LString::fromUtf8(bs.graphgroup()));
 
-			style.entity.type = (EntityData::Type)bs.collide().type();
-			style.entity.center.rx() = bs.collide().centerx();
-			style.entity.center.ry() = bs.collide().centery();
-			style.entity.halfWidth = bs.collide().radianx();
-			style.entity.halfHeight = bs.collide().radiany();
+			style.entity.fromConfig(bs.collide());
 
 			m_nameMap[LString::fromUtf8(bs.name())] = m_styles.size() - 1;
 			if (!m_defStyles[(uint)style.type])

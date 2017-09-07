@@ -114,7 +114,6 @@
   <ItemGroup>
     <ClCompile Include="CirnoEngine.cpp" />
     <ClCompile Include="Factory\EnemyFactory.cpp" />
-    <ClCompile Include="Factory\EntityFactory.cpp" />
     <ClCompile Include="Factory\ShooterFactory.cpp" />
     <ClCompile Include="DebugInfo.cpp" />
     <ClCompile Include="main.cpp">
@@ -131,7 +130,6 @@
     <ClInclude Include="DxLib.h" />
     <ClInclude Include="CirnoEngine.h" />
     <ClInclude Include="Factory\EnemyFactory.h" />
-    <ClInclude Include="Factory\EntityFactory.h" />
     <ClInclude Include="Factory\ShooterFactory.h" />
     <ClInclude Include="DebugInfo.h" />
     <ClInclude Include="StateMachine.h" />

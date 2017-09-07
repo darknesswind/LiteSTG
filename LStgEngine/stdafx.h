@@ -27,5 +27,4 @@
 #include "render/LPainter.h"
 
 // LStgEngine
-#include "interdef.h"
 #include "LStgEngine.h"

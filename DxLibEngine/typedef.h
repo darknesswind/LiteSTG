@@ -144,10 +144,10 @@ __interface IGameObject : public IDrawableObj
 struct PhysicData
 {
 	Vector2	position;	// 位置		[in][out]
+	Radian	radian;		// 方向		[in][out]
 	Vector2	speed;		// 速度		[in][out]
 	Vector2	acceleration;// 加速度	[in]
 	float	friction;	// 摩擦		[in]
-	Radian	radian;		// 方向		[in][out]
 
 	PhysicData() : friction(0)
 	{

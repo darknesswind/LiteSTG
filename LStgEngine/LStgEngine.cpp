@@ -51,7 +51,8 @@ void LStgEngine::OnAsyncLoading()
 	m_spInput->registerKey(StgKey::Slow, Keys::LShift);
 
 	m_pathSet.load(L".\\resource\\PathSet.pb");
-	m_spBullets->styles()->LoadBulletStyles(L"resource\\bulletstyles.pb");
+	m_spBullets->styles()->LoadAssets(L"resource\\bulletstyles.pb");
+	m_spPlayers->LoadAssets(L"resource\\player.pb.json", false);
 
 	m_spRender->addLayer(tEnemyLayer, std::make_unique<LEnemyLayer>());
 	m_spRender->addLayer(tPlayerLayer, std::make_unique<LPlayerLayer>());

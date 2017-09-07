@@ -31,6 +31,7 @@ public:
 	bool load(LPCWSTR lpFilePath);
 	bool load(const ByteArray& bytes);
 	bool loadFromText(LPCWSTR lpFilePath);
+	bool loadFromText(const ByteArray& bytes);
 
 protected:
 	std::unique_ptr<ProtoMsg> m_spMsg;
@@ -84,6 +85,14 @@ public:
 	proto::BulletStyles* msg() { return static_cast<proto::BulletStyles*>(m_spMsg.get()); }
 
 	typedef proto::BulletStyles::BulletType Type;
+};
+
+class PlayerDataBuf : public ProtoBufBase
+{
+public:
+	PlayerDataBuf();
+
+	proto::Players* msg() { return static_cast<proto::Players*>(m_spMsg.get()); }
 };
 
 //////////////////////////////////////////////////////////////////////////
