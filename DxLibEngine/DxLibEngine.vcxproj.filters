@@ -7,9 +7,6 @@
     <Filter Include="tools">
       <UniqueIdentifier>{3ce007f2-6a3c-4e1c-87d4-3b48798b762b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="move">
-      <UniqueIdentifier>{b6936c78-1d93-4243-ada5-285a60946426}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ui">
       <UniqueIdentifier>{6ef8be09-167e-4047-8fbc-127e95d5b0c1}</UniqueIdentifier>
     </Filter>
@@ -66,29 +63,8 @@
     <ClInclude Include="base\LHandle.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="move\LPhysicWalker.h">
-      <Filter>move</Filter>
-    </ClInclude>
-    <ClInclude Include="move\LWalker.h">
-      <Filter>move</Filter>
-    </ClInclude>
     <ClInclude Include="tools\Angle.h">
       <Filter>tools</Filter>
-    </ClInclude>
-    <ClInclude Include="move\LPathWalker.h">
-      <Filter>move</Filter>
-    </ClInclude>
-    <ClInclude Include="move\LFollowWalker.h">
-      <Filter>move</Filter>
-    </ClInclude>
-    <ClInclude Include="move\LControlledWalker.h">
-      <Filter>move</Filter>
-    </ClInclude>
-    <ClInclude Include="move\LPathNodes.h">
-      <Filter>move</Filter>
-    </ClInclude>
-    <ClInclude Include="move\LPathSet.h">
-      <Filter>move</Filter>
     </ClInclude>
     <ClInclude Include="base\LAssets.h">
       <Filter>base</Filter>
@@ -184,27 +160,6 @@
     </ClCompile>
     <ClCompile Include="base\LHandle.cpp">
       <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="move\LPhysicWalker.cpp">
-      <Filter>move</Filter>
-    </ClCompile>
-    <ClCompile Include="move\LWalker.cpp">
-      <Filter>move</Filter>
-    </ClCompile>
-    <ClCompile Include="move\LPathWalker.cpp">
-      <Filter>move</Filter>
-    </ClCompile>
-    <ClCompile Include="move\LFollowWalker.cpp">
-      <Filter>move</Filter>
-    </ClCompile>
-    <ClCompile Include="move\LControlledWalker.cpp">
-      <Filter>move</Filter>
-    </ClCompile>
-    <ClCompile Include="move\LPathNodes.cpp">
-      <Filter>move</Filter>
-    </ClCompile>
-    <ClCompile Include="move\LPathSet.cpp">
-      <Filter>move</Filter>
     </ClCompile>
     <ClCompile Include="base\LAssets.cpp">
       <Filter>base</Filter>

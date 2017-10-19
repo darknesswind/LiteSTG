@@ -3,7 +3,6 @@
 #pragma once
 
 #include "tools/LUnifiedTimer.h"
-#include "move/LPathSet.h"
 
 namespace GameState
 {
@@ -30,7 +29,6 @@ public:
 
 public:
 	LUnifiedTimer& unifiedTimer() { return m_centerTimer; }
-	LPathSet& pathSet() { return m_pathSet; }
 
 public:
 	int exec();
@@ -74,7 +72,6 @@ protected:
 	uint m_nextState{ 0 };
 
 	LUnifiedTimer m_centerTimer;
-	LPathSet m_pathSet;
 
 	std::unique_ptr<LRender> m_spRender;
 	std::unique_ptr<LAssets> m_spAssets;

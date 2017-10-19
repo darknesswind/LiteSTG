@@ -10,6 +10,7 @@ class LPlayers;
 class LEnemys;
 class LPlayer;
 class LBulletStyles;
+class LPathSet;
 #pragma endregion
 
 class LStgEngine : public LEngine
@@ -34,6 +35,7 @@ public:
 public:
 	LBullets* getBullets() { return m_spBullets.get(); }
 	LEnemys* getEnemys() { return m_spEnemys.get(); }
+	LPathSet* pathSet() { return m_spPathSet.get(); }
 
 public:
 	LPlayer* getActivePlayer();
@@ -42,6 +44,7 @@ protected:
 	std::unique_ptr<LBullets> m_spBullets;
 	std::unique_ptr<LPlayers> m_spPlayers;
 	std::unique_ptr<LEnemys> m_spEnemys;
+	std::unique_ptr<LPathSet> m_spPathSet;
 };
 
 #endif

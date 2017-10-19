@@ -49,6 +49,9 @@
     <Filter Include="physic">
       <UniqueIdentifier>{102dd635-c511-4fc9-893a-7ec0a45066b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="move">
+      <UniqueIdentifier>{4ed55559-7714-4750-85f6-359c758ffe12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -138,6 +141,27 @@
     <ClInclude Include="physic\physic.h">
       <Filter>physic</Filter>
     </ClInclude>
+    <ClInclude Include="move\LControlledWalker.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LFollowWalker.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LPathNodes.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LPathSet.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LPathWalker.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LPhysicWalker.h">
+      <Filter>move</Filter>
+    </ClInclude>
+    <ClInclude Include="move\LWalker.h">
+      <Filter>move</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -223,6 +247,27 @@
     </ClCompile>
     <ClCompile Include="physic\physic.cpp">
       <Filter>physic</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LControlledWalker.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LFollowWalker.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LPathNodes.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LPathSet.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LPathWalker.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LPhysicWalker.cpp">
+      <Filter>move</Filter>
+    </ClCompile>
+    <ClCompile Include="move\LWalker.cpp">
+      <Filter>move</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

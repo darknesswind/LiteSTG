@@ -115,7 +115,6 @@ bool LEngine::NeedUpdate()
 
 void LEngine::BeforeEnd()
 {
-	m_pathSet.clear();
 	m_spRootUI->clearChildren();
 }
 

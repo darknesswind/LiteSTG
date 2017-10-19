@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 #include "LPathWalker.h"
 #include "base/LEngine.h"
+#include "move/LPathSet.h"
 
 LPathWalker::LPathWalker()
 	: LPathWalker(0)
@@ -44,5 +45,5 @@ void LPathWalker::nextStep(PhysicData& data)
 
 void LPathWalker::setPath(uint id)
 {
-	m_pPath = LEngine::engine()->pathSet().getPath(id);
+	m_pPath = LStgEngine::engine()->pathSet()->getPath(id);
 }

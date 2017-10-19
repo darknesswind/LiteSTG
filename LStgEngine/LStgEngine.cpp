@@ -13,6 +13,7 @@
 #include "player/LPlayers.h"
 #include "enemy/LEnemys.h"
 #include "ui/LUIObjBase.h"
+#include "move/LPathSet.h"
 
 LStgEngine::LStgEngine(void)
 	: LEngine()
@@ -35,7 +36,7 @@ bool LStgEngine::Init()
 	m_spBullets = std::make_unique<LBullets>();
 	m_spPlayers = std::make_unique<LPlayers>();
 	m_spEnemys = std::make_unique<LEnemys>();
-
+	m_spPathSet = std::make_unique<LPathSet>();
 	return bSucceed;
 }
 
@@ -50,7 +51,7 @@ void LStgEngine::OnAsyncLoading()
 	m_spInput->registerKey(StgKey::Bomb, Keys::X);
 	m_spInput->registerKey(StgKey::Slow, Keys::LShift);
 
-	m_pathSet.load(L".\\resource\\PathSet.pb");
+	m_spPathSet->load(L".\\resource\\PathSet.pb");
 	m_spBullets->styles()->LoadAssets(L"resource\\bulletstyles.pb");
 	m_spPlayers->LoadAssets(L"resource\\player.pb.json", false);
 
@@ -74,6 +75,7 @@ void LStgEngine::BeforeEnd()
 	m_spEnemys->clear();
 	m_spPlayers->clear();
 	m_spBullets->clear();
+	m_spPathSet->clear();
 
 	Base::BeforeEnd();
 }

@@ -160,6 +160,13 @@
     <ClInclude Include="gameobj\stage\LStage.h" />
     <ClInclude Include="Manager\MemoryManager.h" />
     <ClInclude Include="Manager\SpriteManager.h" />
+    <ClInclude Include="move\LControlledWalker.h" />
+    <ClInclude Include="move\LFollowWalker.h" />
+    <ClInclude Include="move\LPathNodes.h" />
+    <ClInclude Include="move\LPathSet.h" />
+    <ClInclude Include="move\LPathWalker.h" />
+    <ClInclude Include="move\LPhysicWalker.h" />
+    <ClInclude Include="move\LWalker.h" />
     <ClInclude Include="physic\physic.h" />
     <ClInclude Include="render\LBulletLayer.h" />
     <ClInclude Include="render\LEnemyLayer.h" />
@@ -191,6 +198,13 @@
     <ClCompile Include="gameobj\stage\LStage.cpp" />
     <ClCompile Include="Manager\MemoryManager.cpp" />
     <ClCompile Include="Manager\SpriteManager.cpp" />
+    <ClCompile Include="move\LControlledWalker.cpp" />
+    <ClCompile Include="move\LFollowWalker.cpp" />
+    <ClCompile Include="move\LPathNodes.cpp" />
+    <ClCompile Include="move\LPathSet.cpp" />
+    <ClCompile Include="move\LPathWalker.cpp" />
+    <ClCompile Include="move\LPhysicWalker.cpp" />
+    <ClCompile Include="move\LWalker.cpp" />
     <ClCompile Include="physic\physic.cpp" />
     <ClCompile Include="render\LBulletLayer.cpp" />
     <ClCompile Include="render\LEnemyLayer.cpp" />

@@ -113,13 +113,6 @@
     <ClInclude Include="base\LScreen.h" />
     <ClInclude Include="base\LWindow.h" />
     <ClInclude Include="enumations.h" />
-    <ClInclude Include="move\LControlledWalker.h" />
-    <ClInclude Include="move\LFollowWalker.h" />
-    <ClInclude Include="move\LPathNodes.h" />
-    <ClInclude Include="move\LPathSet.h" />
-    <ClInclude Include="move\LPathWalker.h" />
-    <ClInclude Include="move\LPhysicWalker.h" />
-    <ClInclude Include="move\LWalker.h" />
     <ClInclude Include="render\DebugPainter.h" />
     <ClInclude Include="render\LDebugLayer.h" />
     <ClInclude Include="render\LPainter.h" />
@@ -159,13 +152,6 @@
     <ClCompile Include="base\LAssets.cpp" />
     <ClCompile Include="base\LScreen.cpp" />
     <ClCompile Include="base\LWindow.cpp" />
-    <ClCompile Include="move\LControlledWalker.cpp" />
-    <ClCompile Include="move\LFollowWalker.cpp" />
-    <ClCompile Include="move\LPathNodes.cpp" />
-    <ClCompile Include="move\LPathSet.cpp" />
-    <ClCompile Include="move\LPathWalker.cpp" />
-    <ClCompile Include="move\LPhysicWalker.cpp" />
-    <ClCompile Include="move\LWalker.cpp" />
     <ClCompile Include="render\DebugPainter.cpp" />
     <ClCompile Include="render\LDebugLayer.cpp" />
     <ClCompile Include="render\LPainter.cpp" />
