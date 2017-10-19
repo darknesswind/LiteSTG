@@ -45,7 +45,7 @@ void LEngine::StartSyncLoad()
 	{
 		auto beginFrame = m_centerTimer.curFrame();
 		OnAsyncLoading();
-		while (m_centerTimer.curFrame() - beginFrame < 180)
+// 		while (m_centerTimer.curFrame() - beginFrame < 180)
 		{
 		}
 		m_bLoadReady = true;

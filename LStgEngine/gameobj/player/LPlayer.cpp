@@ -64,11 +64,11 @@ void LPlayer::Update()
 	if ((m_counter & 0x1) == 0x1)
 		m_phyData.radian += Radian(.02f);
 
-/*
-#pragma region ImgControl
 	if (m_spModel)
 		m_spModel->update();
 
+/*
+#pragma region ImgControl
 	switch (m_actionState)
 	{
 	case 4:

@@ -32,7 +32,7 @@ public:
 	uint interval() const { return m_inteval; }
 
 	void assign(const LGraphHandles& graphs) { m_graphs = graphs; }
-	void assign(LGraphHandles&& graphs) { m_graphs = graphs; }
+	void assign(LGraphHandles&& graphs) { m_graphs = std::move(graphs); }
 	uint size() const { return m_graphs.size(); }
 	LGraphHandle getGraph(uint idx) const { return m_graphs[idx]; }
 

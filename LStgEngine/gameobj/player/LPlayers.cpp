@@ -35,7 +35,7 @@ void LPlayers::LoadAssets(LPCWSTR path, bool bBinary /*= true*/)
 
 LPlayer* LPlayers::Add(uint characterID, LPlayer::InputType type)
 {
-	LPlayer* pPlayer = new LPlayer(LPlayer::UserInput);
+	LPlayer* pPlayer = new LPlayer(type);
 	if (characterID < m_datas.size())
 		pPlayer->setCharacter(characterID, m_datas[characterID]);
 
