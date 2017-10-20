@@ -45,7 +45,7 @@ public:
 	void	setGreen(uchar green)	{ m_color.rgbMap.green = green; }
 	void	setBlue(uchar blue)		{ m_color.rgbMap.blue = blue; }
 	void	setAlpha(uchar alpha)	{ m_color.rgbMap.alpha = alpha; }
-	void	setRgb(uchar red, uchar green, uchar blue, uchar alpha = 255)
+	void	setRgb(uchar red, uchar green, uchar blue, uchar alpha = 255) noexcept
 	{
 		m_color.rgbMap.red = red;
 		m_color.rgbMap.green = green;

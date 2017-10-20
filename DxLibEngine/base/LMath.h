@@ -17,22 +17,22 @@
 
 #define L_EPSIONF FLT_EPSILON
 
-inline float Deg2Rad(float degrees)
+inline constexpr float Deg2Rad(float degrees)
 {
 	return degrees * float(L_PI / 180);
 }
 
-inline double Deg2Rad(double degrees)
+inline constexpr double Deg2Rad(double degrees)
 {
 	return degrees * (L_PI / 180);
 }
 
-inline float Rad2Deg(float radians)
+inline constexpr float Rad2Deg(float radians)
 {
 	return radians * float(180 / L_PI);
 }
 
-inline double Rad2Deg(double radians)
+inline constexpr double Rad2Deg(double radians)
 {
 	return radians * (180 / L_PI);
 }
@@ -40,20 +40,20 @@ inline double Rad2Deg(double radians)
 // Qt的计算方法
 #define QT_SINE_TABLE_SIZE 256
 extern const double qt_sine_table[QT_SINE_TABLE_SIZE];
-inline double qFastSin(double x)
+inline constexpr double qFastSin(double x)
 {
-	int si = int(x * (0.5 * QT_SINE_TABLE_SIZE / L_PI)); // Would be more accurate with qRound, but slower.
-	double d = x - si * (2.0 * L_PI / QT_SINE_TABLE_SIZE);
+	int si = static_cast<int>(x * (0.5 * QT_SINE_TABLE_SIZE / L_PI)); // Would be more accurate with qRound, but slower.
+	const double d = x - si * (2.0 * L_PI / QT_SINE_TABLE_SIZE);
 	int ci = si + QT_SINE_TABLE_SIZE / 4;
 	si &= QT_SINE_TABLE_SIZE - 1;
 	ci &= QT_SINE_TABLE_SIZE - 1;
 	return qt_sine_table[si] + (qt_sine_table[ci] - 0.5 * qt_sine_table[si] * d) * d;
 }
 
-inline double qFastCos(double x)
+inline constexpr double qFastCos(double x)
 {
-	int ci = int(x * (0.5 * QT_SINE_TABLE_SIZE / L_PI)); // Would be more accurate with qRound, but slower.
-	double d = x - ci * (2.0 * L_PI / QT_SINE_TABLE_SIZE);
+	int ci = static_cast<int>(x * (0.5 * QT_SINE_TABLE_SIZE / L_PI)); // Would be more accurate with qRound, but slower.
+	const double d = x - ci * (2.0 * L_PI / QT_SINE_TABLE_SIZE);
 	int si = ci + QT_SINE_TABLE_SIZE / 4;
 	si &= QT_SINE_TABLE_SIZE - 1;
 	ci &= QT_SINE_TABLE_SIZE - 1;
@@ -62,10 +62,10 @@ inline double qFastCos(double x)
 #pragma warning( push )
 #pragma warning( disable: 4244 )
 template <typename ResType>
-inline void qFastSinCos(double x, ResType& sine, ResType& cosine)
+inline constexpr void qFastSinCos(double x, ResType& sine, ResType& cosine)
 {
-	int xi = int(x * (0.5 * QT_SINE_TABLE_SIZE / L_PI)); // Would be more accurate with qRound, but slower.
-	double d = x - xi * (2.0 * L_PI / QT_SINE_TABLE_SIZE);
+	int xi = static_cast<int>(x * (0.5 * QT_SINE_TABLE_SIZE / L_PI)); // Would be more accurate with qRound, but slower.
+	const double d = x - xi * (2.0 * L_PI / QT_SINE_TABLE_SIZE);
 	int yi = xi + QT_SINE_TABLE_SIZE / 4;
 
 	xi &= QT_SINE_TABLE_SIZE - 1;
@@ -94,7 +94,7 @@ inline void qFastSinCos(double x, ResType& sine, ResType& cosine)
 #define CosDeg(x) Cos(Deg2Rad(x))
 #define SinCosDeg(x, sine, cosine)	SinCos(Deg2Rad(x), sine, cosine)
 
-inline bool isSameSign(int lhs, int rhs)
+inline constexpr bool isSameSign(int lhs, int rhs)
 {
 	return !((lhs ^ rhs) & 0x80000000);
 }
@@ -123,14 +123,13 @@ static inline bool qFuzzyIsNull(float f)
 	return fabs(f) <= 0.00001f;
 }
 
-static inline bool qIsNull(double d)
+static inline constexpr bool qIsNull(double d)
 {
 	union U {
 		double d;
 		unsigned long long u;
 	};
-	U val;
-	val.d = d;
+	U val{ d };
 	return (val.u & 0x7fffffffffffffffui64) == 0;
 }
 

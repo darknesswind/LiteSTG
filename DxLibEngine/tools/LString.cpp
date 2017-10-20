@@ -2,6 +2,7 @@
 #include "LString.h"
 #include <codecvt>
 #include <map>
+#include <gsl/span>
 
 std::locale LString::s_defaultLocale;
 
@@ -25,9 +26,10 @@ LString& LString::assign(CStrPtr pcstr, size_t size, const std::locale& locale)
 	}
 	else
 	{
+		auto span = gsl::make_span(pcstr, size);
 		LStrBuilder builder(LStrBuilder::modeJoin, L"\\x");
-		for (CStrPtr pch = pcstr; pch < pcstr + size; ++pch)
-			builder.arg(*(Byte*)pch, 2, 16, L'0');
+		for (const char ch : span)
+			builder.arg(static_cast<Byte>(ch), 2, 16, L'0');
 		(*this) = LString(L"\\x") + builder.apply();
 	}
 	return (*this);
@@ -37,7 +39,7 @@ LString& LString::setNum(int val, int base /*= 10*/)
 {
 	const size_t buffsize = 33;
 	WCHAR buff[buffsize] = { 0 };
-	errno_t err = _itow_s(val, buff, base);
+	const errno_t err = _itow_s(val, buff, base);
 	LAssert(0 == err);
 	Base::assign(buff);
 	return (*this);
@@ -47,7 +49,7 @@ LString& LString::setNum(unsigned int val, int base /*= 10*/)
 {
 	const size_t buffsize = 33;
 	wchar_t buff[buffsize] = { 0 };
-	errno_t err = _ultow_s(val, buff, base);
+	const errno_t err = _ultow_s(val, buff, base);
 	assert(0 == err);
 	Base::assign(buff);
 	return (*this);
@@ -55,11 +57,30 @@ LString& LString::setNum(unsigned int val, int base /*= 10*/)
 
 LString& LString::setNum(float val, int prec /*= 6*/)
 {
-	int decimal, sign;
+	int decimal = 0, sign = 0;
 	char buff[_CVTBUFSIZE + 1] = { 0 };
 	_fcvt_s(buff, val, prec, &decimal, &sign);
 	buff[_CVTBUFSIZE] = 0;
-	assign(buff);
+	size_t sourceLen = strlen(buff);
+	size_t dstLen = sourceLen + (sign ? 2 : 1);
+	resize(dstLen);
+	
+	pointer pData = data();
+	if (sign)
+	{
+		*pData = L'-';
+		++pData;
+	}
+	for (size_t i = 0; i < (size_t)decimal; ++i)
+	{
+		pData[i] = buff[i];
+	}
+	pData[decimal] = L'.';
+	pData += decimal + 1;
+	for (size_t i = 0; i < sourceLen - decimal; ++i)
+	{
+		pData[i] = buff[decimal + i];
+	}
 	return (*this);
 }
 
@@ -71,7 +92,7 @@ std::string LString::toUtf8() const
 
 int LString::toInt(bool* pOk) const
 {
-	int result = _wtoi(c_str());
+	const int result = _wtoi(c_str());
 #if _DEBUG
 	if (ERANGE == errno)
 		LLogger::Warning(L"toInt: number overflow");
@@ -85,7 +106,7 @@ int LString::toInt(bool* pOk) const
 
 double LString::toNumber(bool* pOk) const
 {
-	double result = _wtof(c_str());
+	const double result = _wtof(c_str());
 #if _DEBUG
 	if (ERANGE == errno)
 		LLogger::Warning(L"toInt: number overflow");
@@ -163,7 +184,6 @@ LString LStrBuilder::applyPattern() const
 		return m_pattern;
 
 	LString result;
-	size_t pos = 0;
 	CWStrPtr pBegin = m_pattern.c_str();
 	CWStrPtr pPos = pBegin;
 	for (auto iter = m_chpxes.begin(); iter != m_chpxes.end(); ++iter)
@@ -230,7 +250,7 @@ void LStrBuilder::analyzePattern()
 		const wchar_t* pArgBegin = pch - 1;
 		if (pch + 1 < pEnd)
 		{
-			int num2 = pch[1] - L'0';
+			const int num2 = pch[1] - L'0';
 			if (num2 >= 0 && num2 <= 9)
 			{
 				++pch;

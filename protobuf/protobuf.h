@@ -39,12 +39,12 @@ protected:
 //////////////////////////////////////////////////////////////////////////
 class TextureBuf : public ProtoBufBase
 {
+	typedef proto::Textures MsgType;
 public:
 	TextureBuf();
 
 	void insert(LPCWSTR lpPath, LPCWSTR lpName);
-	inline proto::Textures* msg() { return static_cast<proto::Textures*>(m_spMsg.get()); }
-
+	inline MsgType* msg() { return static_cast<MsgType*>(m_spMsg.get()); }
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -58,6 +58,7 @@ struct SubGraphRaw
 
 class SubGraphicsBuf : public ProtoBufBase
 {
+	typedef proto::SubGraphics MsgType;
 public:
 	class SubInfosRef
 	{
@@ -73,34 +74,37 @@ public:
 	SubGraphicsBuf();
 
 	SubInfosRef insert(LPCWSTR pName);
-	proto::SubGraphics* msg() { return static_cast<proto::SubGraphics*>(m_spMsg.get()); }
+	MsgType* msg() { return static_cast<MsgType*>(m_spMsg.get()); }
 };
 
 //////////////////////////////////////////////////////////////////////////
 class BulletSyltesBuf : public ProtoBufBase
 {
+	typedef proto::BulletStyles MsgType;
 public:
 	BulletSyltesBuf();
 
-	proto::BulletStyles* msg() { return static_cast<proto::BulletStyles*>(m_spMsg.get()); }
+	MsgType* msg() { return static_cast<MsgType*>(m_spMsg.get()); }
 
 	typedef proto::BulletStyles::BulletType Type;
 };
 
 class PlayerDataBuf : public ProtoBufBase
 {
+	typedef proto::Players MsgType;
 public:
 	PlayerDataBuf();
 
-	proto::Players* msg() { return static_cast<proto::Players*>(m_spMsg.get()); }
+	MsgType* msg() { return static_cast<MsgType*>(m_spMsg.get()); }
 };
 
 //////////////////////////////////////////////////////////////////////////
 class PathSetBuf : public ProtoBufBase
 {
+	typedef proto::PathSet MsgType;
 public:
 	PathSetBuf();
 
-	proto::PathSet* msg() { return static_cast<proto::PathSet*>(m_spMsg.get()); }
+	MsgType* msg() { return static_cast<MsgType*>(m_spMsg.get()); }
 
 };

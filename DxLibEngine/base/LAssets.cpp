@@ -2,6 +2,7 @@
 #include "LAssets.h"
 #include "LHandle.h"
 #include "protobuf.h"
+#include "gsl/span"
 
 LGraphHandles LAssets::s_emptyGraphHandles;
 
@@ -33,7 +34,7 @@ void LAssets::LoadTextureList(LPCWSTR lpPath)
 	}
 	
 	LString dir(L"resource/");
-	for (auto& texture : buff.msg()->texture())
+	for (const auto& texture : buff.msg()->texture())
 	{
 		LString path = LString::fromUtf8(texture.path());
 		if (path.empty())
@@ -92,11 +93,11 @@ void LAssets::LoadSubGraphicsList(LPCWSTR lpPath)
 		return;
 	}
 
-	for (auto& subgraph : buff.msg()->subgraphs())
+	for (const auto& subgraph : buff.msg()->subgraphs())
 	{
 		LString name = LString::fromUtf8(subgraph.name());
 		auto& infos = subgraph.infos();
-		for (auto& info : infos)
+		for (const auto& info : infos)
 		{
 			LSubGraphData& datas = m_subGraphics[name];
 			datas.infos.emplace_back(LSubGraphInfo());
@@ -191,8 +192,9 @@ ByteArray LAssets::LoadRawData(LPCWSTR lpPath)
 	if (size < 0)
 		LLogger::Error(LStrBuilder(L"Open '%1' failed!").arg(lpPath).apply());
 
-	uchar* pData = (uchar*)DxLib::FileRead_fullyLoad_getImage(hFile);
-	ByteArray res(pData, pData + size);
+	const uchar* pData = reinterpret_cast<const uchar*>(DxLib::FileRead_fullyLoad_getImage(hFile));
+	auto span = gsl::make_span(pData, size);
+	ByteArray res(span.begin(), span.end());
 	return res;
 }
 
@@ -228,7 +230,7 @@ void LCsvTable::insertRow(LCsvRowData row)
 
 std::wstring LCsvTable::getString(uint row, uint col) const
 {
-	if ((size_t)row >= m_data.size())
+	if (row >= m_data.size())
 		return std::wstring();
 
 	const LCsvRowData& rowDat = m_data[row];
@@ -245,6 +247,6 @@ int LCsvTable::getInt(uint row, uint col, int def /*= 0*/) const
 		return def;
 	
 	bool bOk = false;
-	int res = str.toInt(&bOk);
+	const int res = str.toInt(&bOk);
 	return (bOk ? res : def);
 }

@@ -4,6 +4,7 @@
 #include "LGameObject.h"
 
 class LWalker;
+class LBullets;
 class LBulletStyle;
 enum class ShooterType
 {
@@ -72,6 +73,7 @@ protected:
 	void baseInit();
 
 protected:
+	LBullets* m_pBullets{ nullptr };
 	PhysicData m_phyData;
 	// bullet data
 	PhysicData m_bulletData;

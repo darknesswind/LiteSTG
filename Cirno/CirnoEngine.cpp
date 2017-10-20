@@ -4,6 +4,7 @@
 #include "ui/stage/baseFrame.h"
 #include "ui/loading/LoadingUI.h"
 #include "ui/menu/GameMenu.h"
+#include "stage/LStage.h"
 
 // DEBUG
 #include "player/LPlayers.h"
@@ -26,7 +27,6 @@ CirnoEngine::~CirnoEngine()
 bool CirnoEngine::Init()
 {
 	return Base::Init();
-// 	m_spRootUI->addChild(new LoadingUI(nullptr, true));
 }
 
 void CirnoEngine::OnAsyncLoading()
@@ -63,13 +63,14 @@ void CirnoEngine::OnEnterState(uint state)
 				m_spPane = std::make_unique<BaseFrame>();
 			m_spRootUI->pushChild(m_spPane.get());
 
-			m_spPlayers->Add(0, LPlayer::UserInput);
+			m_spStage->players()->Add(0, LPlayer::UserInput);
 			for (int i = 0; i < 1; ++i)
 			{
-				LEnemy* pEnemy = m_spEnemys->Add();
+				LEnemy* pEnemy = m_spStage->enemys()->Add();
 				pEnemy->position().reset(100 + 20 * i, 100);
 				ShooterFactory::createNWaysFlower(pEnemy);
 			}
+			m_spStage->start();
 		}
 		break;
 	default:

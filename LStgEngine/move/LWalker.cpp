@@ -7,6 +7,7 @@
 
 void LWalker::nextStep(PhysicData& data)
 {
+	UNUSED(data);
 }
 
 WalkerPtr LWalker::CreateWalker(WalkerType type)

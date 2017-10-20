@@ -36,7 +36,7 @@ public:
 private:
 	static const int FpsUpdateInterval = 30;
 	static const int cacheSize = 30;
-	int64 m_cache[cacheSize];
+	std::array<int64, cacheSize> m_cache;
 	int64 m_totalMsec;
 	int64 m_nFpsUpdateFrame;
 	int64 m_cursor;

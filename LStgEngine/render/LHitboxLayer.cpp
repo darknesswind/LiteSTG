@@ -13,5 +13,5 @@ LHitboxLayer::~LHitboxLayer()
 
 void LHitboxLayer::draw(LPainter& painter)
 {
-
+	UNUSED(painter);
 }

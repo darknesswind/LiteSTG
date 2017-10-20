@@ -9,13 +9,11 @@ class SegmentLaser;
 class RayLaser;
 class CurveLaser;
 class Bullet;
-class LBulletStyles;
 class LBullets : public SpriteManager<Bullet>
 {
 public:
 	LBullets();
 	void updateChildren() override;
-	LBulletStyles* styles() { return m_spStyles.get(); }
 
 public:
 	Bullet* Add(BulletType type, IGameObject* pParent);
@@ -25,7 +23,6 @@ public:
 	CurveLaser* AddCurveLaser(IGameObject* pParent);
 
 private:
-	std::unique_ptr<LBulletStyles> m_spStyles;
 };
 
 #endif

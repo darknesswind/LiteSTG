@@ -23,13 +23,6 @@ LPlayer::LPlayer(InputType type)
 		break;
 	}
 
-// 	m_actionState = 5;
-// 	m_nStarImg = 0;
-// 	m_nEndImg = 7;
-// 
-// 	m_imgCount = 0;
-	m_bCanShot = true;
-
 	m_renderArg.uDepth = DepthCharacter;
 	m_hitboxClr = LRgb::Lime;
 	m_hitBoxImg = LStgEngine::assets()->GetSubGraphGroup(__T("≈–∂®µ„"))[0];
@@ -38,18 +31,11 @@ LPlayer::LPlayer(InputType type)
 LPlayer::~LPlayer(void)
 {
 }
-/*
-void LPlayer::setModel(LPlayerModel* pModel)
-{
-	if (pModel)
-		m_pModel = pModel;
-}
-*/
 
 void LPlayer::setCharacter(uint id, const PlayerCharaData& chara)
 {
+	UNUSED(id);
 	m_character = chara;
-// 	m_playerImg = LStgEngine::assets()->GetSubGraphGroup(__T("¡È√Œ"));
 	m_spModel = std::make_unique<LTHPlayerModel>();
 	m_spModel->load(LStgEngine::assets()->GetTexture(m_character.texture));
 }
@@ -61,58 +47,18 @@ void LPlayer::Update()
 	m_phyData.position.rx() = max(min(m_phyData.position.x(), 408), 40);
 	m_phyData.position.ry() = max(min(m_phyData.position.y(), 448), 32);
 
-	if ((m_counter & 0x1) == 0x1)
+	if ((++m_counter & 0x1) == 0x1)
 		m_phyData.radian += Radian(.02f);
 
 	if (m_spModel)
-		m_spModel->update();
-
-/*
-#pragma region ImgControl
-	switch (m_actionState)
 	{
-	case 4:
-		if (!m_pInput->isLogicKeyDown(StgKey::Left) || m_pInput->isLogicKeyDown(StgKey::Right))
-		{
-			m_actionState += 1;
-			m_imgCount = 0;
-			m_nStarImg = 0;
-			m_nEndImg = 7;
-		}
-		break;
-	case 5:
-		if (m_pInput->isLogicKeyDown(StgKey::Left))
-		{
-			m_actionState -= 1;
-			m_imgCount = 8;
-			m_nStarImg = 11;
-			m_nEndImg = 15;
-		}
-		if (m_pInput->isLogicKeyDown(StgKey::Right))
-		{
-			m_actionState += 1;
-			m_imgCount = 16;
-			m_nStarImg = 19;
-			m_nEndImg = 23;
-		}
-		break;
-	case 6:
-		if (!m_pInput->isLogicKeyDown(StgKey::Right) || m_pInput->isLogicKeyDown(StgKey::Left))
-		{
-			m_actionState -= 1;
-			m_imgCount = 0;
-			m_nStarImg = 0;
-			m_nEndImg = 7;
-		}
-		break;
+		uint state = LPlayerModel::stNormal;
+		if (m_phyData.speed.x() > 0)
+			state = LPlayerModel::stRight;
+		else if (m_phyData.speed.x() < 0)
+			state = LPlayerModel::stLeft;
+		m_spModel->update(state);
 	}
-	m_imgCount += (m_counter % 5 == 0);
-	if (m_imgCount > m_nEndImg)	m_imgCount = m_nStarImg;
-
-#pragma endregion ImgControl
-*/
-
-	m_counter++;
 }
 
 void LPlayer::draw(LPainter& painter)

@@ -14,6 +14,7 @@
 #include "enemy/LEnemys.h"
 #include "ui/LUIObjBase.h"
 #include "move/LPathSet.h"
+#include "stage/LStage.h"
 
 LStgEngine::LStgEngine(void)
 	: LEngine()
@@ -33,9 +34,8 @@ bool LStgEngine::Init()
 	
 	bool bSucceed = Base::Init();
 
-	m_spBullets = std::make_unique<LBullets>();
-	m_spPlayers = std::make_unique<LPlayers>();
-	m_spEnemys = std::make_unique<LEnemys>();
+	m_spStyles = std::make_unique<LBulletStyles>();
+	m_spStage = std::make_unique<LStage>();
 	m_spPathSet = std::make_unique<LPathSet>();
 	return bSucceed;
 }
@@ -52,8 +52,8 @@ void LStgEngine::OnAsyncLoading()
 	m_spInput->registerKey(StgKey::Slow, Keys::LShift);
 
 	m_spPathSet->load(L".\\resource\\PathSet.pb");
-	m_spBullets->styles()->LoadAssets(L"resource\\bulletstyles.pb");
-	m_spPlayers->LoadAssets(L"resource\\player.pb.json", false);
+	m_spStyles->LoadAssets(L"resource\\bulletstyles.pb");
+	LPlayers::LoadAssets(L"resource\\player.pb.json", false);
 
 	m_spRender->addLayer(tEnemyLayer, std::make_unique<LEnemyLayer>());
 	m_spRender->addLayer(tPlayerLayer, std::make_unique<LPlayerLayer>());
@@ -64,28 +64,18 @@ void LStgEngine::OnAsyncLoading()
 
 void LStgEngine::Update()
 {
-	m_spEnemys->update();
-	m_spPlayers->update();
-	m_spBullets->update();
+	m_spStage->Update();
 	m_spRootUI->Update();
 }
 
 void LStgEngine::BeforeEnd()
 {
-	m_spEnemys->clear();
-	m_spPlayers->clear();
-	m_spBullets->clear();
 	m_spPathSet->clear();
 
 	Base::BeforeEnd();
 }
 
-LBulletStyles* LStgEngine::bulletStyles()
-{
-	return engine()->bullets()->styles();
-}
-
 LPlayer* LStgEngine::getActivePlayer()
 {
-	return m_spPlayers->GetActiveItem();
+	return m_spStage->players()->GetActiveItem();
 }

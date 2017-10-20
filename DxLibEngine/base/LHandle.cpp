@@ -7,17 +7,17 @@ LGraphHandle LGraphHandle::NoneGraph;
 
 bool LHandle::checkValidType(DxHandleType targetType) const
 {
-	bool bAsync = true;
-	DxLib::HANDLEMANAGE& manage = DxLib::HandleManageArray[(uint)targetType];
+	const bool bAsync = true;
+	DxLib::HANDLEMANAGE& manage = DxLib::HandleManageArray[static_cast<uint>(targetType)];
 
 	if ((manage.InitializeFlag == FALSE) ||
 		hasError() ||
 		((m_handle & TypeMask) != manage.HandleTypeMask) ||
-		index() >= (uint)manage.MaxNum)
+		index() >= static_cast<uint>(manage.MaxNum))
 		return false;
 
-	DxLib::HANDLEINFO* pInfo = manage.Handle[m_handle & IndexMask];
-	if (!pInfo || ((int)(pInfo->ID << CheckOffset) != (m_handle & CheckMask)))
+	const DxLib::HANDLEINFO* pInfo = manage.Handle[m_handle & IndexMask];
+	if (!pInfo || (static_cast<int>(pInfo->ID << CheckOffset) != (m_handle & CheckMask)))
 		return false;
 
 	if (!bAsync && pInfo->ASyncLoadCount != 0)
@@ -29,7 +29,7 @@ bool LHandle::checkValidType(DxHandleType targetType) const
 const DxLib::HANDLEINFO* LHandle::innerData() const
 {
 	LAssert(checkValidType(type()));
-	return DxLib::HandleManageArray[(uint)type()].Handle[index()];
+	return DxLib::HandleManageArray[static_cast<uint>(type())].Handle[index()];
 }
 
 void LGraphHandle::getSize(LSize& size)

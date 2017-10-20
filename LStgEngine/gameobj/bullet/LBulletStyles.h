@@ -38,7 +38,7 @@ public:
 
 public:
 	void LoadAssets(LPCWSTR path);
-	LBulletStyle* getDefaultStyle(BulletType type) { return getStyle(m_defStyles[(uint)type]); }
+	LBulletStyle* getDefaultStyle(BulletType type) { return getStyle(m_defStyles[static_cast<uint>(type)]); }
 	LBulletStyle* getStyle(LPCWSTR name);
 	LBulletStyle* getStyle(uint idx) { return &m_styles[idx]; }
 

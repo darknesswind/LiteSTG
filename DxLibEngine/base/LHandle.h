@@ -66,7 +66,7 @@ public:
 	uint index() const { return m_handle & IndexMask; }
 	DxHandleType type() const 
 	{
-		return (DxHandleType)((m_handle & TypeMask) >> TypeOffset);
+		return static_cast<DxHandleType>((m_handle & TypeMask) >> TypeOffset);
 	}
 
 	bool checkValidType(DxHandleType targetType) const;
@@ -106,7 +106,7 @@ public:
 	}
 
 public:
-	const DxLib::IMAGEDATA2* imgData() const { return (DxLib::IMAGEDATA2*)LHandle::innerData(); }
+	const DxLib::IMAGEDATA2* imgData() const { return reinterpret_cast<const DxLib::IMAGEDATA2*>(LHandle::innerData()); }
 	void getSize(LSize& size);
 	void getSize(int* px, int* py) { CheckRes(DxLib::GetGraphSize(m_handle, px, py)); }
 	LGraphHandles split(int xSrc, int ySrc, int allNum, int xNum, int yNum, int width, int height);

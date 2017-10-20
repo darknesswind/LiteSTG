@@ -19,6 +19,7 @@
 #include <cmath>
 #include <array>
 
+#include "gsl/gsl"
 // DxLibEngine
 #include "typedef.h"
 #include "base/LHandle.h"

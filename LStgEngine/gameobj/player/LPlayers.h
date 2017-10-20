@@ -9,7 +9,7 @@ class LPlayers : public SpriteManager<LPlayer>
 public:
 	LPlayers();
 
-	void LoadAssets(LPCWSTR path, bool bBinary = true);
+	static void LoadAssets(LPCWSTR path, bool bBinary = true);
 
 	LPlayer* Add(uint characterID, LPlayer::InputType type);
 	LPlayer* GetActiveItem() { return m_pActiveItem; }
@@ -17,6 +17,6 @@ public:
 protected:
 	LPlayer* m_pActiveItem;
 
-	std::vector<PlayerCharaData> m_datas;
+	static std::vector<PlayerCharaData> s_datas;
 };
 #endif

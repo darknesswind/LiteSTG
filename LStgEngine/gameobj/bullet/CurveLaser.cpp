@@ -13,7 +13,7 @@ void CurveLaser::Update()
 	}
 	else
 	{
-		Vector2& lastPos = m_grids.front().trunkPos;
+		const Vector2& lastPos = m_grids.front().trunkPos;
 		Vector2 dir(curPos - lastPos);
 		if (dir.isFuzzyNull())
 			return;
@@ -48,8 +48,8 @@ void CurveLaser::draw( LPainter& painter )
 		return;
 
 	const static VERTEX2D g_vertexTemplate = { { 0.0f, 0.0f }, 1.0f, { 0xFF, 0xFF, 0xFF, 0xFF }, 0.0f, 0.0f };
-	static VERTEX2D vertexs[2 * g_MaxGridSize];
-	memset(vertexs, 0, sizeof(VERTEX2D) * 2 * g_MaxGridSize);
+	static std::array<VERTEX2D, 2 * g_MaxGridSize> vertexs;
+	memset(vertexs.data(), 0, sizeof(VERTEX2D) * vertexs.size());
 
 	int i = 0;
 	for (LaserGrids::iterator iter = m_grids.begin();
@@ -63,8 +63,8 @@ void CurveLaser::draw( LPainter& painter )
 		vertexs[i + 1].pos.x = iter->rightPos.x();
 		vertexs[i + 1].pos.y = iter->rightPos.y();
 
-		int nMain = i / 2;
-		float pres = (float)nMain / (g_MaxGridSize - 1);
+		const int nMain = i / 2;
+		const float pres = static_cast<float>(nMain) / (g_MaxGridSize - 1);
 		vertexs[i].u = pres;
 		vertexs[i].v = 0;
 		vertexs[i + 1].u = pres;
@@ -75,7 +75,7 @@ void CurveLaser::draw( LPainter& painter )
 
 // 	painter.setDrawBlendMode(DxBlendMode::Add, 100);
 //  painter.setDrawMode(DxDrawMode::Bilinear);
-	painter.drawPrimitive2D(vertexs, 2 * g_MaxGridSize, PrimitiveType::TriangleStrip, m_visual.hGraph, true);
+	painter.drawPrimitive2D(vertexs.data(), 2 * g_MaxGridSize, PrimitiveType::TriangleStrip, m_visual.hGraph, true);
 //  painter.setDrawMode(DxDrawMode::Nearest);
 // 	painter.setDrawBlendMode(DxBlendMode::NoBlend, 0);
 }

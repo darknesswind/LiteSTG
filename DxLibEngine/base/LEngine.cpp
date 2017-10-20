@@ -43,7 +43,7 @@ void LEngine::StartSyncLoad()
 	m_bLoadReady = false;
 	std::thread initThread([this]()
 	{
-		auto beginFrame = m_centerTimer.curFrame();
+		const auto beginFrame = m_centerTimer.curFrame();
 		OnAsyncLoading();
 // 		while (m_centerTimer.curFrame() - beginFrame < 180)
 		{

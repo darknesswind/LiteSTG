@@ -32,7 +32,7 @@ struct PhysicData;
 #	define LASSERT(x) LAssert(x)
 #	define CheckRes(DxLibFunc)		\
 	{								\
-		int hr = (DxLibFunc);		\
+		const int hr = (DxLibFunc);	\
 		assert(0 == hr);			\
 	}
 #else
@@ -63,6 +63,10 @@ struct PhysicData;
 #	define parallel_begin(range)	(range).begin()
 #	define parallel_end(range)		(range).end()
 #endif
+
+#ifndef UNUSED
+#	define UNUSED(x) (x);
+#endif // !UNUSED
 
 template <class T>
 class destory_ptr
@@ -169,8 +173,8 @@ struct PaintArgument
 
 	bool operator< (const PaintArgument& rhs) const
 	{
-		const int lMode = *(const int*)this;
-		const int rMode = *(const int*)&rhs;
+		const uint lMode = rawMode();
+		const uint rMode = rhs.rawMode();
 
 		if (lMode < rMode)
 			return true;
@@ -179,6 +183,8 @@ struct PaintArgument
 		else
 			return (blendParam < rhs.blendParam);
 	}
+private:
+	uint rawMode() const { return *reinterpret_cast<const uint*>(this); }
 };
 static_assert(sizeof(PaintArgument) == sizeof(ushort) * 2 + sizeof(int), "PaintArgument Layout Error!");
 

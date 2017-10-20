@@ -93,30 +93,33 @@ void LPainter::drawExtRotaGraph(float fx, float fy, float ExRateX, float ExRateY
 	hGraph.getSize(size);
 	float x = size.width() / 2.0f, y = size.height() / 2.0f;
 
-	Vector2 p1(-x * ExRateX, -y);
-	Vector2 p2(x * ExRateX + 1, -y);
-	Vector2 p3(x * ExRateX + 1, y * ExRateY);
-	Vector2 p4(-x * ExRateX, y * ExRateY);
+	std::array<Vector2, 4> rc = 
+	{
+		Vector2(-x * ExRateX, -y),
+		Vector2(x * ExRateX + 1, -y),
+		Vector2(x * ExRateX + 1, y * ExRateY),
+		Vector2(-x * ExRateX, y * ExRateY)
+	};
 
 	if (turnFlag)
 	{
 		float fHead = y * ExRateY;
-		p1.setY(fHead);
-		p2.setY(fHead);
-		p3.setY(-y);
-		p4.setY(-y);
+		rc[0].setY(fHead);
+		rc[1].setY(fHead);
+		rc[2].setY(-y);
+		rc[3].setY(-y);
 	}
-	Vector2 *ar[4] = { &p1, &p2, &p3, &p4 };
-	for (int i = 0; i < 4; ++i)
+
+	for (Vector2& pt : rc)
 	{
-		ar[i]->rotate(RAD);
-		ar[i]->rx() += fx;
-		ar[i]->ry() += fy;
+		pt.rotate(RAD);
+		pt.rx() += fx;
+		pt.ry() += fy;
 	}
 	// 	DrawCircle(pos.x, pos.y, 2, 0xFFFF, 0);
 	// 	DrawQuadrangle(p1.x, p1.y,	p2.x, p2.y,
 	// 		p3.x, p3.y,	p4.x, p4.y, 0xFFFFFF, false);
-	CheckRes(DxLib::DrawModiGraphF(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y(), p4.x(), p4.y(), hGraph, true));
+	CheckRes(DxLib::DrawModiGraphF(rc[0].x(), rc[0].y(), rc[1].x(), rc[1].y(), rc[2].x(), rc[2].y(), rc[3].x(), rc[3].y(), hGraph, true));
 }
 
 #pragma endregion
@@ -134,19 +137,19 @@ void LPainter::setDrawMode(DxDrawMode mode)
 
 DxDrawMode LPainter::getDrawMode()
 {
-	return (DxDrawMode)DxLib::GetDrawMode();
+	return static_cast<DxDrawMode>(DxLib::GetDrawMode());
 }
 
 DxBlendMode LPainter::getDrawBlendMode(int* pParam /*= nullptr*/)
 {
 	int blendMode;
 	CheckRes(DxLib::GetDrawBlendMode(&blendMode, pParam));
-	return (DxBlendMode)blendMode;
+	return static_cast<DxBlendMode>(blendMode);
 }
 
 void LPainter::drawPrimitive2D(VERTEX2D* vertexs, int nCount, PrimitiveType type, LHandle hGraph, bool bTrans)
 {
-	DxLib::DrawPrimitive2D(vertexs, nCount, (int)type, hGraph, bTrans);
+	DxLib::DrawPrimitive2D(vertexs, nCount, static_cast<int>(type), hGraph, bTrans);
 }
 
 void LPainter::save()
@@ -166,6 +169,6 @@ void LPainter::restore()
 void LPainter::setPaintArgument(const PaintArgument& arg)
 {
 	setDrawMode(arg.drawMode);
-	setDrawBlendMode(arg.blendMode, (uchar)arg.blendParam);
+	setDrawBlendMode(arg.blendMode, static_cast<uchar>(arg.blendParam));
 }
 

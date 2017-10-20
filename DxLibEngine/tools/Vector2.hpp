@@ -6,33 +6,34 @@
 #pragma warning(disable:4244)
 class Vector2
 {
+	typedef float ValueT;
 public:
 	Vector2() : cx(0), cy(0) { }
 
 	template<typename T1, typename T2>
 	Vector2(T1 xpos, T2 ypos)
-		: cx((float)xpos), cy((float)ypos)
+		: cx(static_cast<ValueT>(xpos)), cy(static_cast<ValueT>(ypos))
 	{
 	}
 
 	template<typename posType>
 	explicit Vector2(const posType& point)
-		: cx((float)point.x()), cy((float)point.y())
+		: cx(static_cast<ValueT>(point.x())), cy(static_cast<ValueT>(point.y()))
 	{
 	}
 
 	~Vector2(void){};
 	
-	float x() const { return cx; }
-	float y() const { return cy; }
-	float& rx() { return cx; }
-	float& ry() { return cy; }
-	void setX(float fx) { cx = fx; }
-	void setY(float fy) { cy = fy; }
+	ValueT x() const { return cx; }
+	ValueT y() const { return cy; }
+	ValueT& rx() { return cx; }
+	ValueT& ry() { return cy; }
+	void setX(ValueT fx) { cx = fx; }
+	void setY(ValueT fy) { cy = fy; }
 
 	void reset()	{ memset(this, 0, sizeof(Vector2)); }
 
-	void reset(float xpos, float ypos)
+	void reset(ValueT xpos, ValueT ypos)
 	{
 		cx = xpos;
 		cy = ypos;
@@ -90,18 +91,18 @@ public:
 		cy = -cy;
 	}
 
-	const float dotProduct(const Vector2 &vect2)	// 点积
+	const ValueT dotProduct(const Vector2 &vect2)	// 点积
 	{
 		return cx * vect2.cx + cy * vect2.cy;
 	}
-	static const float dotProduct(const Vector2 &vect1, const Vector2 &vect2)	// 点积
+	static const ValueT dotProduct(const Vector2 &vect1, const Vector2 &vect2)	// 点积
 	{
 		return vect1.cx * vect2.cx + vect1.cy * vect2.cy;
 	}
 
 	const Vector2 normalized() const	// 返回向量的单位向量
 	{
-		double len = double(cx) * double(cx) +
+		const double len = double(cx) * double(cx) +
 			double(cy) * double(cy);
 		if (qFuzzyIsNull(len - 1.0f))
 			return *this;
@@ -112,7 +113,7 @@ public:
 	}
 	const Vector2 normalized(float times) const	// 返回向量的单位向量的times倍
 	{
-		double len = double(cx) * double(cx) +
+		const double len = double(cx) * double(cx) +
 			double(cy) * double(cy);
 		if (qFuzzyIsNull(len - 1.0f))
 			return *this * times;
@@ -148,15 +149,15 @@ public:
 		return Radian(atan2(cy, cx));
 	}
 
-	const float length() const	// 返回长度
+	const ValueT length() const	// 返回长度
 	{
 		return sqrt(cx * cx + cy * cy);
 	}
-	const float manhattanLength() const	// 曼哈顿距离
+	const ValueT manhattanLength() const	// 曼哈顿距离
 	{
 		return std::abs(cx) + std::abs(cy);
 	}
-	const float lengthSquared() const	// 返回长度的平方
+	const ValueT lengthSquared() const	// 返回长度的平方
 	{
 		return cx * cx + cy * cy;
 	}
@@ -164,21 +165,21 @@ public:
 	/*
 	返回与向量v2的距离
 	*/
-	const float distance(const Vector2 &v2) const
+	const ValueT distance(const Vector2 &v2) const
 	{
 		return (*this - v2).length();
 	}
 	/// <summary>
 	/// 返回与向量v2的距离的平方
 	/// </summary>
-	const float distanceSquared(const Vector2 &v2) const
+	const ValueT distanceSquared(const Vector2 &v2) const
 	{
 		return (*this - v2).lengthSquared();
 	}
 	/// <summary>
 	/// 返回与向量v2的曼哈顿距离
 	/// </summary>
-	const float manhattanDistance(const Vector2 &v2) const
+	const ValueT manhattanDistance(const Vector2 &v2) const
 	{
 		return std::abs(cx - v2.cx) + std::abs(cy - v2.cy);
 	}
@@ -200,14 +201,14 @@ public:
 	/// <summary>
 	/// 返回src在dest上的投影长度
 	/// </summary>
-	static const float project(const Vector2 &src, const Vector2 &dest)
+	static const ValueT project(const Vector2 &src, const Vector2 &dest)
 	{
 		return dotProduct(src, dest) / dest.length();
 	}
 	/// <summary>
 	/// 返回在dest上的投影长度
 	/// </summary>
-	const float project(const Vector2 &dest)
+	const ValueT project(const Vector2 &dest)
 	{
 		return dotProduct(dest) / dest.length();
 	}
@@ -217,8 +218,8 @@ public:
 	/// </summary>
 	Degree degreeBetween(const Vector2& dest) const
 	{
-		float dx = dest.cx - cx;
-		float dy = dest.cy - cy;
+		const float dx = dest.cx - cx;
+		const float dy = dest.cy - cy;
 		return Degree(Rad2Deg(atan2(dy, dx)));
 	}
 	/// <summary>
@@ -226,8 +227,8 @@ public:
 	/// </summary>
 	Radian radianBetween(const Vector2& dest) const
 	{
-		float dx = dest.cx - cx;
-		float dy = dest.cy - cy;
+		const float dx = dest.cx - cx;
+		const float dy = dest.cy - cy;
 		return Radian(atan2(dy, dx));
 	}
 
@@ -261,8 +262,8 @@ public:
 	{
 		if (isFuzzyNull() || vect2.isFuzzyNull())
 			return true;
-		bool bVert = qFuzzyIsNull(cx);
-		bool bOtherVert = qFuzzyIsNull(vect2.cx);
+		const bool bVert = qFuzzyIsNull(cx);
+		const bool bOtherVert = qFuzzyIsNull(vect2.cx);
 		if (!bVert && !bOtherVert)
 			return qFuzzyCompare(cy / cx, vect2.cy / vect2.cx);
 		else if (bVert && bOtherVert)
@@ -365,5 +366,5 @@ public:
 #pragma endregion
 
 protected:
-	float cx, cy;
+	ValueT cx, cy;
 };

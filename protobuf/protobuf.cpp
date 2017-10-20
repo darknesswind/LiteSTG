@@ -90,7 +90,7 @@ bool ProtoBufBase::loadFromText(const ByteArray& bytes)
 //////////////////////////////////////////////////////////////////////////
 TextureBuf::TextureBuf()
 {
-	m_spMsg = std::make_unique<proto::Textures>();
+	m_spMsg = std::make_unique<MsgType>();
 }
 
 void TextureBuf::insert(LPCWSTR lpPath, LPCWSTR lpName)
@@ -105,7 +105,7 @@ void TextureBuf::insert(LPCWSTR lpPath, LPCWSTR lpName)
 
 SubGraphicsBuf::SubGraphicsBuf()
 {
-	m_spMsg = std::make_unique<proto::SubGraphics>();
+	m_spMsg = std::make_unique<MsgType>();
 }
 
 SubGraphicsBuf::SubInfosRef SubGraphicsBuf::insert(LPCWSTR pName)
@@ -136,16 +136,16 @@ void SubGraphicsBuf::SubInfosRef::insert(LPCWSTR refTexture, const SubGraphRaw* 
 //////////////////////////////////////////////////////////////////////////
 BulletSyltesBuf::BulletSyltesBuf()
 {
-	m_spMsg = std::make_unique<proto::BulletStyles>();
+	m_spMsg = std::make_unique<MsgType>();
 }
 
 //////////////////////////////////////////////////////////////////////////
 PathSetBuf::PathSetBuf()
 {
-	m_spMsg = std::make_unique<proto::PathSet>();
+	m_spMsg = std::make_unique<MsgType>();
 }
 
 PlayerDataBuf::PlayerDataBuf()
 {
-	m_spMsg = std::make_unique<proto::Players>();
+	m_spMsg = std::make_unique<MsgType>();
 }

@@ -35,7 +35,7 @@ void LUIMenu::Update()
 	if (!m_bEnable)
 		return;
 
-	LInput* pInput = LEngine::input();
+	const LInput* pInput = LEngine::input();
 	if (pInput->isLogicKeyPress(BaseKey::Ok))
 	{
 		return OnOk();
@@ -72,7 +72,7 @@ void LUIMenu::Update()
 	if (step)
 	{
 		m_activeIdx += step;
-		if (m_activeIdx >= (int)m_items.size())
+		if (m_activeIdx >= static_cast<int>(m_items.size()))
 			m_activeIdx = 0;
 		else if (m_activeIdx < 0)
 			m_activeIdx = m_items.size() - 1;

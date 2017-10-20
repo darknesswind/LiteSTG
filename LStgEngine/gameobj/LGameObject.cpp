@@ -15,6 +15,7 @@ LGameObject::LGameObject(IGameObject* pParent /*= nullptr*/)
 
 void LCollideObject::DrawHitBox(LPainter& painter)
 {
+	UNUSED(painter);
 	if (LRgb::White == m_hitboxClr)
 		return;
 
@@ -104,18 +105,20 @@ bool LCollideObject::CircleCollideWithCircle(const LCollideObject& other) const
 	float radiusSum = other.radius + radius;
 
 	float impossibleLen = radiusSum;
-	if (c_bThisOffset)
+	if constexpr(c_bThisOffset)
 		impossibleLen += center.manhattanLength();
-	if (c_bOtherOffset)
+	if constexpr(c_bOtherOffset)
 		impossibleLen += other.center.manhattanLength();
 
 	if (vSelf2Other.manhattanLength() >= impossibleLen)
 		return false;
 
-	if (c_bThisOffset && !center.isNull())
-		vSelf2Other -= center.rotated(rad);
-	if (c_bOtherOffset && !other.center.isNull())
-		vSelf2Other += other.center.rotated(radOther);
+	if constexpr(c_bThisOffset)
+		if (!center.isNull())
+			vSelf2Other -= center.rotated(rad);
+	if constexpr(c_bOtherOffset)
+		if (!other.center.isNull())
+			vSelf2Other += other.center.rotated(radOther);
 
 	return (vSelf2Other.lengthSquared() < radiusSum * radiusSum);
 }
@@ -137,8 +140,9 @@ bool LCollideObject::RectCollideWithCircle(const LCollideObject& other) const
 	if (vSelf2Other.manhattanLength() >= radiusSum)
 		return false;
 
-	if (c_bOtherOffset && !other.center.isNull())
-		vSelf2Other += other.center.rotated(radOther);
+	if constexpr (c_bOtherOffset)
+		if (!other.center.isNull())
+			vSelf2Other += other.center.rotated(radOther);
 
 	vSelf2Other.rotate(-rad);
 	if (c_bThisOffset)

@@ -4,6 +4,7 @@
 #include "player/LPlayer.h"
 #include "bullet/LBullets.h"
 #include "bullet/LBulletStyles.h"
+#include "stage/LStage.h"
 
 LShooter::LShooter(IGameObject* pParent /*= nullptr*/)
 	: LGameObject(pParent)
@@ -25,7 +26,8 @@ void LShooter::baseInit()
 	setFireSpeed(Vector2(0, 1));
 
 	m_spWalker = LWalker::CreateFollowWalker(m_pParent);
-	m_pBulletStyle = LStgEngine::bulletStyles()->getDefaultStyle(BulletType::Generic);
+	m_pBulletStyle = global::bulletStyles()->getDefaultStyle(BulletType::Generic);
+	m_pBullets = global::stage()->bullets();
 }
 
 void LShooter::Update()
@@ -35,7 +37,7 @@ void LShooter::Update()
 	{
 		m_counter = 0;
 		if (m_bFollowPlayer)
-			m_fireDegree = position().degreeBetween(LStgEngine::engine()->getActivePlayer()->position());
+			m_fireDegree = position().degreeBetween(global::engine()->getActivePlayer()->position());
 
 		m_fireDegree += m_angleSpeed;
 		m_angleSpeed += m_angleAccel;
@@ -45,7 +47,7 @@ void LShooter::Update()
 		angle = m_fireDegree - ((m_fireRange - m_angleIncrease) / 2);
 		for (int i = 0; i < m_fireWays; ++i)
 		{
-			Bullet *pBullet = LStgEngine::bullets()->AddGenericBullet(this);
+			Bullet *pBullet = m_pBullets->AddGenericBullet(this);
 			pBullet->setStyle(m_pBulletStyle, 0);
 			pBullet->setData(m_bulletData);
 			pBullet->setSpeed(m_bulletSpeed, angle);

@@ -4,6 +4,8 @@
 #include "LAssets.h"
 #include "protobuf.h"
 
+std::vector<PlayerCharaData> LPlayers::s_datas;
+
 LPlayers::LPlayers()
 	: m_pActiveItem(nullptr)
 {
@@ -21,9 +23,9 @@ void LPlayers::LoadAssets(LPCWSTR path, bool bBinary /*= true*/)
 	auto players = buff.msg()->players();
 	for (auto& player : players)
 	{
-		m_datas.emplace_back(PlayerCharaData());
+		s_datas.emplace_back(PlayerCharaData());
 
-		PlayerCharaData& data = m_datas.back();
+		PlayerCharaData& data = s_datas.back();
 		data.name = LString::fromUtf8(player.name());
 		data.collide.fromConfig(player.collide());
 		data.graze.fromConfig(player.graze());
@@ -36,8 +38,8 @@ void LPlayers::LoadAssets(LPCWSTR path, bool bBinary /*= true*/)
 LPlayer* LPlayers::Add(uint characterID, LPlayer::InputType type)
 {
 	LPlayer* pPlayer = new LPlayer(type);
-	if (characterID < m_datas.size())
-		pPlayer->setCharacter(characterID, m_datas[characterID]);
+	if (characterID < s_datas.size())
+		pPlayer->setCharacter(characterID, s_datas[characterID]);
 
 	m_thisList.push_back(pPlayer);
 	if (!m_pActiveItem)

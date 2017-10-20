@@ -7,6 +7,8 @@
 
 enum class Keys : uchar
 {
+	None = 0,
+
 	Back = 0x0E,	// 退格键
 	Tab = 0x0F,	// Tab
 	Return = 0x1C,	// 回车键
@@ -142,14 +144,14 @@ public:
 
 public:
 	bool update();	// 更新状态
-	void registerKey(uchar logicKey, Keys physicKey) { m_logicKeyMap[logicKey] = physicKey; }
+	void registerKey(const uchar logicKey, Keys physicKey) { m_logicKeyMap[logicKey] = physicKey; }
 
 public: // Physic Input
-	bool isKeyPress(Keys key)	const	{ return (KeyState::Down == m_keyList[(uchar)key]); }		// 按键被按下
-	bool isKeyRelease(Keys key)	const	{ return (KeyState::Up == m_keyList[(uchar)key]); }			// 按键被松开
-	bool isKeyDown(Keys key)	const	{ return (0 != m_curKeyState[(uchar)key]); }				// 按键这帧处于按下状态
-	bool isKeyHold(Keys key)	const	{ return (KeyState::Hold == m_keyList[(uchar)key]); }		// 按键被按住
-	KeyState keyState(Keys key) const	{ return m_keyList[(uchar)key]; }							// 按键状态
+	bool isKeyPress(Keys key)	const	{ return (KeyState::Down == m_keyList[static_cast<const uchar>(key)]); }		// 按键被按下
+	bool isKeyRelease(Keys key)	const	{ return (KeyState::Up == m_keyList[static_cast<uchar>(key)]); }		// 按键被松开
+	bool isKeyDown(Keys key)	const	{ return (0 != m_curKeyState[static_cast<uchar>(key)]); }				// 按键这帧处于按下状态
+	bool isKeyHold(Keys key)	const	{ return (KeyState::Hold == m_keyList[static_cast<uchar>(key)]); }		// 按键被按住
+	KeyState keyState(Keys key) const	{ return m_keyList[static_cast<uchar>(key)]; }							// 按键状态
 	
 public: // Logic Input
 	bool isLogicKeyPress(uchar key)		const { return isKeyPress(m_logicKeyMap[key]); }
@@ -168,8 +170,8 @@ private:
 protected:
 	const static int KeyCount = 256;
 
-	char m_curKeyState[KeyCount];
-	KeyState m_keyList[KeyCount];
+	std::array<char, KeyCount> m_curKeyState;
+	std::array<KeyState, KeyCount> m_keyList;
 	std::array<Keys, 0x100> m_logicKeyMap;
 
 	LPoint m_mousePos;

@@ -53,6 +53,7 @@ LPathNode::LPathNode(uint frames)
 
 Vector2 LPathNode::exec(const Vector2& beginPos, uint curFrame) const
 {
+	UNUSED(curFrame);
 	return beginPos;
 }
 

@@ -16,7 +16,7 @@ void LFixedAnimeCut::Iterator::next()
 	{
 		m_counter = 0;
 		++m_curIdx;
-		uint size = m_pAnimeCut->size();
+		const uint size = m_pAnimeCut->size();
 		if (m_curIdx >= size)
 			m_curIdx = m_pAnimeCut->loopPos();
 

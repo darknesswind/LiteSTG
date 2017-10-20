@@ -7,12 +7,11 @@
 
 LBullets::LBullets()
 {
-	m_spStyles = std::make_unique<LBulletStyles>();
 }
 
 Bullet* LBullets::Add(BulletType type, IGameObject* pParent)
 {
-	Bullet* pItem = nullptr;
+	gsl::owner<Bullet*> pItem = nullptr;
 	switch (type)
 	{
 	default:

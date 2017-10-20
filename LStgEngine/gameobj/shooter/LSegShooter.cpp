@@ -10,7 +10,7 @@
 LSegShooter::LSegShooter(IGameObject* pParent)
 	: LShooter(pParent)
 {
-	m_pBulletStyle = LStgEngine::bulletStyles()->getDefaultStyle(BulletType::SegmentLaser);
+	m_pBulletStyle = global::bulletStyles()->getDefaultStyle(BulletType::SegmentLaser);
 }
 
 void LSegShooter::Update()
@@ -27,7 +27,7 @@ void LSegShooter::Update()
 		Degree angle = m_fireDegree - ((m_fireRange - m_angleIncrease) / 2);
 		for (int i=0; i<m_fireWays; ++i)
 		{
-			Bullet *pNewBullet = LStgEngine::bullets()->AddSegmentLaser(this);
+			Bullet *pNewBullet = m_pBullets->AddSegmentLaser(this);
 			pNewBullet->setPosition(position());
 			pNewBullet->setData(m_bulletData);
 			pNewBullet->setSpeed(m_bulletSpeed, angle);

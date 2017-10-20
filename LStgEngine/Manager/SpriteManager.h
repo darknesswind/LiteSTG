@@ -6,7 +6,7 @@
 
 #define QuickImplGameObjAdd(Type)	\
 {									\
-	Type* pItem = new Type(pParent);\
+	gsl::owner<Type*> pItem = new Type(pParent);\
 	m_thisList.push_back(pItem);	\
 	return pItem;					\
 }

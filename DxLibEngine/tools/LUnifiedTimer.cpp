@@ -8,7 +8,7 @@ LPerformanceTimer::LPerformanceTimer()
 	if (0 == s_counterFrequency)
 	{
 		LARGE_INTEGER frequency;
-		BOOL bSucceed = QueryPerformanceFrequency(&frequency);
+		const BOOL bSucceed = QueryPerformanceFrequency(&frequency);
 		LAssert(bSucceed);
 		s_counterFrequency = frequency.QuadPart;
 	}
@@ -32,7 +32,7 @@ int64 LPerformanceTimer::getTickCount()
 {
 	LARGE_INTEGER counter;
 	// On systems that run Windows XP or later, the function will always succeed and will thus never return zero.
-	BOOL bSucceed = QueryPerformanceCounter(&counter);
+	const BOOL bSucceed = QueryPerformanceCounter(&counter);
 	LAssert(bSucceed);
 	return counter.QuadPart;
 }

@@ -3,7 +3,7 @@
 #pragma once
 #include <vector>
 
-template <uint g_objectSize, uint g_chunkSize = 1024>
+template <uint g_objectSize, uint c_chunkSize = 1024>
 class LObjectPool
 {
 	static_assert(
@@ -16,7 +16,7 @@ class LObjectPool
 		uchar bytes[g_objectSize];
 		FreeListNode* pNext;
 	};
-
+	struct chunk_t { FreeListNode node[c_chunkSize]; };
 
 public:
 	LObjectPool(void)
@@ -55,8 +55,9 @@ public:
 
 			--m_nAllocCount;
 // 			((ObjectType*)pObject)->~ObjectType();
-			((FreeListNode*)pObject)->pNext = m_pFreeListHeader;
-			m_pFreeListHeader = (FreeListNode*)pObject;
+			FreeListNode* pFreeNode = static_cast<FreeListNode*>(pObject);
+			pFreeNode->pNext = m_pFreeListHeader;
+			m_pFreeListHeader = pFreeNode;
 		}
 	}
 
@@ -64,15 +65,15 @@ public:
 protected:
 	void allocNewChunk()
 	{
-		FreeListNode* pChunk = (FreeListNode*)::malloc(g_chunkSize * sizeof(FreeListNode));
+		chunk_t* pChunk = new (std::nothrow) chunk_t;
 		if (pChunk)
 		{
-			for (uint i = 0; i < g_chunkSize - 1; ++i)
+			for (uint i = 0; i < c_chunkSize - 1; ++i)
 			{
-				pChunk[i].pNext = &(pChunk[i + 1]);
+				pChunk->node[i].pNext = &(pChunk->node[i + 1]);
 			}
-			pChunk[g_chunkSize - 1].pNext = m_pFreeListHeader;
-			m_pFreeListHeader = pChunk;
+			pChunk->node[c_chunkSize - 1].pNext = m_pFreeListHeader;
+			m_pFreeListHeader = pChunk->node;
 			m_chunkList.push_back(pChunk);
 		}
 	}
@@ -81,16 +82,16 @@ protected:
 	{
 		if (idx < m_chunkList.size())
 		{
-			::free(m_chunkList[idx]);
+			delete m_chunkList[idx];
 		}
 	}
 
-	uint getObjectLocal(void* pObject)
+	uint getObjectLocal(const void* pObject)
 	{
 		for (uint i = 0; i < m_chunkList.size(); ++i)
 		{
-			int nOffset = (FreeListNode*)pObject - m_chunkList[i];
-			if (nOffset >= 0 && nOffset < g_chunkSize)
+			const int nOffset = static_cast<const FreeListNode*>(pObject) - static_cast<const FreeListNode*>(m_chunkList[i]->node);
+			if (nOffset >= 0 && nOffset < c_chunkSize)
 				return i;
 		}
 		return (uint)-1;
@@ -98,7 +99,7 @@ protected:
 
 
 private:
-	std::vector<FreeListNode*> m_chunkList;
+	std::vector<chunk_t*> m_chunkList;
 	FreeListNode* m_pFreeListHeader;
 	uint m_nAllocCount;
 };

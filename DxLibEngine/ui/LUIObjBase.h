@@ -20,7 +20,7 @@ public:
 	LUIObjBase* pushChild(LUIObjBase* pChild, bool bAutoDel = false);
 	void popChild();
 	bool removeChild(LUIObjBase* pChild);
-	bool takeChild(LUIObjBase* pChild);
+	bool takeChild(const LUIObjBase* pChild);
 	void clearChildren();
 	
 	bool autoDelete() const				{ return m_bAutoDelete; }

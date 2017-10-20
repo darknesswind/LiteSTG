@@ -7,6 +7,7 @@
 #include "render/LPainter.h"
 #include "Input.h"
 #include "Vector3.hpp"
+#include "stage/LStage.h"
 
 #define TH_X 430
 #define TH_Y 15
@@ -24,7 +25,7 @@ void DebugInfo::Draw( LPainter& painter )
 	}
 	painter.drawString(
 		TH_X, TH_Y + TH_DY,
-		LStrBuilder(L"Bullet: %1").arg(LStgEngine::bullets()->size()).apply().c_str(),
+		LStrBuilder(L"Bullet: %1").arg(global::stage()->bullets()->size()).apply().c_str(),
 		LRgb::White);
 	painter.drawString(
 		0, 0,

@@ -5,12 +5,10 @@
 #include "LEngine.h"
 
 #pragma region pre-define
-class LBullets;
-class LPlayers;
-class LEnemys;
 class LPlayer;
 class LBulletStyles;
 class LPathSet;
+class LStage;
 #pragma endregion
 
 class LStgEngine : public LEngine
@@ -28,23 +26,26 @@ protected:
 
 public:
 	static LStgEngine* engine() { return static_cast<LStgEngine*>(s_pEngine); }
-	static LBullets* bullets() { return engine()->getBullets(); }
-	static LEnemys* enemys() { return engine()->getEnemys(); }
-	static LBulletStyles* bulletStyles();
 
 public:
-	LBullets* getBullets() { return m_spBullets.get(); }
-	LEnemys* getEnemys() { return m_spEnemys.get(); }
 	LPathSet* pathSet() { return m_spPathSet.get(); }
+	LBulletStyles* bulletStyles() { return m_spStyles.get(); }
+	LStage* stage() { return m_spStage.get(); }
 
 public:
 	LPlayer* getActivePlayer();
 
 protected:
-	std::unique_ptr<LBullets> m_spBullets;
-	std::unique_ptr<LPlayers> m_spPlayers;
-	std::unique_ptr<LEnemys> m_spEnemys;
 	std::unique_ptr<LPathSet> m_spPathSet;
+	std::unique_ptr<LStage> m_spStage;
+	std::unique_ptr<LBulletStyles> m_spStyles;
 };
+
+namespace global
+{
+	inline LStgEngine* engine() { return LStgEngine::engine(); }
+	inline LBulletStyles* bulletStyles() { return engine()->bulletStyles(); }
+	inline LStage* stage() { return engine()->stage(); }
+}
 
 #endif

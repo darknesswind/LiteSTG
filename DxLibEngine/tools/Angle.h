@@ -23,8 +23,8 @@ public:
 	{
 		SinCosDeg(m_deg, sine, cosine);
 	}
-	dtype	sin() const { return (dtype)SinDeg(m_deg); }
-	dtype	cos() const { return (dtype)CosDeg(m_deg); }
+	dtype	sin() const { return static_cast<dtype>(SinDeg(m_deg)); }
+	dtype	cos() const { return static_cast<dtype>(CosDeg(m_deg)); }
 
 public:
 	void operator+=(const Degree& rhs) { m_deg += rhs.m_deg; }
@@ -69,8 +69,8 @@ public:
 	{
 		SinCos(m_rad, sine, cosine);
 	}
-	dtype	sin() const { return (dtype)Sin(m_rad); }
-	dtype	cos() const { return (dtype)Cos(m_rad); }
+	dtype	sin() const { return static_cast<dtype>(Sin(m_rad)); }
+	dtype	cos() const { return static_cast<dtype>(Cos(m_rad)); }
 
 public:
 	void operator+=(const Radian& rhs) { m_rad += rhs.m_rad; }

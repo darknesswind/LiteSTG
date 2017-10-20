@@ -75,7 +75,7 @@ bool LUIObjBase::removeChild(LUIObjBase* pChild)
 	return false;
 }
 
-bool LUIObjBase::takeChild(LUIObjBase* pChild)
+bool LUIObjBase::takeChild(const LUIObjBase* pChild)
 {
 	for (auto iter = m_children.begin(); iter != m_children.end(); ++iter)
 	{

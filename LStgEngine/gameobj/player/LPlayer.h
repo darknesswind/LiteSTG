@@ -27,7 +27,6 @@ public:
 	explicit LPlayer(InputType type);
 	virtual ~LPlayer(void);
 
-// 	void setModel(LPlayerModel* pModel);
 	void setCharacter(uint id, const PlayerCharaData& chara);
 
 public:	// IGameobj
@@ -43,12 +42,8 @@ protected:
 	destory_ptr<IWalker> m_spWalker;
 	std::unique_ptr<LPlayerModel> m_spModel;
 
-	int m_counter;
-// 	int m_imgCount;
-// 	int m_actionState;
-// 	int m_nStarImg;
-// 	int m_nEndImg;
-	bool m_bCanShot;
+	int m_counter = 0;
+	bool m_bCanShot = true;
 
 	LGraphHandles m_playerImg;
 	LGraphHandle m_hitBoxImg;

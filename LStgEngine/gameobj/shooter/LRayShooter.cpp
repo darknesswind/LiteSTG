@@ -16,7 +16,7 @@ LRayShooter::LRayShooter(IGameObject* pParent)
 	m_counter = 0;
 	m_warningLine.setPolar(600, m_fireDegree);
 	ChangeState(Warning);
-	m_pBulletStyle = LStgEngine::bulletStyles()->getDefaultStyle(BulletType::RayLaser);
+	m_pBulletStyle = global::bulletStyles()->getDefaultStyle(BulletType::RayLaser);
 }
 
 LRayShooter::~LRayShooter(void)
@@ -79,7 +79,7 @@ void LRayShooter::EntryShootingState()
 	Degree angle = m_fireDegree - ((m_fireRange - m_angleIncrease) / 2);
 	for (int i = 0; i < m_fireWays; ++i)
 	{
-		RayLaser* pLaser = LStgEngine::bullets()->AddRayLaser(this);
+		RayLaser* pLaser = m_pBullets->AddRayLaser(this);
 		pLaser->SetLife(m_durationTime);
 		pLaser->setPosition(position());
 		pLaser->setStyle(m_pBulletStyle, 0);
