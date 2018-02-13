@@ -40,9 +40,6 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)Qt\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Qt\lib;$(LibraryPath)</LibraryPath>
-    <SourcePath>$(SolutionDir)Qt\src;$(SourcePath)</SourcePath>
     <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
     <EnableCppCoreCheck>true</EnableCppCoreCheck>

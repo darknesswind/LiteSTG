@@ -46,9 +46,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(SolutionDir)Qt\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)Qt\include;$(IncludePath)</IncludePath>
-    <SourcePath>$(SolutionDir)Qt\src;$(SourcePath)</SourcePath>
     <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
@@ -57,8 +54,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\STGproject\boost;$(IncludePath)</IncludePath>
-    <SourcePath>E:\STGproject\boost;$(IncludePath);$(SourcePath)</SourcePath>
     <IntDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)build\$(Configuration)\</OutDir>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
